@@ -1,7 +1,7 @@
 ESPlant - Environment Sensor Plant
 =============
 
-Welcome to the linux.conf.au Open Hardware Project.
+Welcome to the linux.conf.au Open Hardware Project.  You can see information about this and other MiniConfs at http://www.openhardwareconf.org/wiki/Main_Page
 
 The ESPlant kit is designed to provide an open source platform to transmit environmental data to a central source using the power of wifi.
 
