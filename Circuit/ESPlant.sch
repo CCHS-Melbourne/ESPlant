@@ -29,8 +29,6 @@ LIBS:atmel
 LIBS:contrib
 LIBS:valves
 LIBS:freetronics_schematic
-LIBS:basic_esp_board-cache
-LIBS:espkit-07-cache
 LIBS:ESPlant
 LIBS:ESPlant-cache
 EELAYER 25 0
@@ -424,4 +422,15 @@ F 3 "" H 3900 1400 60  0000 C CNN
 	0    1    1    0   
 $EndComp
 NoConn ~ 3900 1700
+$Comp
+L UFQFPN48 IC?
+U 1 1 56379803
+P 5250 4000
+F 0 "IC?" H 4500 5250 40  0000 L BNN
+F 1 "UFQFPN48" H 5800 5250 40  0000 L BNN
+F 2 "" H 5250 4000 30  0000 C CIN
+F 3 "" H 5250 4000 60  0000 C CNN
+	1    5250 4000
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC

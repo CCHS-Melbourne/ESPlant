@@ -1,4 +1,4 @@
-update=3/11/2015 12:49:28 AM
+update=3/11/2015 1:32:29 AM
 version=1
 last_client=kicad
 [pcbnew]
@@ -59,3 +59,4 @@ LibName27=atmel
 LibName28=contrib
 LibName29=valves
 LibName30=C:/Users/mage/Dropbox/Circuits/freetronics_kicad_library/freetronics_schematic
+LibName31=ESPlant
