@@ -5,7 +5,8 @@ Welcome to the linux.conf.au Open Hardware Project.
 
 The ESPlant kit is designed to provide an open source platform to transmit environmental data to a central source using the power of wifi.
 
-
+Worst mock up ever!
+![Board Layout](Photos/mockup.v.0.1.png?raw=true "mockup")
 
 CREDITS
 ------------
@@ -15,6 +16,7 @@ This project was designed by the 2016 linux.conf.au Open Hardware Team!
  - Angus Gratton
  - Andy Gelme
  - Jon Oxer
+
 You can see our githubs at:
  - https://github.com/mage0r
  - https://github.com/projectgus
