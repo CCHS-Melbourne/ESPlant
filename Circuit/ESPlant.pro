@@ -1,4 +1,4 @@
-update=3/11/2015 1:32:29 AM
+update=3/11/2015 2:12:19 AM
 version=1
 last_client=kicad
 [pcbnew]
@@ -23,8 +23,6 @@ ModuleOutlineThickness=0.150000000000
 [cvpcb]
 version=1
 NetIExt=net
-[general]
-version=1
 [eeschema]
 version=1
 LibDir=
@@ -60,3 +58,5 @@ LibName28=contrib
 LibName29=valves
 LibName30=C:/Users/mage/Dropbox/Circuits/freetronics_kicad_library/freetronics_schematic
 LibName31=ESPlant
+[general]
+version=1

@@ -1,9 +1,15 @@
 EESchema-DOCLIB  Version 2.0
 #
+$CMP LQFP48
+D UFQFPN48
+K ARM 32-bit Cortex M0
+F http://www.st.com/st-web-ui/static/active/en/resource/technical/document/datasheet/DM00105814.pdf
+$ENDCMP
+#
 $CMP UFQFPN48
-D TQFP32, 16k Flash, 512B SRAM, 1k EEPROM
-K AVR 8bit Microcontroller MegaAVR
-F http://www.atmel.com/Images/doc2545.pdf
+D UFQFPN48
+K ARM 32-bit Cortex M0
+F http://www.st.com/st-web-ui/static/active/en/resource/technical/document/datasheet/DM00105814.pdf
 $ENDCMP
 #
 #End Doc Library
