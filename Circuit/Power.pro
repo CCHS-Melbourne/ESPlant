@@ -1,6 +1,10 @@
-update=10/11/2015 7:53:59 PM
+update=10/11/2015 8:02:08 PM
 version=1
-last_client=kicad
+last_client=eeschema
+[general]
+version=1
+RootSch=
+BoardNm=
 [pcbnew]
 version=1
 LastNetListRead=
@@ -23,13 +27,11 @@ ModuleOutlineThickness=0.150000000000
 [cvpcb]
 version=1
 NetIExt=net
-[general]
-version=1
 [eeschema]
 version=1
 LibDir=
 [eeschema/libraries]
-LibName1=freetronics_kicad_library/freetronics_schematic
+LibName1=Power-rescue
 LibName2=power
 LibName3=device
 LibName4=transistors
@@ -59,5 +61,4 @@ LibName27=opto
 LibName28=atmel
 LibName29=contrib
 LibName30=valves
-LibName31=ESPlant
-LibName32=C:/Users/mage/Dropbox/GitHub/kicad-ESP8266/ESP8266
+LibName31=freetronics_kicad_library/freetronics_schematic
