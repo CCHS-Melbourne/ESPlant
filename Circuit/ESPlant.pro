@@ -1,4 +1,4 @@
-update=10/11/2015 7:53:59 PM
+update=10/11/2015 10:08:22 PM
 version=1
 last_client=kicad
 [pcbnew]
@@ -60,4 +60,4 @@ LibName28=atmel
 LibName29=contrib
 LibName30=valves
 LibName31=ESPlant
-LibName32=C:/Users/mage/Dropbox/GitHub/kicad-ESP8266/ESP8266
+LibName32=kicad-ESP8266/ESP8266
