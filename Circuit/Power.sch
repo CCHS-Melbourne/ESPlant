@@ -196,11 +196,9 @@ Connection ~ 5050 3050
 Wire Wire Line
 	4700 3550 5200 3550
 Wire Wire Line
-	5200 3550 5200 4500
+	5200 4500 5200 3550
 Wire Wire Line
-	4000 4150 4000 4500
-Wire Wire Line
-	4000 4500 4000 4650
+	4000 4150 4000 4650
 Wire Wire Line
 	4950 3900 4950 3850
 Wire Wire Line
@@ -211,18 +209,14 @@ Connection ~ 4050 1800
 Wire Wire Line
 	1150 1800 1650 1800
 Wire Wire Line
-	1850 1150 1850 1350
+	1850 1150 1850 1500
 Wire Wire Line
-	1850 1350 1850 1500
-Wire Wire Line
-	1100 1150 1850 1150
-Wire Wire Line
-	1850 1150 2200 1150
+	1100 1150 2200 1150
 Connection ~ 1850 1150
 Wire Wire Line
 	2600 1150 2900 1150
 Wire Wire Line
-	2900 1150 2900 1800
+	2900 1800 2900 1150
 Connection ~ 2900 1800
 Wire Wire Line
 	1750 1350 1850 1350
@@ -232,28 +226,14 @@ Wire Wire Line
 Wire Wire Line
 	1150 1350 1150 1500
 Wire Wire Line
-	2050 1800 2450 1800
-Wire Wire Line
-	2450 1800 2900 1800
-Wire Wire Line
-	2900 1800 2950 1800
-Wire Wire Line
-	2950 1800 3900 1800
-Wire Wire Line
-	3900 1800 4050 1800
-Wire Wire Line
-	4050 1800 4600 1800
-Wire Wire Line
-	4600 1800 6650 1800
+	2050 1800 6650 1800
 Wire Wire Line
 	2950 3650 3400 3650
 Wire Wire Line
 	2950 2550 2950 1800
 Connection ~ 2950 1800
 Wire Wire Line
-	2950 3600 2950 3650
-Wire Wire Line
-	2950 3650 2950 3850
+	2950 3600 2950 3850
 Connection ~ 2950 3650
 Wire Wire Line
 	2950 3050 2950 3200
@@ -261,9 +241,7 @@ Connection ~ 2950 3850
 Wire Wire Line
 	6850 2100 6850 3550
 Wire Wire Line
-	2450 3850 2950 3850
-Wire Wire Line
-	2950 3850 3400 3850
+	2450 3850 3400 3850
 Wire Wire Line
 	2450 3050 2450 3200
 Wire Wire Line
@@ -289,11 +267,7 @@ Solar input:\n7V open circuit voltage panel\nNominal 4-6V under load
 Text Notes 4550 4800 0    60   ~ 0
 Charging current\nIr = 220mA max
 Wire Wire Line
-	4000 4500 4950 4500
-Wire Wire Line
-	4950 4500 5200 4500
-Wire Wire Line
-	5200 4500 5850 4500
+	4000 4500 5850 4500
 Connection ~ 4000 4500
 Wire Wire Line
 	4950 4400 4950 4500
@@ -322,14 +296,10 @@ F 3 "" H 8400 2600 60  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 Wire Wire Line
-	4700 3050 5050 3050
-Wire Wire Line
-	5050 3050 5850 3050
+	4700 3050 5850 3050
 Connection ~ 5850 3050
 Wire Wire Line
-	5850 2500 5850 3050
-Wire Wire Line
-	5850 3050 5850 3350
+	5850 2500 5850 3350
 Wire Wire Line
 	5850 2500 8200 2500
 Wire Wire Line
@@ -344,13 +314,7 @@ GBAT
 Text Label 6850 3450 1    60   ~ 0
 GIN
 Wire Wire Line
-	7050 1800 9050 1800
-Wire Wire Line
-	9050 1800 10250 1800
-Wire Wire Line
-	10250 1800 10450 1800
-Wire Wire Line
-	10450 1800 10650 1800
+	7050 1800 10650 1800
 Wire Wire Line
 	10250 1800 10250 2000
 Text HLabel 10650 1800 2    60   Input ~ 0
