@@ -221,3 +221,7 @@ pip-log.txt
 
 # Gerbers
 Gerber/
+
+.#*
+*.bck
+
