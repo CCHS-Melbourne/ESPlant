@@ -6,6 +6,11 @@ K ARM 32-bit Cortex M0
 F http://www.st.com/st-web-ui/static/active/en/resource/technical/document/datasheet/DM00105814.pdf
 $ENDCMP
 #
+$CMP ML8511
+D UV sensor with Voltage Output
+K UV Sensor
+$ENDCMP
+#
 $CMP UFQFPN48
 D UFQFPN48
 K ARM 32-bit Cortex M0

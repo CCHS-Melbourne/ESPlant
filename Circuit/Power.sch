@@ -1,5 +1,4 @@
 EESchema Schematic File Version 2
-LIBS:ESPlant-rescue
 LIBS:freetronics_schematic
 LIBS:power
 LIBS:device
