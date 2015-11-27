@@ -515,25 +515,14 @@ NoConn ~ 8550 2350
 NoConn ~ 8450 2350
 NoConn ~ 8350 2350
 NoConn ~ 8250 2350
-Text Notes 3950 7200 0    60   ~ 0
-GPIO14_SOIL\nused to pulse\ncurrent through\nsoil moisture\nsensors\n\nWire GPIO14 to\none side of the\nsensor, SOIL1/SOIL2\nto the other.
+Text Notes 3900 6500 0    60   ~ 0
+VCC_SENS is used to\npulse current through\nsoil moisture sensors.
 Text Label 6000 3500 0    60   ~ 0
 ADC0
-$Comp
-L R R105
-U 1 1 564EAB03
-P 6500 1150
-F 0 "R105" V 6580 1150 50  0000 C CNN
-F 1 "0R" V 6500 1150 50  0000 C CNN
-F 2 "" H 6500 1150 60  0000 C CNN
-F 3 "" H 6500 1150 60  0000 C CNN
-	1    6500 1150
-	1    0    0    -1  
-$EndComp
 Text Label 7550 1550 2    60   ~ 0
-GPIO14_SOIL
+GPIO14
 Text Label 2650 6250 0    60   ~ 0
-GPIO14_SOIL
+VCC_SENS
 $Comp
 L GND #PWR019
 U 1 1 564FA125
@@ -905,41 +894,39 @@ ADC0
 $Comp
 L MOSFET_P Q?
 U 1 1 565907EF
-P 6650 2450
-F 0 "Q?" H 6560 2620 60  0000 R CNN
-F 1 "FDN340P" H 6710 2200 60  0000 R CNN
-F 2 "" H 6650 2450 60  0000 C CNN
-F 3 "" H 6650 2450 60  0000 C CNN
-	1    6650 2450
+P 6800 2650
+F 0 "Q?" H 6710 2820 60  0000 R CNN
+F 1 "FDN340P" H 6860 2400 60  0000 R CNN
+F 2 "" H 6800 2650 60  0000 C CNN
+F 3 "" H 6800 2650 60  0000 C CNN
+	1    6800 2650
 	0    -1   -1   0   
 $EndComp
 $Comp
 L +3.3V #PWR?
 U 1 1 56596CF8
-P 6400 2300
-F 0 "#PWR?" H 6400 2150 50  0001 C CNN
-F 1 "+3.3V" H 6400 2440 50  0000 C CNN
-F 2 "" H 6400 2300 60  0000 C CNN
-F 3 "" H 6400 2300 60  0000 C CNN
-	1    6400 2300
+P 6550 2350
+F 0 "#PWR?" H 6550 2200 50  0001 C CNN
+F 1 "+3.3V" H 6550 2490 50  0000 C CNN
+F 2 "" H 6550 2350 60  0000 C CNN
+F 3 "" H 6550 2350 60  0000 C CNN
+	1    6550 2350
 	1    0    0    -1  
 $EndComp
-Text Label 6600 2800 2    60   ~ 0
-GPIO2
-Text Label 6850 2350 0    60   ~ 0
-RAIL_VCC
+Text Label 7000 2550 0    60   ~ 0
+VCC_SENS
 Text Label 7200 3500 1    60   ~ 0
-RAIL_VCC
+VCC_SENS
 Text Label 8100 3700 3    60   ~ 0
-RAIL_VCC
+VCC_SENS
 Text Label 9050 3300 1    60   ~ 0
-RAIL_VCC
+VCC_SENS
 Text Label 8250 3400 1    60   ~ 0
-RAIL_VCC
+VCC_SENS
 Text Label 9950 3300 1    60   ~ 0
-RAIL_VCC
+VCC_SENS
 Text Label 10800 3300 1    60   ~ 0
-RAIL_VCC
+VCC_SENS
 Wire Wire Line
 	3750 6500 3300 6500
 Wire Wire Line
@@ -962,15 +949,13 @@ Wire Wire Line
 Wire Wire Line
 	7200 3500 7200 3050
 Wire Wire Line
-	6400 2350 6450 2350
+	6550 2550 6600 2550
 Wire Wire Line
-	6400 2300 6400 2350
+	6550 2350 6550 2550
 Wire Wire Line
-	6650 2800 6300 2800
+	6800 3000 6800 2850
 Wire Wire Line
-	6650 2650 6650 2800
-Wire Wire Line
-	6850 2350 7300 2350
+	7000 2550 7450 2550
 Wire Wire Line
 	9050 3500 9550 3500
 Wire Wire Line
@@ -1086,15 +1071,11 @@ Connection ~ 3150 7300
 Wire Wire Line
 	2650 6500 3150 6500
 Wire Wire Line
-	3750 6250 3750 6350
-Wire Wire Line
 	2650 6250 3750 6250
 Wire Wire Line
-	6750 1450 6750 1450
+	6500 1350 6500 1450
 Wire Wire Line
-	6500 1400 6500 1450
-Wire Wire Line
-	6500 850  6500 900 
+	6500 850  6500 950 
 Wire Wire Line
 	6750 850  6500 850 
 Wire Wire Line
@@ -1108,8 +1089,6 @@ Wire Wire Line
 Wire Wire Line
 	10450 6400 10800 6400
 Connection ~ 9850 5900
-Wire Wire Line
-	6500 1450 7600 1450
 Wire Wire Line
 	7600 1650 7200 1650
 Wire Wire Line
@@ -1284,8 +1263,6 @@ Text Label 950  5250 0    60   ~ 0
 GPIO13
 Text Label 950  5150 0    60   ~ 0
 GPIO12
-Text Label 950  5350 0    60   ~ 0
-GPIO14_SOIL
 $Comp
 L CONN_01X03 P?
 U 1 1 565C0856
@@ -1320,7 +1297,7 @@ F 3 "" H 2100 7100 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 Text Label 2350 7000 1    60   ~ 0
-RAIL_VCC
+VCC_SENS
 $Comp
 L CONN_01X06 P?
 U 1 1 565C3888
@@ -1429,7 +1406,7 @@ F 3 "" H 2100 5550 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 Text Label 2350 5450 1    60   ~ 0
-RAIL_VCC
+VCC_SENS
 Wire Wire Line
 	2100 5450 2350 5450
 Wire Wire Line
@@ -1468,7 +1445,7 @@ F 3 "" H 2100 6300 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 Text Label 2350 6200 1    60   ~ 0
-RAIL_VCC
+VCC_SENS
 Wire Wire Line
 	2100 6200 2350 6200
 Wire Wire Line
@@ -1512,4 +1489,53 @@ Wire Wire Line
 	850  3600 850  3700
 Wire Wire Line
 	1950 3600 1950 3700
+$Comp
+L SJ SJ?
+U 1 1 56581F55
+P 6500 1150
+F 0 "SJ?" H 6400 1000 70  0000 L BNN
+F 1 "SJ" H 6400 1200 30  0001 L BNN
+F 2 "FT:SJ_SHORTED" H 6500 1250 39  0000 C CNN
+F 3 "" H 6500 1150 60  0000 C CNN
+	1    6500 1150
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	6500 1450 7600 1450
+Text Label 6150 3000 2    60   ~ 0
+GPIO14
+$Comp
+L R R?
+U 1 1 56584EA4
+P 6200 2700
+F 0 "R?" V 6280 2700 50  0000 C CNN
+F 1 "10K" V 6200 2700 50  0000 C CNN
+F 2 "" H 6200 2700 60  0000 C CNN
+F 3 "" H 6200 2700 60  0000 C CNN
+	1    6200 2700
+	1    0    0    -1  
+$EndComp
+Connection ~ 6200 3000
+Wire Wire Line
+	6200 2400 6550 2400
+Connection ~ 6550 2400
+$Comp
+L R R?
+U 1 1 56585798
+P 6550 3000
+F 0 "R?" V 6630 3000 50  0000 C CNN
+F 1 "1K" V 6550 3000 50  0000 C CNN
+F 2 "" H 6550 3000 60  0000 C CNN
+F 3 "" H 6550 3000 60  0000 C CNN
+	1    6550 3000
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	6050 3000 6300 3000
+Wire Wire Line
+	6200 3000 6200 2950
+Wire Wire Line
+	6200 2450 6200 2400
+Text Notes 5600 2100 0    79   ~ 0
+"VCC_SENS" sensor power rail
 $EndSCHEMATC
