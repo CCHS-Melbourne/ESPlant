@@ -1,0 +1,23 @@
+(fp_lib_table
+  (lib
+   (name FT)
+   (type KiCad)
+   (uri ${KIPRJMOD}/freetronics_kicad_library/freetronics_footprints.pretty)
+   (options "")
+   (descr "Freetronics Kicad Library")
+   )
+   (lib
+   (name ESP)
+   (type KiCad)
+   (uri ${KIPRJMOD}/kicad-ESP8266/ESP8266.pretty)
+   (options "")
+   (descr "ESP8266 library")
+   )
+   (lib
+   (name Plant)
+   (type KiCad)
+   (uri ${KIPRJMOD}/ESPlant.pretty)
+   (options "")
+   (descr "ESPlant footprints")
+   )
+)

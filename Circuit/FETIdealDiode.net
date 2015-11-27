@@ -1,0 +1,21 @@
+* C:\users\gus\My Documents\dev\esp\hardware\ESPlant\Circuit\FETIdealDiode.asc
+VIN VIN 0 PULSE(0 6 2m 1m 1m 4m 0 1) Rser=1
+M1 VBAT GBAT VOUT VOUT FDN340P
+M2 VIN GIN VOUT VOUT FDN340P
+VBAT VBAT 0 3.7 Rser=0.05
+ILOAD VOUT 0 0.3
+C1 VOUT 0 220µF Rser=65m
+XU4 VIN VBAT VOUT 0 GBAT LTC6241
+XU1 VBAT VIN VOUT 0 GIN LTC6241
+C2 VBAT 0 4.7µF Rser=65m
+.model NMOS NMOS
+.model PMOS PMOS
+.lib Z:\home\gus\wine\ltspice\drive_c\Program Files\LTC\LTspiceIV\lib\cmp\standard.mos
+.tran 10m
+.lib http://www.aosmd.com/res/spice_models/AO3401.mod
+.lib http://www.vishay.com/docs/89656/ss14.txt
+.model FDN340P VDMOS(pchan Rg=1 Vto=-0.65 Rd=5m Rs=0.5m Rb=1.2m Kp=9.8 lambda=.02 Cgdmax=3n Cgdmin=.8n Cgs=650p Cjo=838p Is=82p mfg=Fairchild Vds=-20 Ron=70m)
+.lib MCP6001.txt
+.lib LTC4.lib
+.backanno
+.end
