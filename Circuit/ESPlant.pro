@@ -1,4 +1,4 @@
-update=26/11/2015 8:26:54 PM
+update=28/11/2015 1:45:12 AM
 version=1
 last_client=kicad
 [pcbnew]
@@ -20,9 +20,6 @@ SolderMaskMinWidth=0.000000000000
 DrawSegmentWidth=0.200000000000
 BoardOutlineThickness=0.100000000000
 ModuleOutlineThickness=0.150000000000
-[cvpcb]
-version=1
-NetIExt=net
 [general]
 version=1
 [eeschema]
@@ -61,3 +58,6 @@ LibName29=contrib
 LibName30=valves
 LibName31=ESPlant
 LibName32=kicad-ESP8266/ESP8266
+[cvpcb]
+version=1
+NetIExt=net
