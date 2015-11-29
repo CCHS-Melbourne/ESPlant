@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /home/gus/dev/esp/hardware/ESPlant/Circuit/ESPlant.sch)
-    (date "Sun 29 Nov 2015 14:39:59 AEDT")
+    (date "Sun 29 Nov 2015 16:54:50 AEDT")
     (tool "Eeschema 0.201511110417+6307~30~ubuntu15.10.1-product")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -745,18 +745,18 @@
   (libraries
     (library (logical conn)
       (uri /usr/share/kicad/library/conn.lib))
-    (library (logical freetronics_schematic)
-      (uri freetronics_kicad_library/freetronics_schematic.lib))
     (library (logical device)
       (uri /usr/share/kicad/library/device.lib))
     (library (logical linear)
       (uri /usr/share/kicad/library/linear.lib))
+    (library (logical freetronics_schematic)
+      (uri freetronics_kicad_library/freetronics_schematic.lib))
     (library (logical ESPlant)
       (uri ESPlant.lib))
-    (library (logical ESP8266)
-      (uri kicad-ESP8266/ESP8266.lib))
     (library (logical ESPlant-cache)
-      (uri /home/gus/dev/esp/hardware/ESPlant/Circuit/ESPlant-cache.lib)))
+      (uri /home/gus/dev/esp/hardware/ESPlant/Circuit/ESPlant-cache.lib))
+    (library (logical ESP8266)
+      (uri kicad-ESP8266/ESP8266.lib)))
   (nets
     (net (code 1) (name "Net-(U103-Pad2)")
       (node (ref U103) (pin 2)))
