@@ -5,7 +5,7 @@ Welcome to the linux.conf.au Open Hardware Project.  You can see information abo
 
 The ESPlant kit is designed to provide an open source platform to transmit environmental data to a central source using the power of wifi.
 
-Circuit at Gerblook.org: ![Board Layout](http://gerblook.org/pcb/yRvGzKC4G7xZh2MVUVMHdD#front "Version 1.0")
+Circuit at Gerblook.org: http://gerblook.org/pcb/yRvGzKC4G7xZh2MVUVMHdD#front
 
 Worst mock up ever!
 ![Mockup](Photos/mockup.v.0.1.png?raw=true "mockup")
