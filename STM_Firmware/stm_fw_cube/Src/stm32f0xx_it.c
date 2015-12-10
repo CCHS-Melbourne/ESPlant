@@ -82,6 +82,21 @@ void USB_IRQHandler(void)
   /* USER CODE END USB_IRQn 1 */
 }
 
+extern UART_HandleTypeDef huart2;
+
+void USART2_IRQHandler(void)
+{
+  HAL_UART_IRQHandler(&huart2);
+}
+
+extern TIM_HandleTypeDef htimer;
+
+void TIM3_IRQHandler(void)
+{
+  HAL_TIM_IRQHandler(&htimer);
+}
+
+
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */

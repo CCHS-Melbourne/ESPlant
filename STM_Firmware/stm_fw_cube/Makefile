@@ -43,6 +43,8 @@ C_SOURCES = \
   Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pwr_ex.c \
   Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc.c \
   Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c \
+  Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_tim.c \
+  Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_tim_ex.c \
   Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_uart.c \
   Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_uart_ex.c \
   Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c \
@@ -86,13 +88,15 @@ C_INCLUDES += -IMiddlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc
 C_INCLUDES += -IDrivers/CMSIS/Include
 C_INCLUDES += -IDrivers/CMSIS/Device/ST/STM32F0xx/Include
 # compile gcc flags
-ASFLAGS = -mthumb -mcpu=cortex-m0 $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections -flto
-CFLAGS = -mthumb -mcpu=cortex-m0 $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections -flto
-ifeq ($(DEBUG), 1)
+ASFLAGS = -mthumb -mcpu=cortex-m0 $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
+CFLAGS = -mthumb -mcpu=cortex-m0 $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
 CFLAGS += -g -gdwarf-2
-endif
 # Generate dependency information
 CFLAGS += -MD -MP -MF .dep/$(@F).d
+
+# Link Time Optimisation
+CFLAGS += -flto
+ASFLAGS += -flto
 
 #######################################
 # LDFLAGS
@@ -107,9 +111,13 @@ LDFLAGS = -mthumb -mcpu=cortex-m0 -specs=nano.specs -T$(LDSCRIPT) $(LIBDIR) $(LI
 # default action: build all
 all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
 
-# this flash target is very specific and probably should be replaced
+# this flash target is very hacky and probably should be replaced
 flash: $(BUILD_DIR)/$(TARGET).elf
 	openocd -f interface/stlink-v2.cfg -c "transport select hla_swd" -f target/stm32f0x.cfg -c "program $(BUILD_DIR)/$(TARGET).elf"
+
+# so is this gdb target
+gdb:
+	arm-none-eabi-gdb -ex "target extended-remote :3333" "$(BUILD_DIR)/$(TARGET).elf"
 
 #######################################
 # build the application
