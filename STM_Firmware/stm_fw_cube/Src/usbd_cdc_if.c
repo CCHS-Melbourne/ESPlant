@@ -81,11 +81,12 @@
   * @{
   */
 
-/* Receive data over USB CDC ringbuffer */
-#define cdc2usart_SIZE 256
-uint8_t cdc2usart_buf[cdc2usart_SIZE];
-uint8_t *cdc2usart_rx = cdc2usart_buf; /* Next RX from CDC */
-uint8_t *cdc2usart_tx = cdc2usart_buf; /* Next TX to UART */
+/* Receive data over USB CDC buffer into these two
+   buffers, page flip between them (so one is outputting
+   USART while other is receiving from CDC)*/
+#define cdc2usart_SIZE CDC_DATA_FS_MAX_PACKET_SIZE
+uint8_t cdc2usart_buf_a[cdc2usart_SIZE];
+uint8_t cdc2usart_buf_b[cdc2usart_SIZE];
 
 /* Send Data over USB CDC are stored in this ringbuffer       */
 #define usart2cdc_SIZE 64
@@ -178,8 +179,8 @@ static int8_t CDC_Init_FS(void)
   huart2.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
   HAL_UART_Init(&huart2);
 
-  /* Enable USART2 in NVIC */
-  NVIC_SetPriority(USART2_IRQn, 0);
+  /* Enable USART2 in NVIC, set priority to high */
+  NVIC_SetPriority(USART2_IRQn, 1);
   NVIC_EnableIRQ(USART2_IRQn);
 
   /* UART2 receives data to the CDC transmit buffer, byte at a time :( */
@@ -196,12 +197,12 @@ static int8_t CDC_Init_FS(void)
     return USBD_FAIL;
 
   __TIM3_CLK_ENABLE();
-  NVIC_SetPriority(TIM3_IRQn, 2);
+  NVIC_SetPriority(TIM3_IRQn, 3);
   NVIC_EnableIRQ(TIM3_IRQn);
 
   /* Set Application USB Buffers */
   USBD_CDC_SetTxBuffer(husb, usart2cdc_tx, 0); /* don't send anything now */
-  USBD_CDC_SetRxBuffer(husb, cdc2usart_rx);     /* read into here if CDC data comes */
+  USBD_CDC_SetRxBuffer(husb, cdc2usart_buf_a);     /* read into here if CDC data comes */
 
   return USBD_OK;
 }
@@ -215,7 +216,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
   if(RBUF_FREE(usart2cdc) < 8) {
     /* usart2cdc buffer nearly full, try to TX CDC immediately
     */
-    if(CDC_Transmit_FS() != USBD_OK && usart2cdc_tx == usart2cdc_rx) {
+    if(CDC_Transmit_FS() != USBD_OK && RBUF_FREE(usart2cdc) <= 1) {
       /* worst case: can't TX, and buffer already full. dropping a byte. */
       usart2cdc_tx++;
       if(usart2cdc_tx == usart2cdc_buf + usart2cdc_SIZE) {
@@ -234,7 +235,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
 {
   /* Ignore all errors for now(!), just fire off a new receive request */
-  __HAL_UART_CLEAR_OREFLAG(&huart2);
   HAL_UART_Receive_IT(&huart2, usart2cdc_rx, 1);
 }
 
@@ -316,7 +316,7 @@ static int8_t CDC_Control_FS  (uint8_t cmd, uint8_t* pbuf, uint16_t length)
        Basically ignore parity, char format, parity type, data bits -
        we don't care for this application! */
     huart2.Init.BaudRate = *pbuf_linecoding_baudrate;
-    HAL_UART_Init(&huart2);
+    UART_SetConfig(&huart2);
     break;
 
   case CDC_GET_LINE_CODING:
@@ -358,11 +358,26 @@ static int8_t CDC_Control_FS  (uint8_t cmd, uint8_t* pbuf, uint16_t length)
   * @param  Len: Number of data received (in bytes)
   * @retval Result of the operation: USBD_OK if all operations are OK else USBD_FAIL
   */
-static int8_t CDC_Receive_FS (uint8_t* Buf, uint32_t *Len)
+static int8_t CDC_Receive_FS (uint8_t* buf, uint32_t *len)
 {
-  /* USER CODE BEGIN 6 */
-  return (USBD_OK);
-  /* USER CODE END 6 */
+  if(len == 0)
+    return USBD_OK; /* not sure if this ever happens but it might */
+
+  /* Push the buffer we just received into the HAL UART TX quee */
+  HAL_StatusTypeDef r;
+  while((r = HAL_UART_Transmit_IT(&huart2, buf, *len)) == HAL_BUSY) {
+    // We could go into STOP mode here, but USB is connected so who cares about power?
+    // UART, transmit timer are both higher priority interrupts so will interrupt us here
+  }
+
+  /* Swap the buffer that we'll receive next CDC packet into */
+  if(buf == cdc2usart_buf_a)
+    USBD_CDC_SetRxBuffer(husb, cdc2usart_buf_b);
+  else
+    USBD_CDC_SetRxBuffer(husb, cdc2usart_buf_a);
+
+  USBD_CDC_ReceivePacket(husb);
+  return r == HAL_OK ? USBD_OK : USBD_FAIL;
 }
 
 /**

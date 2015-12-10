@@ -88,8 +88,8 @@ C_INCLUDES += -IMiddlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc
 C_INCLUDES += -IDrivers/CMSIS/Include
 C_INCLUDES += -IDrivers/CMSIS/Device/ST/STM32F0xx/Include
 # compile gcc flags
-ASFLAGS = -mthumb -mcpu=cortex-m0 $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
-CFLAGS = -mthumb -mcpu=cortex-m0 $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
+ASFLAGS = -mthumb -mcpu=cortex-m0 $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -Werror -fdata-sections -ffunction-sections
+CFLAGS = -mthumb -mcpu=cortex-m0 $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -Werror -fdata-sections -ffunction-sections
 CFLAGS += -g -gdwarf-2
 # Generate dependency information
 CFLAGS += -MD -MP -MF .dep/$(@F).d

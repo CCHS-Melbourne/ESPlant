@@ -70,8 +70,8 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef* hpcd)
     /* Peripheral clock enable */
     __USB_CLK_ENABLE();
 
-    /* Peripheral interrupt init*/
-    HAL_NVIC_SetPriority(USB_IRQn, 0, 0);
+    /* Peripheral interrupt init - USB low priority, as host will always retry... */
+    HAL_NVIC_SetPriority(USB_IRQn, 3, 0);
     HAL_NVIC_EnableIRQ(USB_IRQn);
   /* USER CODE BEGIN USB_MspInit 1 */
 
