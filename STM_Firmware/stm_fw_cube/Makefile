@@ -52,6 +52,7 @@ C_SOURCES = \
   Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c \
   Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c \
   Src/main.c \
+  Src/esp_adc_intf.c \
   Src/stm32f0xx_hal_msp.c \
   Src/stm32f0xx_it.c \
   Src/usb_device.c \

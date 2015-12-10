@@ -96,6 +96,32 @@ void TIM3_IRQHandler(void)
   HAL_TIM_IRQHandler(&htimer);
 }
 
+ADC_HandleTypeDef hadc;
+I2C_HandleTypeDef hi2c1;
+
+void I2C1_IRQHandler(void)
+{
+  HAL_I2C_EV_IRQHandler(&hi2c1);
+  HAL_I2C_ER_IRQHandler(&hi2c1);
+}
+
+extern TIM_HandleTypeDef htimeout;
+
+void TIM2_IRQHandler(void)
+{
+  HAL_TIM_IRQHandler(&htimeout);
+}
+
+void esp_adc_timeout_elapsed_callback(void);
+void usb_transmit_timer_elapsed_callback(void);
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  if(htim == &htimeout)
+    esp_adc_timeout_elapsed_callback();
+  else
+    usb_transmit_timer_elapsed_callback();
+}
 
 /* USER CODE BEGIN 1 */
 

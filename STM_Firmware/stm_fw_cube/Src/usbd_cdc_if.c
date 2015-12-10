@@ -238,7 +238,7 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
   HAL_UART_Receive_IT(&huart2, usart2cdc_rx, 1);
 }
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+void usb_transmit_timer_elapsed_callback(void)
 {
   /* try to USB transmit, if we succeed & buffer empty then we can stop TX timer until next time */
   if(CDC_Transmit_FS() == USBD_OK && usart2cdc_rx == usart2cdc_tx)
