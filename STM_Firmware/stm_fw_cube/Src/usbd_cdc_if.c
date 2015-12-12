@@ -34,6 +34,7 @@
 #include "usbd_cdc_if.h"
 #include "stm32f0xx_hal_tim.h"
 #include "stm32f0xx_hal_cortex.h"
+#include <stdbool.h>
 
 /* USER CODE BEGIN INCLUDE */
 /* USER CODE END INCLUDE */
@@ -253,9 +254,10 @@ void usb_transmit_timer_elapsed_callback(void)
   */
 static int8_t CDC_DeInit_FS(void)
 {
-  /* USER CODE BEGIN 4 */
-  return (USBD_OK);
-  /* USER CODE END 4 */
+  /* De-assert ESP RST & GPIOA if they were being held down when USB went away */
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_SET);
+  return USBD_OK;
 }
 
 /**
@@ -269,7 +271,9 @@ static int8_t CDC_DeInit_FS(void)
 static int8_t CDC_Control_FS  (uint8_t cmd, uint8_t* pbuf, uint16_t length)
 {
   uint32_t *pbuf_linecoding_baudrate = (uint32_t *)pbuf;
-  
+  GPIO_PinState esprst_set, gpio0_set;
+  bool dtr, rts;
+
   /* USER CODE BEGIN 5 */
   switch (cmd)
   {
@@ -328,7 +332,17 @@ static int8_t CDC_Control_FS  (uint8_t cmd, uint8_t* pbuf, uint16_t length)
     break;
 
   case CDC_SET_CONTROL_LINE_STATE:
+    /* DTR & RTS are treated the same as on NodeMCU boards - 
+       ie both or neither assert -> normal behaviour
+       either asserted -> assert GPIO0 or nRESET as appropriate
+    */
+    dtr = pbuf[2] & 1; // nRESET, set = hold in reset
+    rts = pbuf[2] & 2; // GPIO0, set = assert to flash
+    esprst_set = (!dtr && rts) ? GPIO_PIN_RESET : GPIO_PIN_SET;
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, esprst_set);
 
+    gpio0_set = (dtr && !rts) ? GPIO_PIN_RESET : GPIO_PIN_SET;
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, gpio0_set);
     break;
 
   case CDC_SEND_BREAK:

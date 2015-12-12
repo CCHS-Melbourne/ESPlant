@@ -167,12 +167,21 @@ void MX_GPIO_Init(void)
   __GPIOF_CLK_ENABLE();
   __GPIOA_CLK_ENABLE();
 
-  /*Configure GPIO pin : PB8 */
+  /* Configure GPIO pin : PB8 - ESP GPIO0 (pulled up by us) */
   GPIO_InitStruct.Pin = GPIO_PIN_8;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_SET); /* Drive GPIO0 high */
 
+  /* Configure GPIO pin : PA7 - ESP nRESET (has external pullup) */
+  GPIO_InitStruct.Pin = GPIO_PIN_7;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET); /* Issue a brief reset now we know GPIO0 is pulled up */
+  HAL_Delay(10);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET); /* Clear the reset */
 }
 
 /* USER CODE BEGIN 4 */
