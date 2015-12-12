@@ -47,6 +47,7 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void OB_Configure(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
@@ -68,6 +69,8 @@ int main(void)
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
+
+  OB_Configure();
 
   /* Configure the system clock */
   SystemClock_Config();
@@ -93,6 +96,21 @@ int main(void)
   /* USER CODE END 3 */
 
 }
+
+
+/* Configure the Flash option byte to disable the BOOT0 pin */
+static void OB_Configure(void)
+{
+  FLASH_OBProgramInitTypeDef ob_config;
+  HAL_FLASHEx_OBGetConfig(&ob_config);
+  if(ob_config.USERConfig & OB_BOOT_SEL_SET) {
+    /* Need to clear the BOOT_SEL flag to disable BOOT0 */
+    ob_config.USERConfig &= ~OB_BOOT_SEL_SET;
+    HAL_FLASHEx_OBErase();
+    HAL_FLASHEx_OBProgram(&ob_config);
+  }
+}
+
 
 /** System Clock Configuration
 */
