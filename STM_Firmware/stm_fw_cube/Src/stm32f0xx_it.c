@@ -96,8 +96,7 @@ void TIM3_IRQHandler(void)
   HAL_TIM_IRQHandler(&htimer);
 }
 
-ADC_HandleTypeDef hadc;
-I2C_HandleTypeDef hi2c1;
+extern I2C_HandleTypeDef hi2c1;
 
 void I2C1_IRQHandler(void)
 {
