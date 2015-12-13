@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /home/gus/dev/esp/hardware/ESPlant/Circuit/ESPlant.sch)
-    (date "Mon 14 Dec 2015 09:15:41 AEDT")
+    (date "Mon 14 Dec 2015 09:16:59 AEDT")
     (tool "Eeschema 0.201511110417+6307~30~ubuntu15.10.1-product")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -315,6 +315,7 @@
       (tstamp 566A9883))
     (comp (ref R101)
       (value 1K)
+      (footprint FT:0805)
       (libsource (lib freetronics_schematic) (part R))
       (sheetpath (names /) (tstamps /))
       (tstamp 566BFB72))
