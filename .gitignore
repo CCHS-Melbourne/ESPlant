@@ -226,3 +226,7 @@ Gerber/
 *.bck
 
 *.d
+
+# kicad backup stuff
+*-bak
+*-rescue.lib
