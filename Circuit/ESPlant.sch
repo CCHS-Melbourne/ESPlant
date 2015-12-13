@@ -540,8 +540,8 @@ F 3 "" H 6350 7100 60  0000 C CNN
 	1    6350 7100
 	0    1    1    0   
 $EndComp
-Text Label 6650 7100 0    60   ~ 0
-GPIO2
+Text Label 6600 7100 0    60   ~ 0
+GPIO13
 $Comp
 L STM32F042F U101
 U 1 1 564E462F
