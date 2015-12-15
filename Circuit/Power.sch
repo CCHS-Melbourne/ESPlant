@@ -476,9 +476,6 @@ F 3 "" H 5450 3250 60  0000 C CNN
 	1    5450 3250
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	5400 2200 5400 1800
-Connection ~ 5400 1800
 $Comp
 L THERMISTOR TH201
 U 1 1 566F7293
