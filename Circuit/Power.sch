@@ -138,17 +138,6 @@ F 3 "" H 2950 3400 60  0000 C CNN
 	1    2950 3400
 	0    1    1    0   
 $EndComp
-$Comp
-L R R203
-U 1 1 563C6031
-P 2950 2800
-F 0 "R203" V 2850 2800 50  0000 C CNN
-F 1 "1K" V 2950 2800 50  0000 C CNN
-F 2 "FT:0603" V 3050 2800 24  0000 C CNN
-F 3 "" H 2950 2800 60  0000 C CNN
-	1    2950 2800
-	1    0    0    -1  
-$EndComp
 Text Label 3200 1800 0    60   ~ 0
 VIN
 $Comp
@@ -165,12 +154,12 @@ $EndComp
 $Comp
 L R R202
 U 1 1 563FF8B7
-P 2450 2800
-F 0 "R202" V 2350 2800 50  0000 C CNN
-F 1 "1K" V 2450 2800 50  0000 C CNN
-F 2 "FT:0603" V 2550 2800 24  0000 C CNN
-F 3 "" H 2450 2800 60  0000 C CNN
-	1    2450 2800
+P 2700 2650
+F 0 "R202" V 2600 2650 50  0000 C CNN
+F 1 "1K" V 2700 2650 50  0000 C CNN
+F 2 "FT:0603" V 2800 2650 24  0000 C CNN
+F 3 "" H 2700 2650 60  0000 C CNN
+	1    2700 2650
 	1    0    0    -1  
 $EndComp
 Text Label 3100 3650 0    60   ~ 0
@@ -397,9 +386,6 @@ Wire Wire Line
 	2050 1800 6650 1800
 Wire Wire Line
 	2950 3650 3400 3650
-Wire Wire Line
-	2950 2550 2950 1800
-Connection ~ 2950 1800
 Connection ~ 2950 3650
 Wire Wire Line
 	2950 3050 2950 3200
@@ -410,9 +396,6 @@ Wire Wire Line
 	2450 3850 3400 3850
 Wire Wire Line
 	2450 3050 2450 3200
-Wire Wire Line
-	2450 2550 2450 1800
-Connection ~ 2450 1800
 Wire Wire Line
 	2450 3600 2450 3850
 Wire Wire Line
@@ -524,4 +507,12 @@ Wire Wire Line
 Connection ~ 5450 4500
 Text Notes 6000 4650 0    59   ~ 0
 NTC thermistor\nplaced under battery holder.\n\nCharging cut off @ 38.5C\nwhen using specified thermistor.
+Wire Wire Line
+	2700 1800 2700 2400
+Connection ~ 2700 1800
+Wire Wire Line
+	2700 2900 2700 3050
+Wire Wire Line
+	2450 3050 2950 3050
+Connection ~ 2700 3050
 $EndSCHEMATC
