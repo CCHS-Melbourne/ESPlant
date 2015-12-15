@@ -264,7 +264,7 @@ F 3 "" V 850 3490 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 Text Notes 750  3050 0    79   ~ 0
-18340 Cell Holder (3.7V)\n
+16340 Cell Holder (3.7V)\n
 $Comp
 L GND #PWR011
 U 1 1 564B5F41
