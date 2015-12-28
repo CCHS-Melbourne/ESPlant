@@ -77,8 +77,8 @@ L R R204
 U 1 1 563C4E3C
 P 4950 4150
 F 0 "R204" V 5030 4150 50  0000 C CNN
-F 1 "8.2K" V 4950 4150 50  0000 C CNN
-F 2 "FT:0805" V 4880 4150 24  0000 C CNN
+F 1 "7.15K 1%" V 4950 4150 39  0000 C CNN
+F 2 "FT:0603" V 4880 4150 24  0000 C CNN
 F 3 "" H 4950 4150 30  0000 C CNN
 	1    4950 4150
 	1    0    0    -1  
@@ -111,7 +111,7 @@ U 1 1 563C5AF3
 P 1500 1350
 F 0 "R201" V 1580 1350 50  0000 C CNN
 F 1 "1K" V 1500 1350 50  0000 C CNN
-F 2 "FT:0805" V 1650 1350 24  0000 C CNN
+F 2 "FT:0603" V 1650 1350 24  0000 C CNN
 F 3 "" H 1500 1350 60  0000 C CNN
 	1    1500 1350
 	0    1    1    0   
@@ -138,6 +138,7 @@ F 3 "" H 2950 3400 60  0000 C CNN
 	1    2950 3400
 	0    1    1    0   
 $EndComp
+<<<<<<< HEAD
 $Comp
 L R R203
 U 1 1 563C6031
@@ -149,6 +150,8 @@ F 3 "" H 2950 2800 60  0000 C CNN
 	1    2950 2800
 	1    0    0    -1  
 $EndComp
+=======
+>>>>>>> master
 Text Label 3200 1800 0    60   ~ 0
 VIN
 $Comp
@@ -165,12 +168,21 @@ $EndComp
 $Comp
 L R R202
 U 1 1 563FF8B7
+<<<<<<< HEAD
 P 2450 2800
 F 0 "R202" V 2350 2800 50  0000 C CNN
 F 1 "330R" V 2450 2800 50  0000 C CNN
 F 2 "FT:0805" V 2550 2800 24  0000 C CNN
 F 3 "" H 2450 2800 60  0000 C CNN
 	1    2450 2800
+=======
+P 2700 2650
+F 0 "R202" V 2600 2650 50  0000 C CNN
+F 1 "1K" V 2700 2650 50  0000 C CNN
+F 2 "FT:0603" V 2800 2650 24  0000 C CNN
+F 3 "" H 2700 2650 60  0000 C CNN
+	1    2700 2650
+>>>>>>> master
 	1    0    0    -1  
 $EndComp
 Text Label 3100 3650 0    60   ~ 0
@@ -193,12 +205,19 @@ USB Input:\nPreferred charging input if available, 4.5-5.5V
 Text Notes 800  2350 0    60   ~ 0
 Solar input:\n7V open circuit voltage panel\nNominal 4-6V under load
 Text Notes 4550 4800 0    60   ~ 0
-Charging current\nIr = 220mA max
+Charging current\nIr = 252mA max
 $Comp
+<<<<<<< HEAD
 L GND #PWR034
 U 1 1 56417FB3
 P 7450 4100
 F 0 "#PWR034" H 7450 3850 50  0001 C CNN
+=======
+L GND #PWR205
+U 1 1 56417FB3
+P 7450 4100
+F 0 "#PWR205" H 7450 3850 50  0001 C CNN
+>>>>>>> master
 F 1 "GND" H 7450 3950 50  0000 C CNN
 F 2 "" H 7450 4100 60  0000 C CNN
 F 3 "" H 7450 4100 60  0000 C CNN
@@ -223,10 +242,17 @@ GIN
 Text HLabel 10650 1800 2    60   Input ~ 0
 VOUT
 $Comp
+<<<<<<< HEAD
 L GND #PWR035
 U 1 1 5641AA9F
 P 10250 2500
 F 0 "#PWR035" H 10250 2250 50  0001 C CNN
+=======
+L GND #PWR208
+U 1 1 5641AA9F
+P 10250 2500
+F 0 "#PWR208" H 10250 2250 50  0001 C CNN
+>>>>>>> master
 F 1 "GND" H 10250 2350 50  0000 C CNN
 F 2 "" H 10250 2500 60  0000 C CNN
 F 3 "" H 10250 2500 60  0000 C CNN
@@ -260,10 +286,17 @@ VOUT
 Text HLabel 9000 3050 1    60   Input ~ 0
 VOUT
 $Comp
+<<<<<<< HEAD
 L GND #PWR036
 U 1 1 5642C1C1
 P 9000 4100
 F 0 "#PWR036" H 9000 3850 50  0001 C CNN
+=======
+L GND #PWR206
+U 1 1 5642C1C1
+P 9000 4100
+F 0 "#PWR206" H 9000 3850 50  0001 C CNN
+>>>>>>> master
 F 1 "GND" H 9000 3950 50  0000 C CNN
 F 2 "" H 9000 4100 60  0000 C CNN
 F 3 "" H 9000 4100 60  0000 C CNN
@@ -317,16 +350,23 @@ U 1 1 5642D8F0
 P 10000 3600
 F 0 "C202" H 10025 3700 50  0000 L CNN
 F 1 "100nF" H 10025 3500 50  0000 L CNN
-F 2 "FT:0805" H 10100 3450 24  0000 C CNN
+F 2 "FT:0603_CAP" H 10100 3450 24  0000 C CNN
 F 3 "" H 10000 3600 60  0000 C CNN
 	1    10000 3600
 	1    0    0    -1  
 $EndComp
 $Comp
+<<<<<<< HEAD
 L GND #PWR039
 U 1 1 5642DA26
 P 10000 4150
 F 0 "#PWR039" H 10000 3900 50  0001 C CNN
+=======
+L GND #PWR207
+U 1 1 5642DA26
+P 10000 4150
+F 0 "#PWR207" H 10000 3900 50  0001 C CNN
+>>>>>>> master
 F 1 "GND" H 10000 4000 50  0000 C CNN
 F 2 "" H 10000 4150 60  0000 C CNN
 F 3 "" H 10000 4150 60  0000 C CNN
@@ -362,12 +402,9 @@ VBAT
 Wire Wire Line
 	5050 3050 5050 2750
 Wire Wire Line
-	5050 2750 4700 2750
-Connection ~ 5050 3050
+	4700 2750 5850 2750
 Wire Wire Line
-	4700 3550 5200 3550
-Wire Wire Line
-	5200 3550 5200 4500
+	4700 3550 5450 3550
 Wire Wire Line
 	4000 4150 4000 4650
 Wire Wire Line
@@ -400,9 +437,6 @@ Wire Wire Line
 	2050 1800 6650 1800
 Wire Wire Line
 	2950 3650 3400 3650
-Wire Wire Line
-	2950 2550 2950 1800
-Connection ~ 2950 1800
 Connection ~ 2950 3650
 Wire Wire Line
 	2950 3050 2950 3200
@@ -414,9 +448,6 @@ Wire Wire Line
 Wire Wire Line
 	2450 3050 2450 3200
 Wire Wire Line
-	2450 2550 2450 1800
-Connection ~ 2450 1800
-Wire Wire Line
 	2450 3600 2450 3850
 Wire Wire Line
 	4000 4500 5850 4500
@@ -424,9 +455,6 @@ Connection ~ 4000 4500
 Wire Wire Line
 	4950 4400 4950 4500
 Connection ~ 4950 4500
-Connection ~ 5200 4500
-Wire Wire Line
-	4700 3050 5850 3050
 Connection ~ 5850 3050
 Wire Wire Line
 	5850 2500 5850 3350
@@ -484,8 +512,89 @@ Wire Notes Line
 	5750 3700 5950 3700
 Wire Notes Line
 	5800 3750 5900 3750
-Text Notes 5950 4200 0    59   ~ 0
-Battery goes here\nin circuit\n(actually connected\nto VBAT on parent sheet)
+Text Notes 6000 3950 0    59   ~ 0
+Battery goes here\nin circuit\n(actually\nconnected\nto VBAT on\nparent sheet)
 Wire Wire Line
+<<<<<<< HEAD
 	2950 3650 2950 3600
+=======
+	2950 3600 2950 3650
+$Comp
+L R R205
+U 1 1 566F70E7
+P 5450 3250
+F 0 "R205" V 5530 3250 50  0000 C CNN
+F 1 "7.15K 1%" V 5450 3250 39  0000 C CNN
+F 2 "FT:0603" V 5350 3250 24  0000 C CNN
+F 3 "" H 5450 3250 60  0000 C CNN
+	1    5450 3250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5400 2200 5400 1800
+Connection ~ 5400 1800
+$Comp
+L THERMISTOR TH201
+U 1 1 566F7293
+P 5450 3850
+F 0 "TH201" V 5360 3740 50  0000 C CNN
+F 1 "10K NTC" V 5600 3850 50  0000 C CNN
+F 2 "FT:0603" V 5650 3850 24  0000 C CNN
+F 3 "http://www.murata.com/products/catalog/pdf/r44e.pdf" H 5450 3850 60  0001 C CNN
+F 4 "NCP18XH103F03RB" V 5450 3850 60  0001 C CNN "MPN"
+	1    5450 3850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5050 3050 4700 3050
+Connection ~ 5850 2750
+Connection ~ 5050 2750
+Wire Wire Line
+	5450 3000 5450 2850
+Text Label 5450 3000 1    60   ~ 0
+VIN
+Wire Wire Line
+	5450 3500 5450 3600
+Connection ~ 5450 3550
+Wire Wire Line
+	5450 4100 5450 4500
+Connection ~ 5450 4500
+Text Notes 6000 4650 0    59   ~ 0
+NTC thermistor\nplaced under battery holder.\n\nCharging cut off @ 38.5C\nwhen using specified thermistor.
+Wire Wire Line
+	2700 1800 2700 2400
+Connection ~ 2700 1800
+Wire Wire Line
+	2700 2900 2700 3050
+Wire Wire Line
+	2450 3050 2950 3050
+Connection ~ 2700 3050
+$Comp
+L C C204
+U 1 1 566F9EBD
+P 6300 2850
+F 0 "C204" H 6325 2950 50  0000 L CNN
+F 1 "10uF 16V" H 6325 2750 50  0000 L CNN
+F 2 "FT:1210_CAP" H 6450 2700 24  0000 C CNN
+F 3 "" H 6300 2850 60  0000 C CNN
+	1    6300 2850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6300 2700 6300 2500
+Connection ~ 6300 2500
+Wire Wire Line
+	6300 3000 6300 3100
+$Comp
+L GND #PWR204
+U 1 1 566FA00B
+P 6300 3100
+F 0 "#PWR204" H 6300 2850 50  0001 C CNN
+F 1 "GND" H 6300 2950 50  0000 C CNN
+F 2 "" H 6300 3100 60  0000 C CNN
+F 3 "" H 6300 3100 60  0000 C CNN
+	1    6300 3100
+	1    0    0    -1  
+$EndComp
+>>>>>>> master
 $EndSCHEMATC
