@@ -1,9 +1,9 @@
-(pcb C:\Users\mage\Dropbox\GitHub\ESPlant\Circuit\ESPlant.dsn
+(pcb C:\Users\John\Dropbox\GitHub\ESPlant\Circuit\ESPlant.dsn
   (parser
     (string_quote ")
     (space_in_quoted_tokens on)
     (host_cad "KiCad's Pcbnew")
-    (host_version "4.0.0-rc2-stable")
+    (host_version "4.0.0-rc1-stable")
   )
   (resolution um 10)
   (unit um)
@@ -32,10 +32,14 @@
             77372.4 -134351  76839.5 -134600  76271.5 -134752  75685.8 -134803
             32738 -134798  32738 -134798)
     )
-    (plane GND (polygon B.Cu 0  31861.8 -46085.8  45737.8 -38669  63451.7 -38669  77421.7 -46558.2
-            77505.6 -132491  71749.9 -133944  32613.6 -133350  31775.4 -132321))
-    (plane GND (polygon F.Cu 0  31851.6 -46045.1  45740.3 -38669  63474.6 -38663.9  77429.4 -46558.2
-            77520.8 -132507  71709.3 -133949  32567.9 -133320  31775.4 -132329))
+    (plane GND (polygon B.Cu 0  29616.4 -49631.6  29616.4 -46685.2  30530.8 -44856.4  45567.6 -37439.6
+            63373 -37515.8  77698.6 -44653.2  78714.6 -46329.6  78790.8 -131216
+            78232 -133096  76454 -134417  33020 -134442  30632.4 -133579
+            29870.4 -131267  29616.4 -53924.2))
+    (plane GND (polygon F.Cu 0  29616.4 -53924.2  29616.4 -46685.2  30556.2 -44881.8  45593 -37439.6
+            63296.8 -37541.2  77673.2 -44678.6  78714.6 -46278.8  78790.8 -131242
+            78206.6 -133121  76479.4 -134391  33020 -134366  30734 -133528
+            29895.8 -131293))
     (via "Via[0-1]_600:400_um")
     (rule
       (width 250)
@@ -49,45 +53,17 @@
       (place REF01 63256.2 -70500 front 0 (PN MOUNT))
       (place REF03 45039.3 -70500 front 0 (PN MOUNT))
     )
-    (component Plant:CR123_Holder
-      (place BT101 54371.2 -118074 front 0 (PN Battery))
-    )
-    (component FT:0805
-      (place C101 59065.2 -93571.1 front 270 (PN 100nF))
-      (place C102 63764.2 -96667.3 front 0 (PN "100nF 6.3V"))
-      (place C104 56774.1 -97035.6 front 90 (PN 100nF))
-      (place C107 69540.1 -52882.8 front 270 (PN "100nF 6.3V"))
-      (place C202 47655.5 -96667.3 front 180 (PN 100nF))
-      (place C301 68717.2 -105217 front 270 (PN "1uF 6.3V"))
-      (place C302 61833.8 -101620 front 0 (PN "1uF 6.3V"))
-      (place R101 65219.6 -82811.6 front 270 (PN "10K DNP"))
-      (place R102 69753.5 -89192.1 front 180 (PN 100K))
-      (place R103 69753.5 -92811.6 front 180 (PN 100K))
-      (place R104 35676.8 -89778.8 front 90 (PN 10K))
-      (place R105 56959.5 -105118 front 270 (PN 10K))
-      (place R106 38313.4 -89778.8 front 90 (PN 1K))
-      (place R107 55265.3 -92816.7 front 0 (PN "56K 1%"))
-      (place R108 59065.2 -97035.6 front 90 (PN "47K 1%"))
-      (place R109 69555.4 -56708 front 90 (PN 10K))
-      (place R110 67635.1 -82814.2 front 90 (PN "4.7K DNP"))
-      (place R111 37642.8 -48615.6 front 0 (PN 10K))
-      (place R113 40513 -47721.5 front 90 (PN 10K))
-      (place R201 51155.6 -132436 front 90 (PN 1K))
-      (place R202 39283.6 -106591 front 90 (PN 330R))
-      (place R203 42748.2 -106586 front 90 (PN 330R))
-      (place R204 42077.6 -90441.8 front 0 (PN 8.2K))
-      (place R301 66669.9 -43159.7 front 180 (PN 4.7K))
-      (place R302 66669.9 -45781 front 180 (PN 4.7K))
-    )
     (component FT:1210_CAP
       (place C103 63741.3 -94145.1 front 0 (PN "10uF 16V"))
-      (place C106 66537.8 -52181.8 front 270 (PN "220uF 16V"))
+      (place C106 66471.8 -51993.8 front 270 (PN "100uF 16V X5R"))
       (place C201 35433 -99822 front 90 (PN "10uF 16V"))
-      (place C203 47457.4 -93268.8 front 0 (PN "220uF 16V"))
+      (place C203 47853.6 -92989.4 front 0 (PN "220uF 16V"))
+      (place C204 31343.6 -106121 front 270 (PN "10uF 16V"))
     )
     (component FT:DIODE_SMA
       (place D201 53746.4 -131216 front 90 (PN SS14))
-      (place D101 31432.5 -102009 front 270 (PN SS14))
+      (place D101 31343.6 -100051 front 270 (PN SS14))
+      (place D102 38582.6 -130480 front 90 (PN SS14))
     )
     (component FT:1210
       (place F101 35458.4 -105745 front 90 (PN "1A PTC"))
@@ -97,14 +73,14 @@
       (place LED202 42753.3 -102555 front 90 (PN LED_CHRG))
     )
     (component "FT:SCREWTERMINAL-3.5MM-3"
-      (place P1 75295.8 -94394 front 90 (PN "SOIL MOISTURE"))
+      (place P1 75295.8 -94394 front 90 (PN SOIL))
     )
     (component FT:1X08
       (place P101 63543.2 -60591.7 front 180 (PN CONN_DIGITAL))
     )
     (component FT:1X02
-      (place P103 41079.4 -53969.9 front 270 (PN SERIAL))
-      (place P104 77500.5 -106223 front 90 (PN I2C))
+      (place P103 70358 -46151.8 front 270 (PN CONN_SERIAL))
+      (place P104 77500.5 -106223 front 90 (PN CONN_I2C))
     )
     (component "FT:SCREWTERMINAL-3.5MM-2"
       (place P105 44521.1 -131044 front 0 (PN SOLAR))
@@ -113,16 +89,16 @@
       (place P106 64465.2 -130607 front 90 (PN USB_5PIN_SHELL))
     )
     (component FT:1X03
-      (place P109 31750 -90932 front 270 (PN PWR))
+      (place P109 31927.8 -89560.4 front 270 (PN CONN_PWR))
     )
     (component FT:1X05
-      (place P110 43667.7 -87723.8 front 90 (PN STM_PGM))
+      (place P110 43667.7 -87723.8 front 90 (PN CONN_01X05))
     )
     (component "FT:SCREWTERMINAL-3.5MM-3::1"
-      (place P111 33248.6 -66553.1 front 270 (PN "UV SENSOR"))
-      (place P112 75311 -80190.3 front 90 (PN "TEMP SENSOR"))
-      (place P113 33223.2 -80921.9 front 270 (PN WS2812))
-      (place P114 75311 -65994.3 front 90 (PN "PIR SENSOR"))
+      (place P111 33248.6 -66553.1 front 270 (PN UV))
+      (place P112 75311 -80190.3 front 90 (PN TEMP))
+      (place P113 33223.2 -80921.9 front 270 (PN NEOPIXEL))
+      (place P114 75311 -65994.3 front 90 (PN PIR))
     )
     (component FT:SOT23_FET
       (place Q101 35407.6 -94437.2 front 180 (PN FDN340P))
@@ -130,14 +106,8 @@
       (place Q202 46771.6 -106312 front 180 (PN FDN340P))
       (place Q203 46743.6 -101059 front 90 (PN FDN340P))
     )
-    (component FT:0805::1
-      (place R112 71033.6 -48661.3 front 180 (PN 10K))
-    )
     (component "FT:SOT23-5"
-      (place REG101 52258 -96344.7 front 0 (PN SPX3819M5))
-    )
-    (component FT:SJ_SHORTED
-      (place SJ101 43055.5 -42776.1 front 270 (PN SJ))
+      (place REG101 52258 -96344.7 front 0 (PN "SPX3819M5-3.3"))
     )
     (component FT:SW_PUSHBUTTON_PTH
       (place SW101 32867.6 -54076.6 front 90 (PN RESET))
@@ -171,6 +141,46 @@
     (component FT:1X06
       (place P102 60782.2 -80203 front 180 (PN CONN_ANALOG))
     )
+    (component FT:0603_CAP
+      (place C101 59065.2 -93571.1 front 270 (PN "100nF 6.3V"))
+      (place C102 63764.2 -96667.3 front 0 (PN "100nF 6.3V"))
+      (place C104 56774.1 -97035.6 front 90 (PN 100nF))
+      (place C107 69540.1 -52882.8 front 270 (PN "100nF 6.3V"))
+      (place C202 47655.5 -96667.3 front 180 (PN 100nF))
+      (place C301 68717.2 -105217 front 270 (PN "1uF 6.3V"))
+      (place C302 66167 -102514 front 180 (PN "1uF 6.3V"))
+    )
+    (component FT:0603
+      (place R101 65219.6 -82811.6 front 270 (PN 1K))
+      (place R102 69753.5 -89192.1 front 180 (PN "100K 1%"))
+      (place R103 69753.5 -92811.6 front 180 (PN "100K 1%"))
+      (place R104 34467.8 -89738.2 front 90 (PN 10K))
+      (place R105 56959.5 -105118 front 270 (PN 10K))
+      (place R106 36931.6 -89738.2 front 90 (PN 1K))
+      (place R107 55265.3 -92816.7 front 0 (PN "121K 1%"))
+      (place R108 59065.2 -97035.6 front 90 (PN "100K 1%"))
+      (place R109 66979.8 -57251.6 front 0 (PN 10K))
+      (place R110 67635.1 -82814.2 front 90 (PN "4.7K DNP"))
+      (place R112 40386 -49961.8 front 0 (PN 1K))
+      (place R113 40462.2 -46939.2 front 0 (PN 10K))
+      (place R114 63195.2 -57277 front 180 (PN 10K))
+      (place R201 51155.6 -132436 front 90 (PN 1K))
+      (place R202 42748.2 -106426 front 90 (PN 1K))
+      (place R204 41960.8 -90728.8 front 90 (PN "7.15K 1%"))
+      (place R205 39420.8 -89814.4 front 90 (PN "7.15K 1%"))
+      (place R301 66065.4 -45796.2 front 180 (PN 4.7K))
+      (place R302 66065.4 -43738.8 front 180 (PN 4.7K))
+      (place TH201 43738.8 -90728.8 front 90 (PN "10K NTC"))
+    )
+    (component Plant:SS12D00
+      (place SW104 60198 -100686 front 0 (PN SS12D00))
+    )
+    (component Plant:CR123_Holder
+      (place BT101 54371.2 -118074 front 0 (PN Battery))
+    )
+    (component FT:0805
+      (place R111 40182.8 -43561 front 90 (PN 10K))
+    )
   )
   (library
     (image Mounting_Holes:MountingHole_5mm
@@ -181,27 +191,6 @@
             1545.09 4755.28  2938.93 4045.09  4045.09 2938.93  4755.28 1545.09))
       (keepout "" (circle F.Cu 5000))
       (keepout "" (circle B.Cu 5000))
-    )
-    (image Plant:CR123_Holder
-      (outline (path signal 150  -21500 -9000  -21500 0))
-      (outline (path signal 150  21500 -9000  -21500 -9000))
-      (outline (path signal 150  21500 9000  21500 -9000))
-      (outline (path signal 150  -21500 9000  21500 9000))
-      (outline (path signal 150  -21500 0  -21500 9000))
-      (pin Round[A]Pad_4500_um 1 -12100 0)
-      (pin Round[A]Pad_4500_um 2 12100 0)
-      (keepout "" (circle F.Cu 1600 19000 0))
-      (keepout "" (circle B.Cu 1600 19000 0))
-      (keepout "" (circle F.Cu 1600 -19000 0))
-      (keepout "" (circle B.Cu 1600 -19000 0))
-      (keepout "" (circle F.Cu 1800 -19000 8200))
-      (keepout "" (circle B.Cu 1800 -19000 8200))
-    )
-    (image FT:0805
-      (outline (path signal 152.4  -299.72 599.44  299.72 599.44))
-      (outline (path signal 152.4  -299.72 -599.44  299.72 -599.44))
-      (pin Rect[T]Pad_797.56x1198.88_um 1 -899.16 0)
-      (pin Rect[T]Pad_797.56x1198.88_um 2 899.16 0)
     )
     (image FT:1210_CAP
       (outline (path signal 250  -1600 -1300  -2350 -1300))
@@ -498,12 +487,6 @@
       (pin Rect[T]Pad_800.1x899.16_um G -949.96 -1000.76)
       (pin Rect[T]Pad_800.1x899.16_um S 949.96 -1000.76)
     )
-    (image FT:0805::1
-      (outline (path signal 152.4  -299.72 599.44  299.72 599.44))
-      (outline (path signal 152.4  -299.72 -599.44  299.72 -599.44))
-      (pin Rect[T]Pad_797.56x1198.88_um 1 -899.16 -45.72)
-      (pin Rect[T]Pad_797.56x1198.88_um 2 899.16 0)
-    )
     (image "FT:SOT23-5"
       (outline (path signal 203.2  1422.4 429.26  1422.4 -429.26))
       (outline (path signal 152.4  1399.54 -797.56  -1399.54 -797.56))
@@ -517,18 +500,6 @@
       (pin Rect[T]Pad_548.64x1198.88_um 3 949.96 -1297.94)
       (pin Rect[T]Pad_548.64x1198.88_um 4 949.96 1297.94)
       (pin Rect[T]Pad_548.64x1198.88_um 5 -949.96 1297.94)
-    )
-    (image FT:SJ_SHORTED
-      (outline (path signal 1600  -300 0  300 0))
-      (outline (path signal 381  -762 0  762 0))
-      (outline (path signal 152.4  1397 -1016  -1397 -1016))
-      (outline (path signal 152.4  1651 -762  1651 762))
-      (outline (path signal 152.4  -1651 -762  -1651 762))
-      (outline (path signal 152.4  -1397 1016  1397 1016))
-      (outline (path signal 152.4  1016 0  1524 0))
-      (outline (path signal 152.4  -1016 0  -1524 0))
-      (pin Rect[T]Pad_1168.4x1600.2_um 1 -762 0)
-      (pin Rect[T]Pad_1168.4x1600.2_um 2 762 0)
     )
     (image FT:SW_PUSHBUTTON_PTH
       (outline (path signal 203.2  3048 1016  3048 2540))
@@ -767,9 +738,60 @@
       (pin Oval[A]Pad_1524x1524_um (rotate 90) 5 10160 0)
       (pin Oval[A]Pad_1524x1524_um (rotate 90) 6 12700 0)
     )
-    (padstack Round[A]Pad_4500_um
-      (shape (circle F.Cu 4500))
-      (shape (circle B.Cu 4500))
+    (image FT:0603_CAP
+      (outline (path signal 119.38  500.38 -650.24  1198.88 -650.24))
+      (outline (path signal 119.38  -500.38 -650.24  -1198.88 -650.24))
+      (outline (path signal 119.38  500.38 650.24  1198.88 650.24))
+      (outline (path signal 119.38  -1198.88 650.24  -500.38 650.24))
+      (outline (path signal 119.38  1198.88 635  1198.88 -635))
+      (outline (path signal 119.38  -1198.88 -635  -1198.88 635))
+      (pin Rect[T]Pad_635x1143_um 1 -762 0)
+      (pin Rect[T]Pad_635x1143_um 2 762 0)
+    )
+    (image FT:0603
+      (outline (path signal 200.66  -200.66 -251.46  200.66 -251.46))
+      (outline (path signal 200.66  -200.66 251.46  200.66 251.46))
+      (pin Rect[T]Pad_762x762_um 1 -762 0)
+      (pin Rect[T]Pad_762x762_um 2 762 0)
+    )
+    (image Plant:SS12D00
+      (outline (path signal 100  -4250 -1750  -4250 1750))
+      (outline (path signal 100  4250 -1750  -4250 -1750))
+      (outline (path signal 100  4250 1750  4250 -1750))
+      (outline (path signal 100  -4250 1750  4250 1750))
+      (pin Round[A]Pad_1600_um 2 0 0)
+      (pin Round[A]Pad_1600_um 1 -2500 0)
+      (pin Round[A]Pad_1600_um 3 2500 0)
+    )
+    (image Plant:CR123_Holder
+      (outline (path signal 150  -21500 -9000  -21500 0))
+      (outline (path signal 150  21500 -9000  -21500 -9000))
+      (outline (path signal 150  21500 9000  21500 -9000))
+      (outline (path signal 150  -21500 9000  21500 9000))
+      (outline (path signal 150  -21500 0  -21500 9000))
+      (pin Round[A]Pad_2500_um 2 19000 0)
+      (pin Round[A]Pad_2500_um 1 -19000 0)
+      (keepout "" (circle F.Cu 3500 -12100 0))
+      (keepout "" (circle B.Cu 3500 -12100 0))
+      (keepout "" (circle F.Cu 3500 12100 0))
+      (keepout "" (circle B.Cu 3500 12100 0))
+      (keepout "" (circle F.Cu 1800 -19000 8200))
+      (keepout "" (circle B.Cu 1800 -19000 8200))
+    )
+    (image FT:0805
+      (outline (path signal 152.4  -299.72 599.44  299.72 599.44))
+      (outline (path signal 152.4  -299.72 -599.44  299.72 -599.44))
+      (pin Rect[T]Pad_797.56x1198.88_um 1 -899.16 0)
+      (pin Rect[T]Pad_797.56x1198.88_um 2 899.16 0)
+    )
+    (padstack Round[A]Pad_1600_um
+      (shape (circle F.Cu 1600))
+      (shape (circle B.Cu 1600))
+      (attach off)
+    )
+    (padstack Round[A]Pad_2500_um
+      (shape (circle F.Cu 2500))
+      (shape (circle B.Cu 2500))
       (attach off)
     )
     (padstack Oval[A]Pad_1501.14x1000.76_um
@@ -824,6 +846,14 @@
       (shape (rect F.Cu -299.72 -699.77 299.72 699.77))
       (attach off)
     )
+    (padstack Rect[T]Pad_635x1143_um
+      (shape (rect F.Cu -317.5 -571.5 317.5 571.5))
+      (attach off)
+    )
+    (padstack Rect[T]Pad_762x762_um
+      (shape (rect F.Cu -381 -381 381 381))
+      (attach off)
+    )
     (padstack Rect[T]Pad_797.56x1198.88_um
       (shape (rect F.Cu -398.78 -599.44 398.78 599.44))
       (attach off)
@@ -834,10 +864,6 @@
     )
     (padstack Rect[T]Pad_1145x550_um
       (shape (rect F.Cu -572.5 -275 572.5 275))
-      (attach off)
-    )
-    (padstack Rect[T]Pad_1168.4x1600.2_um
-      (shape (rect F.Cu -584.2 -800.1 584.2 800.1))
       (attach off)
     )
     (padstack Rect[T]Pad_1198.88x1998.98_um
@@ -874,80 +900,77 @@
   )
   (network
     (net /BAT+
-      (pins BT101-1 F101-1)
+      (pins F101-1 BT101-1)
     )
     (net GND
-      (pins BT101-2 C101-2 C102-2 C103-2 C104-2 C106-2 C107-2 C201-2 C202-2 C203-1
-        C301-2 C302-2 P105-2 P106-SHLD P106-SHLD@1 P106-SHLD@2 P106-SHLD@3 P106-SHLD@4
-        P106-5 P106-SHLD@5 P109-3 P110-3 P111-3 P112-3 P113-3 P114-3 R101-2 R102-2
-        R103-2 R108-2 R109-2 R201-2 R204-2 REG101-2 SW101-1 SW101-1@1 SW102-1 SW102-1@1
-        SW103-1 SW103-1@1 U101-15 U103-15 U202-4 U301-1 U301-7 U301-5 U302-2 U302-4
-        U302-5 D101-A U201-1 U201-3)
+      (pins C103-2 C106-2 C201-2 C203-1 P105-2 P106-SHLD P106-SHLD@1 P106-SHLD@2 P106-SHLD@3
+        P106-SHLD@4 P106-5 P106-SHLD@5 P109-3 P110-3 P111-3 P112-3 P113-3 P114-3 REG101-2
+        SW101-1 SW101-1@1 SW102-1 SW102-1@1 SW103-1 SW103-1@1 U101-15 U103-15 U202-4
+        U301-1 U301-7 U302-2 U302-4 U302-5 U302-12 D101-A U201-3 P102-6 C101-2 C102-2
+        C104-2 C107-2 C202-2 C204-2 C301-2 C302-2 D102-A R102-2 R103-2 R108-2 R109-2
+        R201-2 R204-2 TH201-2 BT101-2)
     )
     (net "Net-(C101-Pad1)"
-      (pins C101-1 REG101-4)
+      (pins REG101-4 C101-1)
     )
     (net +3V3
-      (pins C102-1 C103-1 C106-1 C107-1 C301-1 C302-1 P109-1 P110-1 Q101-D R104-1
-        R111-2 R112-2 R113-1 R301-1 R302-1 REG101-5 U101-5 U101-16 U103-8 U301-2 U301-8
-        U301-6 U302-1 U302-6 U302-12 U302-7)
+      (pins C103-1 C106-1 P109-1 P110-1 Q101-S REG101-5 U101-5 U101-16 U103-8 U301-2
+        U301-8 U301-6 U301-5 U302-1 U302-6 U302-7 C102-1 C107-1 C301-1 C302-1 R104-1
+        R113-1 R114-1 R301-1 R302-1 R111-1)
     )
     (net "Net-(C104-Pad1)"
-      (pins C104-1 R107-2 R108-1 U101-14)
+      (pins U101-14 C104-1 R107-2 R108-1)
     )
     (net /Power/VIN
-      (pins C201-1 D201-K Q201-S Q202-D R202-1 R203-1 U202-2 U202-5 U201-4)
+      (pins C201-1 D201-K Q201-S Q202-D U202-2 U202-5 U201-4 R202-1 R205-1)
     )
     (net /Power/VOUT
-      (pins C202-1 C203-2 Q202-S Q203-S R107-1 REG101-1 REG101-3 U202-8)
+      (pins C203-2 Q202-S Q203-S U202-8 C202-1 R107-1 SW104-1)
     )
     (net /Power/USB_IN
       (pins D201-A P106-1 Q201-G R201-1)
     )
     (net /Power/VBAT
-      (pins F101-2 Q203-D U202-3 U202-6 D101-K U201-8 U201-5)
+      (pins F101-2 Q203-D U202-3 U202-6 D101-K U201-8 U201-5 C204-1)
     )
     (net "Net-(LED201-PadA)"
-      (pins LED201-A R202-2)
+      (pins LED201-A LED202-A R202-2)
     )
     (net /Power/~CHRG
       (pins LED202-K U201-7)
     )
-    (net "Net-(LED202-PadA)"
-      (pins LED202-A R203-2)
-    )
     (net /VCC_SENS
-      (pins P1-1 P109-2 P111-1 P112-1 P113-1 P114-1 Q101-S R110-1)
+      (pins P1-1 P109-2 P111-1 P112-1 P113-1 P114-1 Q101-D R110-1)
     )
     (net /SOIL_2
-      (pins P1-2 R103-1 U101-13 P102-6)
+      (pins P1-2 U101-12 P102-5 R103-1)
     )
     (net /SOIL_1
-      (pins P1-3 R102-1 U101-12 P102-5)
+      (pins P1-3 U101-11 P102-4 R102-1)
     )
     (net /GPIO0
-      (pins P101-1 R112-1 SW102-2 SW102-2@1 U103-18)
+      (pins P101-1 U103-18 R101-2)
     )
     (net /GPIO2
-      (pins P101-2 R105-1 U103-17)
+      (pins P101-2 U103-17 R114-2)
     )
     (net "/I2C Sensors/I2C_SCL"
-      (pins P101-3 R302-2 U101-3 U103-19 U301-4 U302-14 P104-1)
+      (pins P101-4 U101-3 U103-20 U301-4 U302-14 P104-1 R302-2)
     )
     (net "/I2C Sensors/I2C_SDA"
-      (pins P101-4 R301-2 U101-2 U103-20 U301-3 U302-13 P104-2)
+      (pins P101-3 U101-2 U103-19 U301-3 U302-13 P104-2 R301-2)
     )
     (net /GPIO12
-      (pins P101-5 P112-2 R110-2 U103-6)
+      (pins P101-5 P112-2 U103-6 R110-2)
     )
     (net /GPIO13
-      (pins P101-6 P113-2 U103-7)
+      (pins P101-6 P113-2 U103-7 R105-1)
     )
     (net /GPIO14
-      (pins P101-7 R104-2 R106-2 U103-5)
+      (pins P101-7 U103-5 R104-2 R106-2)
     )
     (net /GPIO15
-      (pins P101-8 P114-2 R109-1 U103-16)
+      (pins P101-8 P114-2 U103-16 R109-1)
     )
     (net /ADC0
       (pins P111-2 U101-6 P102-1)
@@ -958,9 +981,6 @@
     (net /ADC2
       (pins U101-10 P102-3)
     )
-    (net /ADC3
-      (pins U101-11 P102-4)
-    )
     (net /STM_RXD
       (pins P103-1 U101-9 U103-22)
     )
@@ -968,7 +988,7 @@
       (pins P103-2 U101-8 U103-21)
     )
     (net /Power/SOLAR_IN
-      (pins P105-1 Q201-D)
+      (pins P105-1 Q201-D D102-K)
     )
     (net /USB_D+
       (pins P106-3 U101-18)
@@ -997,23 +1017,20 @@
     (net /Power/GBAT
       (pins Q203-G U202-7)
     )
-    (net /STM_BOOT
-      (pins R101-1 U101-1)
-    )
     (net "/I2C Sensors/ADXL_INT"
-      (pins R105-2 U302-8)
+      (pins U302-8 R105-2)
     )
     (net /ESP_~RESET
-      (pins R111-1 SJ101-1 SW101-2 SW101-2@1 U103-1)
+      (pins SW101-2 SW101-2@1 U101-13 U103-1 R112-1 R111-2)
     )
     (net /ESP_EN
-      (pins R113-2 U103-3)
+      (pins U103-3 R113-2)
     )
     (net "Net-(R204-Pad1)"
-      (pins R204-1 U201-2)
+      (pins U201-2 R204-1)
     )
     (net /GPIO16
-      (pins SJ101-2 U103-4)
+      (pins U103-4 R112-2)
     )
     (net "Net-(U103-Pad9)"
       (pins U103-9)
@@ -1051,17 +1068,30 @@
     (net /Power/~DONE
       (pins LED201-K U201-6)
     )
-    (class kicad_default "" +3V3 /ADC0 /ADC1 /ADC2 /ADC3 /BAT+ /ESP_EN /ESP_~RESET
-      /GPIO0 /GPIO12 /GPIO13 /GPIO14 /GPIO15 /GPIO16 /GPIO2 "/I2C Sensors/ADXL_INT"
+    (net /GPIO0_BOOT
+      (pins SW102-2 SW102-2@1 U101-1 R101-1)
+    )
+    (net "Net-(R205-Pad2)"
+      (pins U201-1 R205-2 TH201-1)
+    )
+    (net /VSWITCHED
+      (pins REG101-1 REG101-3 SW104-2)
+    )
+    (net "Net-(SW104-Pad3)"
+      (pins SW104-3)
+    )
+    (class kicad_default "" +3V3 /ADC0 /ADC1 /ADC2 /BAT+ /ESP_EN /ESP_~RESET
+      /GPIO0 /GPIO0_BOOT /GPIO12 /GPIO13 /GPIO14 /GPIO15 /GPIO16 /GPIO2 "/I2C Sensors/ADXL_INT"
       "/I2C Sensors/I2C_SCL" "/I2C Sensors/I2C_SDA" /Power/GBAT /Power/GIN
       /Power/SOLAR_IN /Power/USB_IN /Power/VBAT /Power/VIN /Power/VOUT /Power/~CHRG
-      /Power/~DONE /SOIL_1 /SOIL_2 /STM_BOOT /STM_RXD /STM_SWCLK /STM_SWDIO
-      /STM_TXD /STM_~RESET /USB_D+ "/USB_D-" /VCC_SENS GND "Net-(C101-Pad1)"
-      "Net-(C104-Pad1)" "Net-(LED201-PadA)" "Net-(LED202-PadA)" "Net-(P106-Pad4)"
-      "Net-(Q101-PadG)" "Net-(R204-Pad1)" "Net-(U103-Pad10)" "Net-(U103-Pad11)"
-      "Net-(U103-Pad12)" "Net-(U103-Pad13)" "Net-(U103-Pad14)" "Net-(U103-Pad2)"
-      "Net-(U103-Pad9)" "Net-(U302-Pad10)" "Net-(U302-Pad11)" "Net-(U302-Pad3)"
-      "Net-(U302-Pad9)"
+      /Power/~DONE /SOIL_1 /SOIL_2 /STM_RXD /STM_SWCLK /STM_SWDIO /STM_TXD
+      /STM_~RESET /USB_D+ "/USB_D-" /VCC_SENS /VSWITCHED GND "Net-(C101-Pad1)"
+      "Net-(C104-Pad1)" "Net-(LED201-PadA)" "Net-(MH101-Pad1)" "Net-(MH102-Pad1)"
+      "Net-(MH103-Pad1)" "Net-(MH104-Pad1)" "Net-(P106-Pad4)" "Net-(Q101-PadG)"
+      "Net-(R204-Pad1)" "Net-(R205-Pad2)" "Net-(SW104-Pad3)" "Net-(U103-Pad10)"
+      "Net-(U103-Pad11)" "Net-(U103-Pad12)" "Net-(U103-Pad13)" "Net-(U103-Pad14)"
+      "Net-(U103-Pad2)" "Net-(U103-Pad9)" "Net-(U302-Pad10)" "Net-(U302-Pad11)"
+      "Net-(U302-Pad3)" "Net-(U302-Pad9)"
       (circuit
         (use_via Via[0-1]_600:400_um)
       )
