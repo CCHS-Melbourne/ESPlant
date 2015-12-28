@@ -138,20 +138,6 @@ F 3 "" H 2950 3400 60  0000 C CNN
 	1    2950 3400
 	0    1    1    0   
 $EndComp
-<<<<<<< HEAD
-$Comp
-L R R203
-U 1 1 563C6031
-P 2950 2800
-F 0 "R203" V 2850 2800 50  0000 C CNN
-F 1 "330R" V 2950 2800 50  0000 C CNN
-F 2 "FT:0805" V 3050 2800 24  0000 C CNN
-F 3 "" H 2950 2800 60  0000 C CNN
-	1    2950 2800
-	1    0    0    -1  
-$EndComp
-=======
->>>>>>> master
 Text Label 3200 1800 0    60   ~ 0
 VIN
 $Comp
@@ -168,21 +154,12 @@ $EndComp
 $Comp
 L R R202
 U 1 1 563FF8B7
-<<<<<<< HEAD
-P 2450 2800
-F 0 "R202" V 2350 2800 50  0000 C CNN
-F 1 "330R" V 2450 2800 50  0000 C CNN
-F 2 "FT:0805" V 2550 2800 24  0000 C CNN
-F 3 "" H 2450 2800 60  0000 C CNN
-	1    2450 2800
-=======
 P 2700 2650
 F 0 "R202" V 2600 2650 50  0000 C CNN
 F 1 "1K" V 2700 2650 50  0000 C CNN
 F 2 "FT:0603" V 2800 2650 24  0000 C CNN
 F 3 "" H 2700 2650 60  0000 C CNN
 	1    2700 2650
->>>>>>> master
 	1    0    0    -1  
 $EndComp
 Text Label 3100 3650 0    60   ~ 0
@@ -207,17 +184,10 @@ Solar input:\n7V open circuit voltage panel\nNominal 4-6V under load
 Text Notes 4550 4800 0    60   ~ 0
 Charging current\nIr = 252mA max
 $Comp
-<<<<<<< HEAD
-L GND #PWR034
-U 1 1 56417FB3
-P 7450 4100
-F 0 "#PWR034" H 7450 3850 50  0001 C CNN
-=======
 L GND #PWR205
 U 1 1 56417FB3
 P 7450 4100
 F 0 "#PWR205" H 7450 3850 50  0001 C CNN
->>>>>>> master
 F 1 "GND" H 7450 3950 50  0000 C CNN
 F 2 "" H 7450 4100 60  0000 C CNN
 F 3 "" H 7450 4100 60  0000 C CNN
@@ -242,17 +212,10 @@ GIN
 Text HLabel 10650 1800 2    60   Input ~ 0
 VOUT
 $Comp
-<<<<<<< HEAD
-L GND #PWR035
-U 1 1 5641AA9F
-P 10250 2500
-F 0 "#PWR035" H 10250 2250 50  0001 C CNN
-=======
 L GND #PWR208
 U 1 1 5641AA9F
 P 10250 2500
 F 0 "#PWR208" H 10250 2250 50  0001 C CNN
->>>>>>> master
 F 1 "GND" H 10250 2350 50  0000 C CNN
 F 2 "" H 10250 2500 60  0000 C CNN
 F 3 "" H 10250 2500 60  0000 C CNN
@@ -286,17 +249,10 @@ VOUT
 Text HLabel 9000 3050 1    60   Input ~ 0
 VOUT
 $Comp
-<<<<<<< HEAD
-L GND #PWR036
-U 1 1 5642C1C1
-P 9000 4100
-F 0 "#PWR036" H 9000 3850 50  0001 C CNN
-=======
 L GND #PWR206
 U 1 1 5642C1C1
 P 9000 4100
 F 0 "#PWR206" H 9000 3850 50  0001 C CNN
->>>>>>> master
 F 1 "GND" H 9000 3950 50  0000 C CNN
 F 2 "" H 9000 4100 60  0000 C CNN
 F 3 "" H 9000 4100 60  0000 C CNN
@@ -356,17 +312,10 @@ F 3 "" H 10000 3600 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-<<<<<<< HEAD
-L GND #PWR039
-U 1 1 5642DA26
-P 10000 4150
-F 0 "#PWR039" H 10000 3900 50  0001 C CNN
-=======
 L GND #PWR207
 U 1 1 5642DA26
 P 10000 4150
 F 0 "#PWR207" H 10000 3900 50  0001 C CNN
->>>>>>> master
 F 1 "GND" H 10000 4000 50  0000 C CNN
 F 2 "" H 10000 4150 60  0000 C CNN
 F 3 "" H 10000 4150 60  0000 C CNN
@@ -515,9 +464,6 @@ Wire Notes Line
 Text Notes 6000 3950 0    59   ~ 0
 Battery goes here\nin circuit\n(actually\nconnected\nto VBAT on\nparent sheet)
 Wire Wire Line
-<<<<<<< HEAD
-	2950 3650 2950 3600
-=======
 	2950 3600 2950 3650
 $Comp
 L R R205
@@ -596,5 +542,4 @@ F 3 "" H 6300 3100 60  0000 C CNN
 	1    6300 3100
 	1    0    0    -1  
 $EndComp
->>>>>>> master
 $EndSCHEMATC
