@@ -12,6 +12,28 @@ Worst mock up ever!
 
 ![Board Layout](Photos/mockup.v.0.1.png?raw=true "mockup")
 
+FEATURES
+--------
+
+* ESP8266 WiFi enabled microcontroller. You can program it via the Arduino IDE, or alternatively Espressif SDK or esp-open-rtos.
+* Secondary microcontroller (STM32F042) acts as USB/Serial interface and i2c Analog to Digital Converter
+* Battery holder for 16340 sized 3.7V lithium cell
+* Lithium battery charger interface (solar input friendly)
+* Board automatically switches power source between solar input, battery, and USB power as applicable.
+
+## Onboard Sensors (on I2C bus)
+
+* BME280 Temperature/Humidity/Barometric Pressure sensor
+* ADXL345 accelerometer
+
+## External Sensors (all optional, connected to screw terminals)
+
+* 2x soil moisture sensors (via ADC pins)
+* DS18B20 connected to GPIO 12.
+* PIR (infrared motion) sensor connected to GPIO 15.
+* WS2812B LED strip connected to GPIO 13 (mislabelled as 15 on V1.3 PCB!)
+
+
 CREDITS
 ------------
 
