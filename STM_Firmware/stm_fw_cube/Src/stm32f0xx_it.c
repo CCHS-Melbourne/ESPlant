@@ -82,6 +82,7 @@ void USB_IRQHandler(void)
   /* USER CODE END USB_IRQn 1 */
 }
 
+/* USART2 is USART wired to USB/serial interface */
 extern UART_HandleTypeDef huart2;
 
 void USART2_IRQHandler(void)
@@ -89,37 +90,20 @@ void USART2_IRQHandler(void)
   HAL_UART_IRQHandler(&huart2);
 }
 
-extern TIM_HandleTypeDef htimer;
+/* TIM3 is USB transmit timer */
+extern TIM_HandleTypeDef husbtimer;
 
 void TIM3_IRQHandler(void)
 {
-  HAL_TIM_IRQHandler(&htimer);
+  HAL_TIM_IRQHandler(&husbtimer);
 }
 
-extern I2C_HandleTypeDef hi2c1;
+/* ADC used by i2c ASDC interface */
+extern ADC_HandleTypeDef hadc;
 
-void I2C1_IRQHandler(void)
+void ADC1_IRQHandler(void)
 {
-  HAL_I2C_EV_IRQHandler(&hi2c1);
-  HAL_I2C_ER_IRQHandler(&hi2c1);
-}
-
-extern TIM_HandleTypeDef htimeout;
-
-void TIM2_IRQHandler(void)
-{
-  HAL_TIM_IRQHandler(&htimeout);
-}
-
-void esp_adc_timeout_elapsed_callback(void);
-void usb_transmit_timer_elapsed_callback(void);
-
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-  if(htim == &htimeout)
-    esp_adc_timeout_elapsed_callback();
-  else
-    usb_transmit_timer_elapsed_callback();
+  HAL_ADC_IRQHandler(&hadc);
 }
 
 /* USER CODE BEGIN 1 */

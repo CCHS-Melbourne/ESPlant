@@ -108,7 +108,7 @@ USBD_HandleTypeDef  *husb;
 /* handle for the USART */
 UART_HandleTypeDef huart2;
 
-TIM_HandleTypeDef htimer;
+TIM_HandleTypeDef husbtimer;
 
 /* USER CODE BEGIN PRIVATE_VARIABLES  */
 /* USER CODE END  PRIVATE VARIABLES */
@@ -189,12 +189,12 @@ static int8_t CDC_Init_FS(void)
     return USBD_FAIL;
 
   /* Configure USB transmit timer */
-  htimer.Instance = TIM3;
-  htimer.Init.Period = 10000 - 1; /* approx 10ms, I think... */
-  htimer.Init.Prescaler = 48-1;
-  htimer.Init.ClockDivision = 0;
-  htimer.Init.CounterMode = TIM_COUNTERMODE_UP;
-  if(HAL_TIM_Base_Init(&htimer) != HAL_OK)
+  husbtimer.Instance = TIM3;
+  husbtimer.Init.Period = 10000 - 1; /* approx 10ms, I think... */
+  husbtimer.Init.Prescaler = 48-1;
+  husbtimer.Init.ClockDivision = 0;
+  husbtimer.Init.CounterMode = TIM_COUNTERMODE_UP;
+  if(HAL_TIM_Base_Init(&husbtimer) != HAL_OK)
     return USBD_FAIL;
 
   __TIM3_CLK_ENABLE();
@@ -230,7 +230,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
   HAL_UART_Receive_IT(&huart2, usart2cdc_rx, 1);
 
   /* Ensure the USB TX timer is running (should be idempotent) */
-  HAL_TIM_Base_Start_IT(&htimer);
+  HAL_TIM_Base_Start_IT(&husbtimer);
 }
 
 void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
@@ -239,11 +239,11 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
   HAL_UART_Receive_IT(&huart2, usart2cdc_rx, 1);
 }
 
-void usb_transmit_timer_elapsed_callback(void)
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* try to USB transmit, if we succeed & buffer empty then we can stop TX timer until next time */
   if(CDC_Transmit_FS() == USBD_OK && usart2cdc_rx == usart2cdc_tx)
-    HAL_TIM_Base_Stop_IT(&htimer);
+    HAL_TIM_Base_Stop_IT(&husbtimer);
 }
 
 /**
