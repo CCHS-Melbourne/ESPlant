@@ -12,11 +12,30 @@ static void adc_init(void);
 ADC_HandleTypeDef hadc;
 I2C_HandleTypeDef hi2c1;
 
-static volatile uint8_t adc_addr = 0xFF; /* single byte ADC register number */
+static volatile uint8_t adc_channel = 0xFF; /* single byte ADC register number */
 static volatile uint16_t adc_value;
 static volatile uint8_t adc_value_tx_index; /* index (0-2) of next byte to transmit to master. ADC_NOT_READY when conversion still being completed. */
 
 #define ADC_NOT_READY 0xFF
+
+/* number of ADC channels exposed over i2c */
+#define ADC_NUM_CHANNELS 12
+
+/* Map from the i2c-facing channel numbers to internal STM32 channels */
+static const uint8_t ADC_CHANNEL_MAP[ADC_NUM_CHANNELS] = {
+  ADC_CHANNEL_0,
+  ADC_CHANNEL_1,
+  ADC_CHANNEL_2,
+  ADC_CHANNEL_3,
+  ADC_CHANNEL_4,
+  ADC_CHANNEL_5,
+  ADC_CHANNEL_6,
+  ADC_CHANNEL_7,
+  ADC_CHANNEL_8,
+  ADC_CHANNEL_9,
+  ADC_CHANNEL_TEMPSENSOR,
+  ADC_CHANNEL_VBAT,
+};
 
 void esp_adc_intf_init(void)
 {
@@ -26,8 +45,6 @@ void esp_adc_intf_init(void)
 
 static void adc_init(void)
 {
-  ADC_ChannelConfTypeDef sConfig;
-
   /**Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion)
    */
   hadc.Instance = ADC1;
@@ -45,13 +62,6 @@ static void adc_init(void)
   hadc.Init.Overrun = OVR_DATA_PRESERVED;
   HAL_ADC_Init(&hadc);
 
-  /**Configure for the selected ADC regular channel to be converted. 
-   */
-  sConfig.Channel = ADC_CHANNEL_TEMPSENSOR;
-  sConfig.Rank = ADC_RANK_CHANNEL_NUMBER;
-  sConfig.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
-  HAL_ADC_ConfigChannel(&hadc, &sConfig);
-
   NVIC_SetPriority(ADC1_IRQn, ADC1_IRQ_PRIORITY);
   NVIC_EnableIRQ(ADC1_IRQn);
 }
@@ -66,11 +76,8 @@ static void i2c_init(void)
   hi2c1.Init.OwnAddress2 = 0;
   hi2c1.Init.OwnAddress2Masks = I2C_OA2_NOMASK;
   hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLED;
-  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_ENABLE;
+  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
   HAL_I2C_Init(&hi2c1);
-
-  /* Enable Address Acknowledge */
-  hi2c1.Instance->CR2 &= ~I2C_CR2_NACK;
 
   /**Configure Analogue filter
   */
@@ -85,6 +92,12 @@ static void i2c_init(void)
   NVIC_EnableIRQ(I2C1_IRQn);
 }
 
+static void i2c_tx_byte()
+{
+  volatile uint8_t *tx_buf = (volatile uint8_t *)&adc_value;
+  hi2c1.Instance->TXDR = tx_buf[adc_value_tx_index++];
+}
+
 void I2C1_IRQHandler(void)
 {
   bool is_i2c_write = __HAL_I2C_GET_FLAG(&hi2c1, I2C_FLAG_DIR);
@@ -92,33 +105,45 @@ void I2C1_IRQHandler(void)
   /* Check for address interrupt */
   if(__HAL_I2C_GET_FLAG(&hi2c1, I2C_FLAG_ADDR)) {
     __HAL_I2C_CLEAR_FLAG(&hi2c1,I2C_FLAG_ADDR);
+    if(!is_i2c_write) {
+      /* Flush the TXDR register on commencing read */
+      hi2c1.Instance->ISR = I2C_FLAG_TXE;
+    }
   }
 
   /* Check for TXI interrupt (i2c master reading from us) */
-  if(__HAL_I2C_GET_FLAG(&hi2c1, I2C_FLAG_TXIS)) {
+  if(__HAL_I2C_GET_FLAG(&hi2c1, I2C_FLAG_TXIS)
+     && !__HAL_I2C_GET_FLAG(&hi2c1, I2C_FLAG_STOPF)) {
     if(adc_value_tx_index < 2) {
-      volatile uint8_t *tx_buf = (volatile uint8_t *)&adc_value;
-      hi2c1.Instance->TXDR = tx_buf[adc_value_tx_index++];
-    } else {
-      /* Either ADC isn't ready for we've already read 2 bytes, so NACK next request */
-      hi2c1.Instance->CR2 |= I2C_CR2_NACK;
+      i2c_tx_byte();
     }
   }
 
   /* Check for RXNE interrupt (i2c master sent us stuff) */
   if(__HAL_I2C_GET_FLAG(&hi2c1, I2C_FLAG_RXNE)) {
-    adc_addr = hi2c1.Instance->RXDR;
-    /* TODO: should set an error/NACK if the value is out of the accepted range */
+    adc_channel = hi2c1.Instance->RXDR;
+
+    if(adc_channel < ADC_NUM_CHANNELS) {
+      /* got ADC channel, configure ADC, start conversion */
+      ADC_ChannelConfTypeDef adc_config;
+      adc_config.Channel = ADC_CHANNEL_MAP[adc_channel];
+      adc_config.Rank = ADC_RANK_CHANNEL_NUMBER;
+      /* TODO experiment with longer sampling time */
+      adc_config.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
+      HAL_ADC_ConfigChannel(&hadc, &adc_config);
+      adc_value_tx_index = ADC_NOT_READY;
+      HAL_ADC_Start_IT(&hadc);
+    } else {
+      adc_value = 0xFFFF;
+      adc_value_tx_index = 0;
+    }
   }
 
   /* Check for STOP interrupt (i2c transaction done) */
   if(__HAL_I2C_GET_FLAG(&hi2c1, I2C_FLAG_STOPF)) {
-    hi2c1.Instance->CR2 &= ~I2C_CR2_NACK; /* clear any NACK */
+    hi2c1.Instance->CR2 |= I2C_CR2_NACK;
     __HAL_I2C_CLEAR_FLAG(&hi2c1, I2C_FLAG_STOPF);
     if(is_i2c_write) {
-      /* TODO: check & set ADC channel based on value written to adc_addr  */
-      adc_value_tx_index = ADC_NOT_READY;
-      HAL_ADC_Start_IT(&hadc);
     }
   }
 
@@ -136,5 +161,8 @@ void I2C1_IRQHandler(void)
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc_unused)
 {
   adc_value = (uint16_t)HAL_ADC_GetValue(&hadc);
-  adc_value_tx_index = 0; /* ready to read back */
+  /* ready to read back */
+  adc_value_tx_index = 0;
+  /* queue first byte, this will cancel any clock stretching if necessary */
+  i2c_tx_byte();
 }
