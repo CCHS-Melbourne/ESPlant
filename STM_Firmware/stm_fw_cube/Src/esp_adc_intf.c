@@ -19,22 +19,17 @@ static volatile uint8_t adc_value_tx_index; /* index (0-2) of next byte to trans
 #define ADC_NOT_READY 0xFF
 
 /* number of ADC channels exposed over i2c */
-#define ADC_NUM_CHANNELS 12
+#define ADC_NUM_CHANNELS 7
 
 /* Map from the i2c-facing channel numbers to internal STM32 channels */
 static const uint8_t ADC_CHANNEL_MAP[ADC_NUM_CHANNELS] = {
-  ADC_CHANNEL_0,
-  ADC_CHANNEL_1,
-  ADC_CHANNEL_2,
-  ADC_CHANNEL_3,
-  ADC_CHANNEL_4,
-  ADC_CHANNEL_5,
-  ADC_CHANNEL_6,
-  ADC_CHANNEL_7,
-  ADC_CHANNEL_8,
-  ADC_CHANNEL_9,
-  ADC_CHANNEL_TEMPSENSOR,
-  ADC_CHANNEL_VBAT,
+  ADC_CHANNEL_0, /* 0 = "ADC0" */
+  ADC_CHANNEL_1, /* 1 = "ADC1" */
+  ADC_CHANNEL_4, /* 2 = "ADC2" */
+  ADC_CHANNEL_5, /* 3 = "ADC3/SOIL1" */
+  ADC_CHANNEL_6, /* 4 = "ADC4/SOIL2" */
+  ADC_CHANNEL_9, /* 5 = Battery voltage monitor */
+  ADC_CHANNEL_TEMPSENSOR, /* 6 = internal temp sensor */
 };
 
 void esp_adc_intf_init(void)
@@ -51,16 +46,18 @@ static void adc_init(void)
   hadc.Init.ClockPrescaler = ADC_CLOCK_ASYNC;
   hadc.Init.Resolution = ADC_RESOLUTION12b;
   hadc.Init.DataAlign = ADC_DATAALIGN_RIGHT;
-  hadc.Init.ScanConvMode = ADC_SCAN_DIRECTION_FORWARD;
+  hadc.Init.ScanConvMode = DISABLE;
   hadc.Init.EOCSelection = EOC_SINGLE_CONV;
   hadc.Init.LowPowerAutoWait = DISABLE;
-  hadc.Init.LowPowerAutoPowerOff = ENABLE;
+  hadc.Init.LowPowerAutoPowerOff = DISABLE;
   hadc.Init.ContinuousConvMode = DISABLE;
   hadc.Init.DiscontinuousConvMode = DISABLE;
   hadc.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
   hadc.Init.DMAContinuousRequests = DISABLE;
-  hadc.Init.Overrun = OVR_DATA_PRESERVED;
+  hadc.Init.Overrun = OVR_DATA_OVERWRITTEN;
   HAL_ADC_Init(&hadc);
+
+  __ADC1_CLK_ENABLE();
 
   NVIC_SetPriority(ADC1_IRQn, ADC1_IRQ_PRIORITY);
   NVIC_EnableIRQ(ADC1_IRQn);
@@ -125,15 +122,19 @@ void I2C1_IRQHandler(void)
 
     if(adc_channel < ADC_NUM_CHANNELS) {
       /* got ADC channel, configure ADC, start conversion */
-      ADC_ChannelConfTypeDef adc_config;
-      adc_config.Channel = ADC_CHANNEL_MAP[adc_channel];
-      adc_config.Rank = ADC_RANK_CHANNEL_NUMBER;
-      /* TODO experiment with longer sampling time */
-      adc_config.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
-      HAL_ADC_ConfigChannel(&hadc, &adc_config);
+      int i;
+      for(i = 0; i < ADC_NUM_CHANNELS; i++) {
+	/* disable every channel except the one we're using */
+	ADC_ChannelConfTypeDef adc_config;
+	adc_config.Channel = ADC_CHANNEL_MAP[i];
+	adc_config.Rank = (adc_channel == i) ?  ADC_RANK_CHANNEL_NUMBER : ADC_RANK_NONE;
+	adc_config.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;
+	HAL_ADC_ConfigChannel(&hadc, &adc_config);
+      }
       adc_value_tx_index = ADC_NOT_READY;
       HAL_ADC_Start_IT(&hadc);
     } else {
+      /* invalid channel, prepare to return an invalid read */
       adc_value = 0xFFFF;
       adc_value_tx_index = 0;
     }
