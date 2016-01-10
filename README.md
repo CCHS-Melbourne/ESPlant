@@ -8,9 +8,9 @@ The ESPlant kit is designed to provide an open source platform to transmit envir
 ![Board Layout](Photos/ESPlant.front.png?raw=true "Front")
 ![Board Layout](Photos/ESPlant.back.png?raw=true "Back")
 
-Worst mock up ever!
+Prototype board in action!
 
-![Board Layout](Photos/mockup.v.0.1.png?raw=true "mockup")
+![Prototype](Photos/ESPlant.prototype.jpg?raw=true "Prototype")
 
 FEATURES
 --------
