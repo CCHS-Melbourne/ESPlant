@@ -8,9 +8,14 @@ The ESPlant kit is designed to provide an open source platform to transmit envir
 ![Board Layout](Photos/ESPlant.front.png?raw=true "Front")
 ![Board Layout](Photos/ESPlant.back.png?raw=true "Back")
 
-Prototype board in action!
+Prototype board in action (Significant changes to the controller board since then)!
 
 ![Prototype](Photos/ESPlant.prototype.jpg?raw=true "Prototype")
+
+You can check out photos of our build day in the Photos\Build directory of this repo.
+
+Check out a video of pick-n-placing components of the boards you'll be getting at LCA 2016.
+https://www.youtube.com/watch?v=282qku2C4xo
 
 FEATURES
 --------
