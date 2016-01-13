@@ -62,3 +62,9 @@ The source tree has an openocd.cfg and some hardcoded openocd commands in the Ma
 
 * No low power modes yet. Due to interrupt-driven architecture is should be fairly easy to use WFE or STOP mode in the main loop, rather than a busy wait.
 
+
+# License
+
+Original code under src/ and inc/ is licensed under the New BSD License as per source file headers.
+
+Other library code is from STM32Cube and carries their license.
