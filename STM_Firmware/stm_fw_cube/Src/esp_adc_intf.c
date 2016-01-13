@@ -1,13 +1,10 @@
 #include <stdbool.h>
 
 #include "stm32f0xx_hal.h"
-
+#include "config.h"
 #include "esp_adc_intf.h"
 static void i2c_init(void);
 static void adc_init(void);
-
-#define ADC1_IRQ_PRIORITY 2 /* higher priority than i2c, prevents race when copying value */
-#define I2C1_IRQ_PRIORITY 3
 
 ADC_HandleTypeDef hadc;
 I2C_HandleTypeDef hi2c1;
