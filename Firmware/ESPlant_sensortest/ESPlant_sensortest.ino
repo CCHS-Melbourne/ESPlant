@@ -125,7 +125,7 @@ void loop() {
 
    test_adc();
 
-  delay(5000);
+  delay(2500);
 
 }
 

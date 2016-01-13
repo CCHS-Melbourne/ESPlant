@@ -73,6 +73,12 @@ static void i2c_init(void)
   hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
   HAL_I2C_Init(&hi2c1);
 
+  /* Give us a timeout interrupt if we clock stretch too long */
+  const int timeoutb = 0x17; /* approx 1ms timeout, I think */
+  hi2c1.Instance->TIMEOUTR = 0;
+  hi2c1.Instance->TIMEOUTR = (timeoutb << 16);
+  hi2c1.Instance->TIMEOUTR |= I2C_TIMEOUTR_TEXTEN;
+
   /**Configure Analogue filter
   */
   //HAL_I2CEx_AnalogFilter_Config(&hi2c1, I2C_ANALOGFILTER_ENABLED);
@@ -95,6 +101,14 @@ static void i2c_tx_byte()
 void I2C1_IRQHandler(void)
 {
   bool is_i2c_write = __HAL_I2C_GET_FLAG(&hi2c1, I2C_FLAG_DIR);
+
+  /* Check for timeout */
+  if(__HAL_I2C_GET_FLAG(&hi2c1, I2C_FLAG_TIMEOUT)) {
+    /* Reset the whole i2c peripheral so we can start again */
+    __HAL_I2C_DISABLE(&hi2c1);
+    __HAL_I2C_ENABLE(&hi2c1);
+    return;
+  }
 
   /* Check for address interrupt */
   if(__HAL_I2C_GET_FLAG(&hi2c1, I2C_FLAG_ADDR)) {
