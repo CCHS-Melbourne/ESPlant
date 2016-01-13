@@ -38,6 +38,16 @@ FEATURES
 * PIR (infrared motion) sensor connected to GPIO 15.
 * WS2812B LED strip connected to GPIO 13 (mislabelled as 15 on V1.3 PCB!)
 
+Using with Arduino
+------------------
+
+To use the ESPlant with Arduino:
+
+* No drivers required on Linux, OS X, or Windows 10.
+* No manual reset or button pressing dance required to program.
+* In [ESP8266 Arduino IDE](https://github.com/esp8266/arduino), under Tools menu, set Board to "NodeMCU V1.0" (fully compatible).
+* Can set upload speed to 230400. 460800 works in most cases (you might get occasionl failures at 460800)
+
 
 CREDITS
 ------------
