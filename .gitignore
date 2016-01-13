@@ -230,3 +230,14 @@ Gerber/
 # kicad backup stuff
 *-bak
 *-rescue.lib
+
+# emacs
+\#*
+*~
+
+# GTAGS
+GPATH
+GRTAGS
+GTAGS
+
+

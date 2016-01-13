@@ -1,8 +1,11 @@
+/* i2c slave interface to control onboard ADC */
+
 #include <stdbool.h>
 
 #include "stm32f0xx_hal.h"
 #include "config.h"
-#include "esp_adc_intf.h"
+#include "i2c_adc_if.h"
+
 static void i2c_init(void);
 static void adc_init(void);
 
@@ -29,7 +32,7 @@ static const uint8_t ADC_CHANNEL_MAP[ADC_NUM_CHANNELS] = {
   ADC_CHANNEL_TEMPSENSOR, /* 6 = internal temp sensor */
 };
 
-void esp_adc_intf_init(void)
+void i2c_adc_if_init(void)
 {
   adc_init();
   i2c_init();
