@@ -26,41 +26,41 @@ BUILD_DIR = build
 # source
 ######################################
 C_SOURCES = \
-  Drivers/CMSIS/Device/ST/STM32F0xx/Source/Templates/system_stm32f0xx.c \
-  Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal.c \
-  Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_adc.c \
-  Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_adc_ex.c \
-  Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_cortex.c \
-  Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_dma.c \
-  Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash.c \
-  Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash_ex.c \
-  Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_gpio.c \
-  Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c.c \
-  Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c \
-  Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd.c \
-  Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c \
-  Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pwr.c \
-  Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pwr_ex.c \
-  Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc.c \
-  Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c \
-  Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_tim.c \
-  Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_tim_ex.c \
-  Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_uart.c \
-  Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_uart_ex.c \
-  Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c \
-  Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c \
-  Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c \
-  Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c \
-  Src/main.c \
-  Src/esp_adc_intf.c \
-  Src/stm32f0xx_hal_msp.c \
-  Src/stm32f0xx_it.c \
-  Src/usb_device.c \
-  Src/usbd_cdc_if.c \
-  Src/usbd_conf.c \
-  Src/usbd_desc.c  
+  drivers/CMSIS/Device/ST/STM32F0xx/Source/Templates/system_stm32f0xx.c \
+  drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal.c \
+  drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_adc.c \
+  drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_adc_ex.c \
+  drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_cortex.c \
+  drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_dma.c \
+  drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash.c \
+  drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash_ex.c \
+  drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_gpio.c \
+  drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c.c \
+  drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c \
+  drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd.c \
+  drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pcd_ex.c \
+  drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pwr.c \
+  drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pwr_ex.c \
+  drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc.c \
+  drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c \
+  drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_tim.c \
+  drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_tim_ex.c \
+  drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_uart.c \
+  drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_uart_ex.c \
+  middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c \
+  middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c \
+  middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c \
+  middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c \
+  src/main.c \
+  src/i2c_adc_if.c \
+  src/stm32f0xx_hal_msp.c \
+  src/stm32f0xx_it.c \
+  src/usb_device.c \
+  src/usbd_cdc_if.c \
+  src/usbd_conf.c \
+  src/usbd_desc.c
 ASM_SOURCES = \
-  Drivers/CMSIS/Device/ST/STM32F0xx/Source/Templates/gcc/startup_stm32f042x6.s
+  drivers/CMSIS/Device/ST/STM32F0xx/Source/Templates/gcc/startup_stm32f042x6.s
 
 #######################################
 # binaries
@@ -81,13 +81,13 @@ AS_DEFS =
 C_DEFS = -DUSE_HAL_DRIVER -DSTM32F042x6
 # includes for gcc
 AS_INCLUDES =
-C_INCLUDES = -IInc
-C_INCLUDES += -IDrivers/STM32F0xx_HAL_Driver/Inc
-C_INCLUDES += -IDrivers/STM32F0xx_HAL_Driver/Inc/Legacy
-C_INCLUDES += -IMiddlewares/ST/STM32_USB_Device_Library/Core/Inc
-C_INCLUDES += -IMiddlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc
-C_INCLUDES += -IDrivers/CMSIS/Include
-C_INCLUDES += -IDrivers/CMSIS/Device/ST/STM32F0xx/Include
+C_INCLUDES = -Iinc
+C_INCLUDES += -Idrivers/STM32F0xx_HAL_Driver/Inc
+C_INCLUDES += -Idrivers/STM32F0xx_HAL_Driver/Inc/Legacy
+C_INCLUDES += -Imiddlewares/ST/STM32_USB_Device_Library/Core/Inc
+C_INCLUDES += -Imiddlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc
+C_INCLUDES += -Idrivers/CMSIS/Include
+C_INCLUDES += -Idrivers/CMSIS/Device/ST/STM32F0xx/Include
 # compile gcc flags
 ASFLAGS = -mthumb -mcpu=cortex-m0 $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -Werror -fdata-sections -ffunction-sections
 CFLAGS = -mthumb -mcpu=cortex-m0 $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -Werror -fdata-sections -ffunction-sections
@@ -114,7 +114,7 @@ all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET
 
 # this flash target is very hacky and probably should be replaced
 flash: $(BUILD_DIR)/$(TARGET).elf
-	openocd -f interface/stlink-v2.cfg -c "transport select hla_swd" -f target/stm32f0x.cfg -c "program $(BUILD_DIR)/$(TARGET).elf"
+	openocd -f interface/stlink-v2.cfg -c "transport select hla_swd" -f target/stm32f0x.cfg -c "program $(BUILD_DIR)/$(TARGET).elf reset"
 
 # so is this gdb target
 gdb:

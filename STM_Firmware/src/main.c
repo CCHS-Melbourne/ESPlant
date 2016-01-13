@@ -33,7 +33,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f0xx_hal.h"
 #include "usb_device.h"
-#include "esp_adc_intf.h"
+#include "i2c_adc_if.h"
 
 /* USER CODE BEGIN Includes */
 
@@ -77,7 +77,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  esp_adc_intf_init();
+  i2c_adc_if_init();
   MX_USB_DEVICE_Init();
 
   /* USER CODE BEGIN 2 */
