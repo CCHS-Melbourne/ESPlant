@@ -34,6 +34,7 @@
 #include "usbd_cdc_if.h"
 #include "stm32f0xx_hal_tim.h"
 #include "stm32f0xx_hal_cortex.h"
+#include "config.h"
 #include <stdbool.h>
 
 /* USER CODE BEGIN INCLUDE */
@@ -181,7 +182,7 @@ static int8_t CDC_Init_FS(void)
   HAL_UART_Init(&huart2);
 
   /* Enable USART2 in NVIC, set priority to high */
-  NVIC_SetPriority(USART2_IRQn, 1);
+  NVIC_SetPriority(USART2_IRQn, USART_IRQ_PRIORITY);
   NVIC_EnableIRQ(USART2_IRQn);
 
   /* UART2 receives data to the CDC transmit buffer, byte at a time :( */
@@ -198,7 +199,7 @@ static int8_t CDC_Init_FS(void)
     return USBD_FAIL;
 
   __TIM3_CLK_ENABLE();
-  NVIC_SetPriority(TIM3_IRQn, 3);
+  NVIC_SetPriority(TIM3_IRQn, USB_TIMER_IRQ_PRIORITY);
   NVIC_EnableIRQ(TIM3_IRQn);
 
   /* Set Application USB Buffers */

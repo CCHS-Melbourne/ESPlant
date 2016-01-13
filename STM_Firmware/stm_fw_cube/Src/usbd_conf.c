@@ -37,6 +37,7 @@
 #include "usbd_def.h"
 #include "usbd_core.h"
 #include "usbd_cdc.h"
+#include "config.h"
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
@@ -71,7 +72,7 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef* hpcd)
     __USB_CLK_ENABLE();
 
     /* Peripheral interrupt init - USB low priority, as host will always retry... */
-    HAL_NVIC_SetPriority(USB_IRQn, 3, 0);
+    HAL_NVIC_SetPriority(USB_IRQn, USB_IRQ_PRIORITY, 0);
     HAL_NVIC_EnableIRQ(USB_IRQn);
   /* USER CODE BEGIN USB_MspInit 1 */
 
