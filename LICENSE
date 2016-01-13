@@ -1,0 +1,8 @@
+Circuit design in the "Circuit/" subdirectory licensed under TAPR Open Hardware License, a copy can be found in the Circuit directory.
+
+Orginal firmware source code in the "STM_Firmware/" subdirectories is licensed under the New BSD License. Copies of the license can be found in the comment headers of those source files.
+
+Photos and other documentation are provided under the Creative Commons Attribution Share-Alike 3.0 license.
+
+Files under STM_Firmware/drivers, STM_Firmware/middlewares are library functions provided by ST under their own licensing terms which can be found in those source files.
+
