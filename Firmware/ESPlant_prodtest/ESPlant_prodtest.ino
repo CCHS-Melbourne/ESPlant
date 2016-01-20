@@ -39,7 +39,7 @@ void setup() {
   //test_uvsensor();
   test_soilsensor(ADC_CHANNEL_SOIL1);
   test_soilsensor(ADC_CHANNEL_SOIL2);
-  test_pir();
+  //test_pir();
 
   Serial.println("Tests done");
   Serial.println("************************************************");
@@ -106,7 +106,7 @@ void test_bme()
   float t = bme.readTemperature();
   float alt = bme.readAltitude(SEALEVELPRESSURE_HPA);
 
-  if (t > 10 && t < 35 && alt > 10 && alt < 100) {
+  if (t > 10 && t < 38 && alt > 10 && alt < 100) {
     Serial.println("BME280 readings OK");
     return;
   }
@@ -275,11 +275,11 @@ void test_vin()
 void test_pir()
 {
   Serial.println("Hold still...");
-  while(digitalRead(14) == HIGH) {
+  while(digitalRead(14) == LOW) {
     delay(200);  
   }
   Serial.println("Now move!");
-  while(digitalRead(14) == LOW) {
+  while(digitalRead(14) == HIGH) {
     delay(200);
   }
   Serial.println("PIR test OK");
