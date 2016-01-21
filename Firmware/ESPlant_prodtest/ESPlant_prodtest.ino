@@ -5,6 +5,32 @@
 #include <Adafruit_ADXL345_U.h>
 #include <Adafruit_NeoPixel.h>
 #include <OneWire.h>
+/*
+ * "Production" test skethc for ESPlant
+ * 
+ * Relies on someone manually walking the ESPlant through each test stage.
+ * 
+ * HOWTO Use:
+ * 
+ * - Manually inspect the ESPlant and its solder joints.
+ * - With the ESPlant disconnected from solar power and USB, place a battery in the holder and check the power switch is "On". The ESP8266 built-in LED should blink at least once (it may come back on, or not).
+ * - If you need to double-check the built-in LED, press and release the "ESP Reset" button or turn the power switch to Off and then back to On.
+ * - Connect USB to ESPlant. With a battery in the battery holder, cause either the Charging or Charged LED should come on solid. The other LED stays off. Any other LED pattern is a fail.
+ * - Remove the battery while keeping USB connected. The green Charged LED should come on solid, while the red Charging LED flickers. Any other LED pattern is a fail.
+ * 
+ * - Connect all sensors to ESPlant except for (optionally) the UV Sensor (this sensor is hard to test indoors.)
+ * - Situate the IR sensor facing a wall or inside a small box, so it can't easily be triggered by motion.
+ * - Press Upload to flash this sketch, verify it uploads correctly.
+ * - Open Serial Monitor, press and release the "ESP RESET" button on the board.
+ * - The LED ring should immediately flash 4 LEDs on very quickly, then off very quickly. If there's no flash, or the LEDs stay on, this is a fail.
+ * - The serial monitor output should be "ESPlant production test..." then rows of output as various sensors are tested. The word "FAIL" in the output indicates a problem.
+ * - The serial monitor will prompt you to touch the probes of the soil moisture sensor at ADC #3. Low numbers (<100) should be being printed at regular intervals.
+ *   Hold onto the probes, and the resistance in your skin simulates wet soil.
+ *   The numbers in the output should increase to more than 400 fairly quickly. If the values seem random then this is a fail.
+ * - The same process repeats for the soil moisture sensor at ADC #4.
+ * - Finally the output will prompt you to "Now Move!". Wave your hand in front of the IR sensor. The device should instantly react to the motion.
+ * - When finished, the LED ring should turn green (pass) or red (fail). If the LEDs do not remain on at a solid colour, this is a fail.
+ */
 
 OneWire onewire(12); // external one-wire connection for DS18B20
 
