@@ -3,9 +3,12 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
 #include <Adafruit_ADXL345_U.h>
+#include <Adafruit_NeoPixel.h>
 #include <OneWire.h>
 
 OneWire onewire(12); // external one-wire connection for DS18B20
+
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(16, 13, NEO_GRB + NEO_KHZ800);
 
 #define SEALEVELPRESSURE_HPA (1013.25)
 
@@ -28,7 +31,20 @@ void setup() {
   Wire.begin();
 
   Serial.begin(115200);
-  Serial.println(F("ESPlant production test..."));
+  Serial.println(F("\r\n\r\n\r\nESPlant production test..."));
+  delay(500);
+
+  Serial.println(F("Flashing LEDs..."));
+  set_vsens(true);
+  pixels.begin(); // This initializes the NeoPixel library.
+  pixels.setPixelColor(0, pixels.Color(255,255,255));
+  pixels.setPixelColor(1, pixels.Color(255,0,0));
+  pixels.setPixelColor(2, pixels.Color(0,255,0));
+  pixels.setPixelColor(3, pixels.Color(0,0,255));
+  pixels.show();
+  delay(250);
+  set_vsens(false);
+  Serial.println(F("LEDs powered off."));
 
   test_bme();
   test_accel();
@@ -39,7 +55,7 @@ void setup() {
   //test_uvsensor();
   test_soilsensor(ADC_CHANNEL_SOIL1);
   test_soilsensor(ADC_CHANNEL_SOIL2);
-  //test_pir();
+  test_pir();
 
   Serial.println("Tests done");
   Serial.println("************************************************");
@@ -48,7 +64,12 @@ void setup() {
   else
     Serial.println("**********            PASS            ********");
   Serial.println("************************************************");
-  
+
+  set_vsens(true);
+  for(int i = 0; i < 16; i++) {    
+    pixels.setPixelColor(i, fail ? pixels.Color(255,0,0,0) : pixels.Color(0,64,0));
+  }
+  pixels.show();    
 }
 
 void loop() {
@@ -154,6 +175,7 @@ void test_ds18b20()
 
   onewire.reset();
   Serial.println("DS18B20 reading OK");
+  delay(50);
 }
 
 void test_uvsensor()
@@ -225,7 +247,7 @@ void test_soilsensor(int channel)
   Serial.println(channel);
 
   soil = read_adc(channel);
-  while (soil < 500) {
+  while (soil < 400) {
     Serial.print(soil);
     Serial.print(".. ");
     delay(200);
@@ -266,7 +288,7 @@ void test_vin()
   Serial.print(vin);
   Serial.println("mV");
 
-  if(vin < 4000 || vin > 5000) {
+  if(vin < 4000 || vin > 5100) {
     Serial.println("FAIL - VIN reading out of expected range for USB powered board");
     fail = true;    
   }
@@ -275,11 +297,11 @@ void test_vin()
 void test_pir()
 {
   Serial.println("Hold still...");
-  while(digitalRead(14) == LOW) {
+  while(digitalRead(15) == HIGH) {
     delay(200);  
   }
   Serial.println("Now move!");
-  while(digitalRead(14) == HIGH) {
+  while(digitalRead(15) == LOW) {
     delay(200);
   }
   Serial.println("PIR test OK");
