@@ -38,6 +38,9 @@ FEATURES
 * PIR (infrared motion) sensor connected to GPIO 15.
 * WS2812B LED strip connected to GPIO 13 (mislabelled as 15 on V1.3 PCB!)
 
+The 3.3V "VSens" power rail is switchable on/off by the microcontroller. It defaults to unpowered (off). The GPIO to use is 14, and it is active low (ie driving the output low turns VSens on, driving it high turns it off).
+
+
 Using with Arduino
 ------------------
 
