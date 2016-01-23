@@ -40,6 +40,15 @@
 #include "usbd_cdc.h"
 #include "usbd_cdc_if.h"
 
+/*!< Interrupt Mask on line 18
+
+  This definition is missing in the stm32f042x6.h header file.
+  Hopefully this is just an oversight, doesn't mean you can't
+  wake on USB...
+*/
+#define  EXTI_IMR_MR18                       ((uint32_t)0x00040000)
+
+
 /* USB Device Core handle declaration */
 USBD_HandleTypeDef hUsbDeviceFS;
 
@@ -55,6 +64,7 @@ void MX_USB_DEVICE_Init(void)
 
   USBD_Start(&hUsbDeviceFS);
 
+  __HAL_USB_WAKEUP_EXTI_ENABLE_IT();
 }
 /**
   * @}

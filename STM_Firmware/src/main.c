@@ -86,10 +86,14 @@ int main(void)
 
   while (1)
   {
-    HAL_PWR_EnterSLEEPMode(0, PWR_SLEEPENTRY_WFI);
+    if(i2c_adc_is_active()) {
+      HAL_PWR_EnterSLEEPMode(PWR_LOWPOWERREGULATOR_ON, PWR_SLEEPENTRY_WFI);
+    } else {
+      HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_SLEEPENTRY_WFI);
+      HAL_Delay(100);
+    }
   }
 }
-
 
 /* Configure the Flash option byte to disable the BOOT0 pin */
 static void OB_Configure(void)

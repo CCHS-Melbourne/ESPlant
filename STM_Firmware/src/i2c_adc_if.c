@@ -24,6 +24,8 @@ static void adc_init(void);
 ADC_HandleTypeDef hadc;
 I2C_HandleTypeDef hi2c1;
 
+static volatile bool i2c_in_progress;
+
 static volatile uint8_t adc_channel = 0xFF; /* single byte ADC register number */
 static volatile uint16_t adc_value;
 static volatile uint8_t adc_value_tx_index; /* index (0-2) of next byte to transmit to master. ADC_NOT_READY when conversion still being completed. */
@@ -61,18 +63,20 @@ static void adc_init(void)
   hadc.Init.ScanConvMode = DISABLE;
   hadc.Init.EOCSelection = EOC_SINGLE_CONV;
   hadc.Init.LowPowerAutoWait = DISABLE;
-  hadc.Init.LowPowerAutoPowerOff = DISABLE;
+  hadc.Init.LowPowerAutoPowerOff = ENABLE;
   hadc.Init.ContinuousConvMode = DISABLE;
   hadc.Init.DiscontinuousConvMode = DISABLE;
   hadc.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
   hadc.Init.DMAContinuousRequests = DISABLE;
   hadc.Init.Overrun = OVR_DATA_OVERWRITTEN;
-  HAL_ADC_Init(&hadc);
-
-  __ADC1_CLK_ENABLE();
 
   NVIC_SetPriority(ADC1_IRQn, ADC1_IRQ_PRIORITY);
   NVIC_EnableIRQ(ADC1_IRQn);
+}
+
+bool i2c_adc_is_active()
+{
+  return i2c_in_progress || ADC_IS_CONVERSION_ONGOING_REGULAR(&hadc) == SET;
 }
 
 static void i2c_init(void)
@@ -89,10 +93,13 @@ static void i2c_init(void)
   HAL_I2C_Init(&hi2c1);
 
   /* Give us a timeout interrupt if we clock stretch too long */
-  const int timeoutb = 0x17; /* approx 1ms timeout, I think */
+  const int timeoutb = 0x200; /* approx 20ms timeout, I think */
   hi2c1.Instance->TIMEOUTR = 0;
   hi2c1.Instance->TIMEOUTR = (timeoutb << 16);
   hi2c1.Instance->TIMEOUTR |= I2C_TIMEOUTR_TEXTEN;
+
+  HAL_I2CEx_EnableWakeUp(&hi2c1);
+  EXTI->IMR |= EXTI_IMR_MR23; /* MR23 is wakeup line for i2c1 */
 
   /**Configure Analogue filter
   */
@@ -124,6 +131,8 @@ void I2C1_IRQHandler(void)
     __HAL_I2C_ENABLE(&hi2c1);
     return;
   }
+
+  i2c_in_progress = true;
 
   /* Check for address interrupt */
   if(__HAL_I2C_GET_FLAG(&hi2c1, I2C_FLAG_ADDR)) {
@@ -158,7 +167,6 @@ void I2C1_IRQHandler(void)
 	HAL_ADC_ConfigChannel(&hadc, &adc_config);
       }
       adc_value_tx_index = ADC_NOT_READY;
-      HAL_ADC_Start_IT(&hadc);
     } else {
       /* invalid channel, prepare to return an invalid read */
       adc_value = 0xFFFF;
@@ -170,8 +178,11 @@ void I2C1_IRQHandler(void)
   if(__HAL_I2C_GET_FLAG(&hi2c1, I2C_FLAG_STOPF)) {
     hi2c1.Instance->CR2 |= I2C_CR2_NACK;
     __HAL_I2C_CLEAR_FLAG(&hi2c1, I2C_FLAG_STOPF);
-    if(is_i2c_write) {
+    if(adc_value_tx_index == ADC_NOT_READY) {
+      HAL_ADC_Init(&hadc);
+      HAL_ADC_Start_IT(&hadc);
     }
+    i2c_in_progress = false;
   }
 
   /* Check for NACK */
@@ -192,4 +203,6 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc_unused)
   adc_value_tx_index = 0;
   /* queue first byte, this will cancel any clock stretching if necessary */
   i2c_tx_byte();
+  HAL_ADC_Stop_IT(&hadc);
+  HAL_ADC_DeInit(&hadc);
 }

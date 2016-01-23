@@ -108,18 +108,17 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
   /* USER CODE END ADC1_MspDeInit 0 */
     /* Peripheral clock disable */
     __ADC1_CLK_DISABLE();
-  
+
     /**ADC GPIO Configuration    
     PA0     ------> ADC_IN0
     PA1     ------> ADC_IN1
     PA4     ------> ADC_IN4
     PA5     ------> ADC_IN5
     PA6     ------> ADC_IN6
-    PA7     ------> ADC_IN7
     PB1     ------> ADC_IN9 
     */
     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_4|GPIO_PIN_5 
-                          |GPIO_PIN_6|GPIO_PIN_7);
+                          |GPIO_PIN_6);
 
     HAL_GPIO_DeInit(GPIOB, GPIO_PIN_1);
 
@@ -195,7 +194,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
   /* USER CODE END USART2_MspInit 0 */
     /* Peripheral clock enable */
     __USART2_CLK_ENABLE();
-  
+
     /**USART2 GPIO Configuration    
     PA2     ------> USART2_TX
     PA3     ------> USART2_RX 
