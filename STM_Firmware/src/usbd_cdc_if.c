@@ -198,7 +198,7 @@ static int8_t CDC_Init_FS(void)
   if(HAL_TIM_Base_Init(&husbtimer) != HAL_OK)
     return USBD_FAIL;
 
-  __TIM3_CLK_ENABLE();
+  __HAL_RCC_TIM3_CLK_ENABLE();
   NVIC_SetPriority(TIM3_IRQn, USB_TIMER_IRQ_PRIORITY);
   NVIC_EnableIRQ(TIM3_IRQn);
 
@@ -258,6 +258,8 @@ static int8_t CDC_DeInit_FS(void)
   /* De-assert ESP RST & GPIOA if they were being held down when USB went away */
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_SET);
+  __HAL_RCC_TIM3_CLK_DISABLE();
+  HAL_UART_DeInit(&huart2);
   return USBD_OK;
 }
 
