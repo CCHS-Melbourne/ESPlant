@@ -114,7 +114,7 @@ all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET
 
 # this flash target is very hacky and probably should be replaced
 flash: $(BUILD_DIR)/$(TARGET).elf
-	openocd -f interface/stlink-v2.cfg -c "transport select hla_swd" -f target/stm32f0x.cfg -c "program $(BUILD_DIR)/$(TARGET).elf reset"
+	openocd -f interface/stlink-v2-1.cfg -c "transport select hla_swd" -f target/stm32f0x.cfg -c "program $(BUILD_DIR)/$(TARGET).elf reset"
 
 # so is this gdb target
 gdb:
