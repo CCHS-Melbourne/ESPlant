@@ -103,9 +103,14 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
 
   if(hadc->Instance==ADC1)
   {
-  /* USER CODE BEGIN ADC1_MspDeInit 0 */
+    /* force reset the i2c peripheral This saves about 1mA or 3mA of
+       excess sleep current, that seems to be relate to talking to
+       ADC_CHANNELS[3] and up and/or enabling an ADC channel? Not sure
+       what it's about
+    */
+    __HAL_RCC_ADC1_FORCE_RESET();
+    __HAL_RCC_ADC1_RELEASE_RESET();
 
-  /* USER CODE END ADC1_MspDeInit 0 */
     /* Peripheral clock disable */
     __ADC1_CLK_DISABLE();
 

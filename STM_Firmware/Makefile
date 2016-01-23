@@ -90,7 +90,7 @@ C_INCLUDES += -Idrivers/CMSIS/Include
 C_INCLUDES += -Idrivers/CMSIS/Device/ST/STM32F0xx/Include
 # compile gcc flags
 ASFLAGS = -mthumb -mcpu=cortex-m0 $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -Werror -fdata-sections -ffunction-sections
-CFLAGS = -mthumb -mcpu=cortex-m0 $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -Werror -fdata-sections -ffunction-sections
+CFLAGS = -std=gnu99 -mthumb -mcpu=cortex-m0 $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -Werror -fdata-sections -ffunction-sections
 CFLAGS += -g -gdwarf-2
 # Generate dependency information
 CFLAGS += -MD -MP -MF .dep/$(@F).d

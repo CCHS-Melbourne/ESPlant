@@ -62,13 +62,14 @@ static void adc_init(void)
   hadc.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc.Init.ScanConvMode = DISABLE;
   hadc.Init.EOCSelection = EOC_SINGLE_CONV;
-  hadc.Init.LowPowerAutoWait = DISABLE;
+  hadc.Init.LowPowerAutoWait = ENABLE;
   hadc.Init.LowPowerAutoPowerOff = ENABLE;
   hadc.Init.ContinuousConvMode = DISABLE;
   hadc.Init.DiscontinuousConvMode = DISABLE;
-  hadc.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
+  hadc.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc.Init.DMAContinuousRequests = DISABLE;
   hadc.Init.Overrun = OVR_DATA_OVERWRITTEN;
+  HAL_ADC_Init(&hadc);
 
   NVIC_SetPriority(ADC1_IRQn, ADC1_IRQ_PRIORITY);
   NVIC_EnableIRQ(ADC1_IRQn);
@@ -77,6 +78,19 @@ static void adc_init(void)
 bool i2c_adc_is_active()
 {
   return i2c_in_progress || ADC_IS_CONVERSION_ONGOING_REGULAR(&hadc) == SET;
+}
+
+void i2c_adc_suspend()
+{
+  HAL_ADC_DeInit(&hadc);
+  /* Reset i2c peripheral, in case anything odd is going on */
+  __HAL_I2C_DISABLE(&hi2c1);
+  __HAL_I2C_ENABLE(&hi2c1);
+}
+
+void i2c_adc_resume()
+{
+  HAL_ADC_Init(&hadc);
 }
 
 static void i2c_init(void)
@@ -122,6 +136,7 @@ static void i2c_tx_byte()
 
 void I2C1_IRQHandler(void)
 {
+  i2c_in_progress = true;
   bool is_i2c_write = __HAL_I2C_GET_FLAG(&hi2c1, I2C_FLAG_DIR);
 
   /* Check for timeout */
@@ -129,10 +144,9 @@ void I2C1_IRQHandler(void)
     /* Reset the whole i2c peripheral so we can start again */
     __HAL_I2C_DISABLE(&hi2c1);
     __HAL_I2C_ENABLE(&hi2c1);
+    //i2c_in_progress = true;
     return;
   }
-
-  i2c_in_progress = true;
 
   /* Check for address interrupt */
   if(__HAL_I2C_GET_FLAG(&hi2c1, I2C_FLAG_ADDR)) {
@@ -167,6 +181,7 @@ void I2C1_IRQHandler(void)
 	HAL_ADC_ConfigChannel(&hadc, &adc_config);
       }
       adc_value_tx_index = ADC_NOT_READY;
+      HAL_ADC_Start_IT(&hadc);
     } else {
       /* invalid channel, prepare to return an invalid read */
       adc_value = 0xFFFF;
@@ -178,10 +193,6 @@ void I2C1_IRQHandler(void)
   if(__HAL_I2C_GET_FLAG(&hi2c1, I2C_FLAG_STOPF)) {
     hi2c1.Instance->CR2 |= I2C_CR2_NACK;
     __HAL_I2C_CLEAR_FLAG(&hi2c1, I2C_FLAG_STOPF);
-    if(adc_value_tx_index == ADC_NOT_READY) {
-      HAL_ADC_Init(&hadc);
-      HAL_ADC_Start_IT(&hadc);
-    }
     i2c_in_progress = false;
   }
 
@@ -204,5 +215,4 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc_unused)
   /* queue first byte, this will cancel any clock stretching if necessary */
   i2c_tx_byte();
   HAL_ADC_Stop_IT(&hadc);
-  HAL_ADC_DeInit(&hadc);
 }

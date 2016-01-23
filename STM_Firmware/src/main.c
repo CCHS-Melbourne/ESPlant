@@ -89,9 +89,11 @@ int main(void)
     if(i2c_adc_is_active()) {
       HAL_PWR_EnterSLEEPMode(PWR_LOWPOWERREGULATOR_ON, PWR_SLEEPENTRY_WFI);
     } else {
+      i2c_adc_suspend();
       HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_SLEEPENTRY_WFI);
-      HAL_Delay(100);
+      i2c_adc_resume();
     }
+    HAL_Delay(100); // Seems to make multi-part i2c transactions more reliable
   }
 }
 
@@ -122,7 +124,7 @@ void SystemClock_Config(void)
                               |RCC_OSCILLATORTYPE_HSI48;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSI48State = RCC_HSI48_ON;
-  RCC_OscInitStruct.HSI14State = RCC_HSI14_ON;
+  RCC_OscInitStruct.HSI14State = RCC_HSI14_ADC_CONTROL;
   RCC_OscInitStruct.HSICalibrationValue = 16;
   RCC_OscInitStruct.HSI14CalibrationValue = 16;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
