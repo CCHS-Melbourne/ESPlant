@@ -157,7 +157,7 @@ void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   __GPIOB_CLK_ENABLE();
-  __GPIOF_CLK_ENABLE();
+  __GPIOF_CLK_ENABLE(); /* i2c pins */
   __GPIOA_CLK_ENABLE();
 
   /* Configure GPIO pin : PB8 - ESP GPIO0 (pulled up by us) */
@@ -168,13 +168,11 @@ void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_SET); /* Drive GPIO0 high */
 
   /* Configure GPIO pin : PA7 - ESP nRESET (has external pullup) */
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET); /* Make sure we're out of reset when pin becomes a driver */
   GPIO_InitStruct.Pin = GPIO_PIN_7;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET); /* Issue a brief reset now we know GPIO0 is pulled up */
-  HAL_Delay(10);
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET); /* Clear the reset */
 }
 
 /* USER CODE BEGIN 4 */
