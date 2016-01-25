@@ -34,7 +34,7 @@
 
 OneWire onewire(12); // external one-wire connection for DS18B20
 
-Adafruit_NeoPixel pixels = Adafruit_NeoPixel(16, 13, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(12, 13, NEO_GRB + NEO_KHZ800);
 
 #define SEALEVELPRESSURE_HPA (1013.25)
 
@@ -153,7 +153,7 @@ void test_bme()
   float t = bme.readTemperature();
   float alt = bme.readAltitude(SEALEVELPRESSURE_HPA);
 
-  if (t > 10 && t < 38 && alt > 10 && alt < 100) {
+  if (t > 10 && t < 38 && alt > -1 && alt < 100) {
     Serial.println("BME280 readings OK");
     return;
   }
