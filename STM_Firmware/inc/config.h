@@ -9,7 +9,7 @@
    Version number is reported in the USB Device "serial number" field.
 */
 #define FIRMWARE_VERSION_MAJOR 0
-#define FIRMWARE_VERSION_MINOR 1
+#define FIRMWARE_VERSION_MINOR 2
 #define __STR(X) #X
 #define _STR(X) __STR(X)
 #define FIRMWARE_VERSION_STR _STR(FIRMWARE_VERSION_MAJOR) "." _STR(FIRMWARE_VERSION_MINOR) " git " GIT_REVISION
