@@ -83,9 +83,6 @@ bool i2c_adc_is_active()
 void i2c_adc_suspend()
 {
   HAL_ADC_DeInit(&hadc);
-  /* Reset i2c peripheral, in case anything odd is going on */
-  __HAL_I2C_DISABLE(&hi2c1);
-  __HAL_I2C_ENABLE(&hi2c1);
 }
 
 void i2c_adc_resume()
@@ -143,6 +140,7 @@ void I2C1_IRQHandler(void)
   if(__HAL_I2C_GET_FLAG(&hi2c1, I2C_FLAG_TIMEOUT)) {
     /* Reset the whole i2c peripheral so we can start again */
     __HAL_I2C_DISABLE(&hi2c1);
+    for(volatile int i = 0; i < 10; i++) { } /* RM says needs to be disabled at 4 least tick APB ticks */
     __HAL_I2C_ENABLE(&hi2c1);
     //i2c_in_progress = true;
     return;
