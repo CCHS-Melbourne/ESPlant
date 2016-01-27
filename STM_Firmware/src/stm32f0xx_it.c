@@ -30,20 +30,15 @@
   *
   ******************************************************************************
   */
-/* Includes ------------------------------------------------------------------*/
 #include "stm32f0xx_hal.h"
 #include "stm32f0xx.h"
 #include "stm32f0xx_it.h"
-
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
 extern PCD_HandleTypeDef hpcd_USB_FS;
 
 /******************************************************************************/
-/*            Cortex-M0 Processor Interruption and Exception Handlers         */ 
+/*            Cortex-M0 Processor Interruption and Exception Handlers         */
 /******************************************************************************/
 
 /**
@@ -51,14 +46,8 @@ extern PCD_HandleTypeDef hpcd_USB_FS;
 */
 void SysTick_Handler(void)
 {
-  /* USER CODE BEGIN SysTick_IRQn 0 */
-
-  /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
   HAL_SYSTICK_IRQHandler();
-  /* USER CODE BEGIN SysTick_IRQn 1 */
-
-  /* USER CODE END SysTick_IRQn 1 */
 }
 
 /******************************************************************************/
@@ -73,13 +62,7 @@ void SysTick_Handler(void)
 */
 void USB_IRQHandler(void)
 {
-  /* USER CODE BEGIN USB_IRQn 0 */
-
-  /* USER CODE END USB_IRQn 0 */
   HAL_PCD_IRQHandler(&hpcd_USB_FS);
-  /* USER CODE BEGIN USB_IRQn 1 */
-
-  /* USER CODE END USB_IRQn 1 */
 }
 
 /* USART2 is USART wired to USB/serial interface */
@@ -90,7 +73,7 @@ void USART2_IRQHandler(void)
   HAL_UART_IRQHandler(&huart2);
 }
 
-/* TIM3 is USB transmit timer */
+/* TIM3 is USB transmit timer for USB/serial */
 extern TIM_HandleTypeDef husbtimer;
 
 void TIM3_IRQHandler(void)
@@ -98,17 +81,10 @@ void TIM3_IRQHandler(void)
   HAL_TIM_IRQHandler(&husbtimer);
 }
 
-/* ADC used by i2c ASDC interface */
+/* ADC used by i2c_adc_if.h/.c */
 extern ADC_HandleTypeDef hadc;
 
 void ADC1_IRQHandler(void)
 {
   HAL_ADC_IRQHandler(&hadc);
 }
-
-
-
-/* USER CODE BEGIN 1 */
-
-/* USER CODE END 1 */
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -44,6 +44,8 @@ The 3.3V "VSens" power rail is switchable on/off by the microcontroller. It defa
 Using with Arduino
 ------------------
 
+To add ESP8266 support to the Arduino IDE (1.6.5 or newer), follow [these instructions from the ESP8266 Arduino project](https://github.com/esp8266/Arduino/#installing-with-boards-manager).
+
 To use the ESPlant with Arduino:
 
 * No drivers required on Linux, OS X, or Windows 10.
@@ -51,21 +53,25 @@ To use the ESPlant with Arduino:
 * In [ESP8266 Arduino IDE](https://github.com/esp8266/arduino), under Tools menu, set Board to "NodeMCU V1.0" (fully compatible).
 * Can set upload speed to 230400. 460800 works in most cases (you might get occasionl failures at 460800)
 
+Libraries you will need
+-----------------------
+
+We recommend the following additional libraries for dealing with peripherals attached to ESPlant. All of these can be installed from inside the Arduino IDE under Sketch -> Include Library -> Manage Libraries
+
+* [Adafruit_BME280_Library](https://github.com/adafruit/Adafruit_BME280_Library) - BME280 library by @adafruit.
+* [Adafruit_ADXL345](https://github.com/adafruit/Adafruit_ADXL345) - ADXL345 library by @adafruit.
+* [Adafruit_NeoPixel](https://github.com/adafruit/Adafruit_NeoPixel) - NeoPixel library by Adafruit.
+
+... for supporting WiFi and the MQTT client, there are additional libraries required. These are listed in the [MQTTLogger README](https://github.com/CCHS-Melbourne/ESPlant/tree/master/Firmware/ESPlant_mqttlogger#libraries).
 
 CREDITS
 ------------
 
 This project was designed by the 2016 linux.conf.au Open Hardware Team!
- - John Spencer
- - Angus Gratton
- - Andy Gelme
- - Jon Oxer
-
-You can see our githubs at:
- - https://github.com/mage0r
- - https://github.com/projectgus
- - https://github.com/geekscape
- - https://github.com/jonoxer
+ - [John Spencer](https://github.com/mage0r)
+ - [Angus Gratton](https://github.com/projectgus)
+ - [Andy Gelme](https://github.com/geekscape)
+ - [Jon Oxer](https://github.com/jonoxer)
 
 Made at hackmelbourne.org!
 

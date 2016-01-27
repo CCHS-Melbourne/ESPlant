@@ -30,47 +30,24 @@
   *
   ******************************************************************************
   */
-/* Includes ------------------------------------------------------------------*/
 #include "stm32f0xx_hal.h"
 #include "usb_device.h"
 #include "i2c_adc_if.h"
 
-/* USER CODE BEGIN Includes */
-
-/* USER CODE END Includes */
-
-/* USER CODE BEGIN PV */
-/* Private variables ---------------------------------------------------------*/
-
-/* USER CODE END PV */
-
-/* Private function prototypes -----------------------------------------------*/
+/* This is also called during USB Resume */
 void SystemClock_Config(void);
+
+/* Private function prototypes */
 static void MX_GPIO_Init(void);
-static void OB_Configure(void);
-
-/* USER CODE BEGIN PFP */
-/* Private function prototypes -----------------------------------------------*/
-
-/* USER CODE END PFP */
-
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
+static void Disable_BOOT0(void);
 
 int main(void)
 {
 
-  /* USER CODE BEGIN 1 */
-
-  /* USER CODE END 1 */
-
-  /* MCU Configuration----------------------------------------------------------*/
-
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
-  OB_Configure();
+  Disable_BOOT0();
 
   /* Configure the system clock */
   SystemClock_Config();
@@ -79,10 +56,6 @@ int main(void)
   MX_GPIO_Init();
   i2c_adc_if_init();
   MX_USB_DEVICE_Init();
-
-  /* USER CODE BEGIN 2 */
-
-  /* USER CODE END 2 */
 
   while (1)
   {
@@ -97,8 +70,10 @@ int main(void)
   }
 }
 
-/* Configure the Flash option byte to disable the BOOT0 pin */
-static void OB_Configure(void)
+/* Configure the Flash option byte to disable the BOOT0 pin
+   (as ESPlant reuses it for a different function)
+*/
+static void Disable_BOOT0(void)
 {
   FLASH_OBProgramInitTypeDef ob_config;
   HAL_FLASHEx_OBGetConfig(&ob_config);
@@ -149,12 +124,9 @@ void SystemClock_Config(void)
   HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
 }
 
-/** Configure pins as 
-        * Analog 
-        * Input 
-        * Output
-        * EVENT_OUT
-        * EXTI
+/* Configure all GPIOs in use by the firmware as GPIOs
+
+ Other pin configuration happens in stm32f0xx_hal_msp.c
 */
 void MX_GPIO_Init(void)
 {
@@ -180,37 +152,3 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 }
-
-/* USER CODE BEGIN 4 */
-
-/* USER CODE END 4 */
-
-#ifdef USE_FULL_ASSERT
-
-/**
-   * @brief Reports the name of the source file and the source line number
-   * where the assert_param error has occurred.
-   * @param file: pointer to the source file name
-   * @param line: assert_param error line source number
-   * @retval None
-   */
-void assert_failed(uint8_t* file, uint32_t line)
-{
-  /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line number,
-    ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-  /* USER CODE END 6 */
-
-}
-
-#endif
-
-/**
-  * @}
-  */ 
-
-/**
-  * @}
-*/ 
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

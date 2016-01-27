@@ -33,50 +33,24 @@
 */
 
 /* Includes ------------------------------------------------------------------*/
+#include "config.h"
 #include "usbd_core.h"
 #include "usbd_desc.h"
 #include "usbd_conf.h"
 
-/** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
-  * @{
-  */
+/* USB Device Descriptor fields
 
-/** @defgroup USBD_DESC
-  * @brief USBD descriptors module
-  * @{
-  */
-
-/** @defgroup USBD_DESC_Private_TypesDefinitions
-  * @{
-  */
-/**
-  * @}
-  */
-
-/** @defgroup USBD_DESC_Private_Defines
-  * @{
-  */
-#define USBD_VID     1155
+   VID/PID courtesy pid.codes http://pid.codes/1209/9021/
+ */
+#define USBD_VID     0x1209
 #define USBD_LANGID_STRING     1033
-#define USBD_MANUFACTURER_STRING     "STMicroelectronics"
-#define USBD_PID_FS     22336
-#define USBD_PRODUCT_STRING_FS     "STM32 Virtual ComPort"
-/* USER CODE BEGIN SERIALNUMBER_STRING_FS */
-#define USBD_SERIALNUMBER_STRING_FS     "00000000001A"
-/* USER CODE END SERIALNUMBER_STRING_FS */
+#define USBD_MANUFACTURER_STRING     "Connected Community Hackerspace"
+#define USBD_PID_FS     0x9021
+#define USBD_PRODUCT_STRING_FS     "ESPlant"
+#define USBD_SERIALNUMBER_STRING_FS     "Version " FIRMWARE_VERSION_STR
 #define USBD_CONFIGURATION_STRING_FS     "CDC Config"
 #define USBD_INTERFACE_STRING_FS     "CDC Interface"
 
-/**
-  * @}
-  */
-
-/** @defgroup USBD_DESC_Private_Macros
-  * @{
-  */
-/**
-  * @}
-  */
 
 /** @defgroup USBD_DESC_Private_Variables
   * @{
@@ -104,9 +78,6 @@ USBD_DescriptorsTypeDef FS_Desc =
   USBD_FS_InterfaceStrDescriptor,
 };
 
-#if defined ( __ICCARM__ ) /*!< IAR Compiler */
-  #pragma data_alignment=4
-#endif
 /* USB Standard Device Descriptor */
 __ALIGN_BEGIN uint8_t USBD_FS_DeviceDesc[USB_LEN_DEV_DESC] __ALIGN_END =
   {
@@ -131,10 +102,6 @@ __ALIGN_BEGIN uint8_t USBD_FS_DeviceDesc[USB_LEN_DEV_DESC] __ALIGN_END =
   } ;
 /* USB_DeviceDescriptor */
 
-#if defined ( __ICCARM__ ) /*!< IAR Compiler */
-  #pragma data_alignment=4
-#endif
-
 /* USB Standard Device Descriptor */
 __ALIGN_BEGIN uint8_t USBD_LangIDDesc[USB_LEN_LANGID_STR_DESC] __ALIGN_END =
 {
@@ -148,13 +115,6 @@ __ALIGN_BEGIN uint8_t USBD_LangIDDesc[USB_LEN_LANGID_STR_DESC] __ALIGN_END =
   #pragma data_alignment=4
 #endif
 __ALIGN_BEGIN uint8_t USBD_StrDesc[USBD_MAX_STR_DESC_SIZ] __ALIGN_END;
-/**
-  * @}
-  */
-
-/** @defgroup USBD_DESC_Private_FunctionPrototypes
-  * @{
-  */
 /**
   * @}
   */
@@ -281,16 +241,3 @@ uint8_t *  USBD_FS_InterfaceStrDescriptor( USBD_SpeedTypeDef speed , uint16_t *l
   }
   return USBD_StrDesc;
 }
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

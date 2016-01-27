@@ -181,7 +181,6 @@ void I2C1_IRQHandler(void)
 	HAL_ADC_ConfigChannel(&hadc, &adc_config);
       }
       adc_value_tx_index = ADC_NOT_READY;
-      HAL_ADC_Start_IT(&hadc);
     } else {
       /* invalid channel, prepare to return an invalid read */
       adc_value = 0xFFFF;
@@ -194,6 +193,9 @@ void I2C1_IRQHandler(void)
     hi2c1.Instance->CR2 |= I2C_CR2_NACK;
     __HAL_I2C_CLEAR_FLAG(&hi2c1, I2C_FLAG_STOPF);
     i2c_in_progress = false;
+    if(adc_value_tx_index == ADC_NOT_READY) {
+      HAL_ADC_Start_IT(&hadc);
+    }
   }
 
   /* Check for NACK */
