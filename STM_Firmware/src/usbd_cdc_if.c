@@ -29,123 +29,57 @@
   *
   ******************************************************************************
 */
-
-/* Includes ------------------------------------------------------------------*/
 #include "usbd_cdc_if.h"
 #include "stm32f0xx_hal_tim.h"
 #include "stm32f0xx_hal_cortex.h"
 #include "config.h"
 #include <stdbool.h>
 
-/* USER CODE BEGIN INCLUDE */
-/* USER CODE END INCLUDE */
-
-/** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
-  * @{
-  */
-
-/** @defgroup USBD_CDC
-  * @brief usbd core module
-  * @{
-  */
-
-/** @defgroup USBD_CDC_Private_TypesDefinitions
-  * @{
-  */
-/* USER CODE BEGIN PRIVATE TYPES  */
-/* USER CODE END PRIVATE TYPES */
-/**
-  * @}
-  */
-
-/** @defgroup USBD_CDC_Private_Defines
-  * @{
-  */
-/* USER CODE BEGIN PRIVATE DEFINES  */
-/* Define size for the receive and transmit buffer over CDC */
-/* It's up to user to redefine and/or remove those define */
-/* USER CODE END PRIVATE DEFINES */
-/**
-  * @}
-  */
-
-/** @defgroup USBD_CDC_Private_Macros
-  * @{
-  */
-/* USER CODE BEGIN PRIVATE_MACRO  */
-/* USER CODE END PRIVATE_MACRO */
-
-/**
-  * @}
-  */
-
-/** @defgroup USBD_CDC_Private_Variables
-  * @{
-  */
-
-/* Receive data over USB CDC buffer into these two
-   buffers, page flip between them (so one is outputting
-   USART while other is receiving from CDC)*/
+/* Receive data over USB CDC buffer into these two buffers, flip
+   between them (so one is being transmitted to USART while other is
+   receiving from CDC)
+*/
 #define cdc2usart_SIZE CDC_DATA_FS_MAX_PACKET_SIZE
 uint8_t cdc2usart_buf_a[cdc2usart_SIZE];
 uint8_t cdc2usart_buf_b[cdc2usart_SIZE];
 
-/* Send Data over USB CDC are stored in this ringbuffer       */
+/* Data to be sent over the USB CDC is stored in this ringbuffer */
 #define usart2cdc_SIZE 64
 uint8_t usart2cdc_buf[usart2cdc_SIZE];
 uint8_t *usart2cdc_rx = usart2cdc_buf; /* Next RX from UART */
 uint8_t *usart2cdc_tx = usart2cdc_buf; /* Next TX to CDC */
 
-/* BEWARE: Horrible macro hackery */
+/* Return space free for USART to receive into buffer */
+static inline size_t usart2cdc_buf_free() {
+  if(usart2cdc_tx > usart2cdc_rx)
+    return usart2cdc_tx - usart2cdc_rx;
+  else
+    return usart2cdc_tx + sizeof(usart2cdc_buf) - usart2cdc_rx;
+}
 
-/* Return space free to RX into buffer */
-#define RBUF_FREE(BUF) (BUF##_tx > BUF##_rx ? BUF##_tx-BUF##_rx \
-			: BUF##_tx+BUF##_SIZE-BUF##_rx)
-
-/* USB handler declaration */
-/* Handle for USB Full Speed IP */
+/* Handle for USB Full Speed EP */
 USBD_HandleTypeDef  *husb;
 
-/* handle for the USART */
+/* Handle for the USART */
 UART_HandleTypeDef huart2;
 
+/* Handle for transmit timer (grouping bytes received via USART, sending via USB) */
 TIM_HandleTypeDef husbtimer;
 
-/* USER CODE BEGIN PRIVATE_VARIABLES  */
-/* USER CODE END  PRIVATE VARIABLES */
+/* Extern declarations */
+extern USBD_HandleTypeDef hUsbDeviceFS;
 
-/**
-  * @}
-  */
-
-/** @defgroup USBD_CDC_IF_Exported_Variables
-  * @{
-  */
-  extern USBD_HandleTypeDef hUsbDeviceFS;
-/* USER CODE BEGIN EXPORTED_VARIABLES  */
-/* USER CODE END  EXPORTED_VARIABLES */
-
-/**
-  * @}
-  */
-
-/** @defgroup USBD_CDC_Private_FunctionPrototypes
-  * @{
-  */
+/* Private CDC driver operation functions */
 static int8_t CDC_Init_FS     (void);
 static int8_t CDC_DeInit_FS   (void);
 static int8_t CDC_Control_FS  (uint8_t cmd, uint8_t* pbuf, uint16_t length);
 static int8_t CDC_Receive_FS  (uint8_t* pbuf, uint32_t *Len);
 
+/* This last function isn't part of the driver, just a user function
+   to transmit to the driver */
 static uint8_t CDC_Transmit_FS(void);
 
-/* USER CODE BEGIN PRIVATE_FUNCTIONS_DECLARATION */
-/* USER CODE END  PRIVATE_FUNCTIONS_DECLARATION */
-
-/**
-  * @}
-  */
-
+/* CDC driver ops table */
 USBD_CDC_ItfTypeDef USBD_Interface_fops_FS =
 {
   CDC_Init_FS,
@@ -154,7 +88,6 @@ USBD_CDC_ItfTypeDef USBD_Interface_fops_FS =
   CDC_Receive_FS
 };
 
-/* Private functions ---------------------------------------------------------*/
 /**
   * @brief  CDC_Init_FS
   *         Initializes the CDC media low layer over the FS USB IP
@@ -185,11 +118,17 @@ static int8_t CDC_Init_FS(void)
   NVIC_SetPriority(USART2_IRQn, USART_IRQ_PRIORITY);
   NVIC_EnableIRQ(USART2_IRQn);
 
-  /* UART2 receives data to the CDC transmit buffer, byte at a time :( */
+  /* UART2 receives data to the CDC transmit buffer, interrupt on completion
+   *
+   * Unfortunately this is byte at a time for now :( */
   if(HAL_UART_Receive_IT(&huart2, usart2cdc_rx, 1) != HAL_OK)
     return USBD_FAIL;
 
-  /* Configure USB transmit timer */
+  /* Configure USB transmit timer
+
+     Timer starts whenever data is received over UART into
+     usart2cdc_buf, transmits over USB on expiry.
+   */
   husbtimer.Instance = TIM3;
   husbtimer.Init.Period = 10000 - 1; /* approx 10ms, I think... */
   husbtimer.Init.Prescaler = 48-1;
@@ -202,26 +141,28 @@ static int8_t CDC_Init_FS(void)
   NVIC_SetPriority(TIM3_IRQn, USB_TIMER_IRQ_PRIORITY);
   NVIC_EnableIRQ(TIM3_IRQn);
 
-  /* Set Application USB Buffers */
+  /* Set  Application USB Buffers for the USB CDC driver to use */
   USBD_CDC_SetTxBuffer(husb, usart2cdc_tx, 0); /* don't send anything now */
-  USBD_CDC_SetRxBuffer(husb, cdc2usart_buf_a);     /* read into here if CDC data comes */
+  USBD_CDC_SetRxBuffer(husb, cdc2usart_buf_a); /* read into here if CDC data comes */
 
   return USBD_OK;
 }
 
+/* HAL callback when a byte is received over the UART.
+ */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
   usart2cdc_rx++;
-  if(usart2cdc_rx == usart2cdc_buf + usart2cdc_SIZE) {
+  if(usart2cdc_rx == usart2cdc_buf + sizeof(usart2cdc_buf)) {
     usart2cdc_rx = usart2cdc_buf;
   }
-  if(RBUF_FREE(usart2cdc) < 8) {
+  if(usart2cdc_buf_free() < 8) {
     /* usart2cdc buffer nearly full, try to TX CDC immediately
     */
-    if(CDC_Transmit_FS() != USBD_OK && RBUF_FREE(usart2cdc) <= 1) {
+    if(CDC_Transmit_FS() != USBD_OK && usart2cdc_buf_free() <= 1) {
       /* worst case: can't TX, and buffer already full. dropping a byte. */
       usart2cdc_tx++;
-      if(usart2cdc_tx == usart2cdc_buf + usart2cdc_SIZE) {
+      if(usart2cdc_tx == usart2cdc_buf + sizeof(usart2cdc_buf)) {
 	usart2cdc_tx = usart2cdc_buf;
       }
     }
@@ -240,9 +181,13 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
   HAL_UART_Receive_IT(&huart2, usart2cdc_rx, 1);
 }
 
+/* Callback when the USB transmit timer has expired.
+   Trigger to send bytes to USB host.
+*/
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-  /* try to USB transmit, if we succeed & buffer empty then we can stop TX timer until next time */
+  /* if transmit succeeds & buffer now empty then we can stop the TX
+     timer until next time */
   if(CDC_Transmit_FS() == USBD_OK && usart2cdc_rx == usart2cdc_tx)
     HAL_TIM_Base_Stop_IT(&husbtimer);
 }
@@ -258,6 +203,7 @@ static int8_t CDC_DeInit_FS(void)
   /* De-assert ESP RST & GPIOA if they were being held down when USB went away */
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_SET);
+  /* Stop clocks and shut down peripherals to save power */
   __HAL_RCC_TIM3_CLK_DISABLE();
   HAL_UART_DeInit(&huart2);
   return USBD_OK;
@@ -277,27 +223,17 @@ static int8_t CDC_Control_FS  (uint8_t cmd, uint8_t* pbuf, uint16_t length)
   GPIO_PinState esprst_set, gpio0_set;
   bool dtr, rts;
 
-  /* USER CODE BEGIN 5 */
   switch (cmd)
   {
   case CDC_SEND_ENCAPSULATED_COMMAND:
-
     break;
-
   case CDC_GET_ENCAPSULATED_RESPONSE:
-
     break;
-
   case CDC_SET_COMM_FEATURE:
-
     break;
-
   case CDC_GET_COMM_FEATURE:
-
     break;
-
   case CDC_CLEAR_COMM_FEATURE:
-
     break;
 
   /*******************************************************************************/
@@ -335,9 +271,12 @@ static int8_t CDC_Control_FS  (uint8_t cmd, uint8_t* pbuf, uint16_t length)
     break;
 
   case CDC_SET_CONTROL_LINE_STATE:
-    /* DTR & RTS are treated the same as on NodeMCU boards - 
-       ie both or neither assert -> normal behaviour
-       either asserted -> assert GPIO0 or nRESET as appropriate
+    /* DTR & RTS are treated the same as on NodeMCU boards:
+
+       If Both DTR & RTS asserted -> normal behaviour
+       If Neither asserted -> normal behaviour
+       If RTS is asserted -> Assert GPIO0
+       If DTR is asserted -> Assert nRESET
     */
     dtr = pbuf[2] & 1; // nRESET, set = hold in reset
     rts = pbuf[2] & 2; // GPIO0, set = assert to flash
@@ -349,15 +288,12 @@ static int8_t CDC_Control_FS  (uint8_t cmd, uint8_t* pbuf, uint16_t length)
     break;
 
   case CDC_SEND_BREAK:
-
     break;
-
   default:
     break;
   }
 
   return (USBD_OK);
-  /* USER CODE END 5 */
 }
 
 /**
@@ -383,8 +319,15 @@ static int8_t CDC_Receive_FS (uint8_t* buf, uint32_t *len)
   /* Push the buffer we just received into the HAL UART TX quee */
   HAL_StatusTypeDef r;
   while((r = HAL_UART_Transmit_IT(&huart2, buf, *len)) == HAL_BUSY) {
-    // We could go into STOP mode here, but USB is connected so who cares about power?
-    // UART, transmit timer are both higher priority interrupts so will interrupt us here
+    // This is a bad thing if it happens a lot - it means the last
+    // UART transmit buffer hasn't cleared yet, so we have to wait and
+    // stall the endpoint until that happens.
+    //
+    // We could kind of work around this by adding more buffering in software, but
+    // at some point the USB transmission is limited by the UART baud rate.
+    //
+    // A bigger problem is that no other USB interaction or I2C interaction can happen
+    // while stalled here.
   }
 
   /* Swap the buffer that we'll receive next CDC packet into */
@@ -422,7 +365,8 @@ static uint8_t CDC_Transmit_FS()
   USBD_CDC_SetTxBuffer(husb, usart2cdc_tx, tx_len);
   result = USBD_CDC_TransmitPacket(husb);
 
-  if(result == USBD_OK) { /* advance the TX pointer only if we managed to send something */
+  /* advance the TX pointer only if we managed to send something */
+  if(result == USBD_OK) {
     usart2cdc_tx += tx_len;
     if(usart2cdc_tx >= usart2cdc_buf + usart2cdc_SIZE)
       usart2cdc_tx -= usart2cdc_SIZE;
@@ -430,15 +374,3 @@ static uint8_t CDC_Transmit_FS()
   return result;
 }
 
-/* USER CODE BEGIN PRIVATE_FUNCTIONS_IMPLEMENTATION */
-/* USER CODE END  PRIVATE_FUNCTIONS_IMPLEMENTATION */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
