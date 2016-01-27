@@ -33,6 +33,7 @@
 */
 
 /* Includes ------------------------------------------------------------------*/
+#include "config.h"
 #include "usbd_core.h"
 #include "usbd_desc.h"
 #include "usbd_conf.h"
@@ -53,17 +54,16 @@
   * @}
   */
 
-/** @defgroup USBD_DESC_Private_Defines
-  * @{
-  */
-#define USBD_VID     1155
+/* USB Device Descriptor fields
+
+   VID/PID courtesy pid.codes http://pid.codes/1209/9021/
+ */
+#define USBD_VID     0x1209
 #define USBD_LANGID_STRING     1033
-#define USBD_MANUFACTURER_STRING     "STMicroelectronics"
-#define USBD_PID_FS     22336
-#define USBD_PRODUCT_STRING_FS     "STM32 Virtual ComPort"
-/* USER CODE BEGIN SERIALNUMBER_STRING_FS */
-#define USBD_SERIALNUMBER_STRING_FS     "00000000001A"
-/* USER CODE END SERIALNUMBER_STRING_FS */
+#define USBD_MANUFACTURER_STRING     "Connected Community Hackerspace"
+#define USBD_PID_FS     0x9021
+#define USBD_PRODUCT_STRING_FS     "ESPlant"
+#define USBD_SERIALNUMBER_STRING_FS     "Version " FIRMWARE_VERSION_STR
 #define USBD_CONFIGURATION_STRING_FS     "CDC Config"
 #define USBD_INTERFACE_STRING_FS     "CDC Interface"
 

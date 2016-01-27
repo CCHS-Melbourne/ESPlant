@@ -72,13 +72,15 @@ AR = arm-none-eabi-ar
 SZ = arm-none-eabi-size
 HEX = $(CP) -O ihex
 BIN = $(CP) -O binary -S
- 
+
+GIT_REVISION=\"$(shell git describe --long --tags --dirty --always)\"
+
 #######################################
 # CFLAGS
 #######################################
 # macros for gcc
 AS_DEFS =
-C_DEFS = -DUSE_HAL_DRIVER -DSTM32F042x6
+C_DEFS = -DUSE_HAL_DRIVER -DSTM32F042x6 -DGIT_REVISION=$(GIT_REVISION)
 # includes for gcc
 AS_INCLUDES =
 C_INCLUDES = -Iinc

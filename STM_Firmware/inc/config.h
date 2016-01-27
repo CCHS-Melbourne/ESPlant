@@ -1,5 +1,18 @@
-/* Some firmware configuration aspects */
+/* Some top-level firmware configuration aspects */
 #pragma once
+
+/* Version numbering
+
+   Something like semver - major version increments when functionality/interface changes,
+   minor version increments when bugs get fixed.
+
+   Version number is reported in the USB Device "serial number" field.
+*/
+#define FIRMWARE_VERSION_MAJOR 0
+#define FIRMWARE_VERSION_MINOR 1
+#define __STR(X) #X
+#define _STR(X) __STR(X)
+#define FIRMWARE_VERSION_STR _STR(FIRMWARE_VERSION_MAJOR) "." _STR(FIRMWARE_VERSION_MINOR) " git " GIT_REVISION
 
 /* IRQ Priorities */
 #define ADC1_IRQ_PRIORITY      1 /* higher priority than i2c, prevents race when copying value */
