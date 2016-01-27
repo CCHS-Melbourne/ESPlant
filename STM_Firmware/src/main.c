@@ -32,6 +32,7 @@
   */
 #include "stm32f0xx_hal.h"
 #include "usb_device.h"
+#include "usbd_cdc_if.h"
 #include "i2c_adc_if.h"
 
 /* This is also called during USB Resume */
@@ -59,14 +60,26 @@ int main(void)
 
   while (1)
   {
-    if(i2c_adc_is_active()) {
-      HAL_PWR_EnterSLEEPMode(PWR_LOWPOWERREGULATOR_ON, PWR_SLEEPENTRY_WFI);
-    } else {
-      i2c_adc_suspend();
-      HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_SLEEPENTRY_WFI);
-      i2c_adc_resume();
+    /* Only go into lightweight sleep mode (wait for interrupt) if anything
+       is happening, otherwise go into deep sleep STOP mode.
+    */
+    for(int idle = 0; idle < 200; idle++) {
+      if(i2c_adc_is_active()) {
+	HAL_PWR_EnterSLEEPMode(PWR_LOWPOWERREGULATOR_ON, PWR_SLEEPENTRY_WFI);
+	idle = 0;
+      }
+      else if(usb_cdc_if_enabled()) {
+	HAL_PWR_EnterSLEEPMode(PWR_LOWPOWERREGULATOR_ON, PWR_SLEEPENTRY_WFI);
+	idle = 0;
+      }
+      else {
+	HAL_Delay(5);
+      }
     }
-    HAL_Delay(100); // Seems to make multi-part i2c transactions more reliable
+    /* OK, we've been idle for 1s while nothing much happens. Go to deep sleep. */
+    i2c_adc_suspend();
+    HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_SLEEPENTRY_WFI);
+    i2c_adc_resume();
   }
 }
 

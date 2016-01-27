@@ -148,6 +148,12 @@ static int8_t CDC_Init_FS(void)
   return USBD_OK;
 }
 
+/* Return true if the UART is enabled, indicating CDC is in use */
+bool usb_cdc_if_enabled(void)
+{
+  return huart2.State != HAL_UART_STATE_RESET;
+}
+
 /* HAL callback when a byte is received over the UART.
  */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
