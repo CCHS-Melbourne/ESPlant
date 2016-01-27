@@ -164,7 +164,7 @@ void I2C1_IRQHandler(void)
       i2c_tx_byte();
     } else {
       /* Flush the TXDR register */
-      hi2c1.Instance->ISR = I2C_FLAG_TXE;
+      hi2c1.Instance->TXDR = 0xFF;
     }
   }
 
