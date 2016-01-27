@@ -162,6 +162,9 @@ void I2C1_IRQHandler(void)
      && !__HAL_I2C_GET_FLAG(&hi2c1, I2C_FLAG_STOPF)) {
     if(adc_value_tx_index < 2) {
       i2c_tx_byte();
+    } else {
+      /* Flush the TXDR register */
+      hi2c1.Instance->ISR = I2C_FLAG_TXE;
     }
   }
 
