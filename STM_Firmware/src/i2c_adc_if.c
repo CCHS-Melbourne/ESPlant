@@ -62,8 +62,8 @@ static void adc_init(void)
   hadc.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc.Init.ScanConvMode = DISABLE;
   hadc.Init.EOCSelection = EOC_SINGLE_CONV;
-  hadc.Init.LowPowerAutoWait = ENABLE;
-  hadc.Init.LowPowerAutoPowerOff = ENABLE;
+  hadc.Init.LowPowerAutoWait = DISABLE;
+  hadc.Init.LowPowerAutoPowerOff = DISABLE;
   hadc.Init.ContinuousConvMode = DISABLE;
   hadc.Init.DiscontinuousConvMode = DISABLE;
   hadc.Init.ExternalTrigConv = ADC_SOFTWARE_START;
