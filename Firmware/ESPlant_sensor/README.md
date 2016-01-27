@@ -8,6 +8,8 @@ This uses [ESP8266 Arduino](https://github.com/esp8266/Arduino) environment.
 
 # Libraries
 
+You will need to clone these libraries to your ~/Documents/Arduino/Library (OSX).
+
 * [ESP_Onboarding](https://github.com/wolfeidau/ESP_Onboarding) - ESP8266 on boarding for wifi.
 * [ESP_MQTTLogger](https://github.com/wolfeidau/ESP_MQTTLogger) - Generic MQTT logger with configuration rest endpoint.
 * [PubSubClient](https://github.com/Imroy/pubsubclient) - MQTT library by @Imroy.
