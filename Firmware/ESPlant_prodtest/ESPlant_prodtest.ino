@@ -92,7 +92,7 @@ void setup() {
   Serial.println("************************************************");
 
   set_vsens(true);
-  for(int i = 0; i < 16; i++) {    
+  for(int i = 0; i < 12; i++) {    
     pixels.setPixelColor(i, fail ? pixels.Color(255,0,0,0) : pixels.Color(0,64,0));
   }
   pixels.show();    
