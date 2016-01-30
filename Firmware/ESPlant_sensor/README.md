@@ -18,5 +18,6 @@ You will need to clone these libraries to your ~/Documents/Arduino/Library (OSX)
 * [ArduinoJson](https://github.com/bblanchon/ArduinoJson) - Arduino JSON library
 * [Adafruit_Sensor](https://github.com/adafruit/Adafruit_Sensor) - Adafruit Sensors @adafruit
 * [Arduino-Temperature-Control-Library](https://github.com/milesburton/Arduino-Temperature-Control-Library) Temp-Controll Library
-* 
-Please note you will need to copy https://github.com/CCHS-Melbourne/ESPlant/tree/master/Libraries/ESP_Kwai To your Arduino/Library directory
+
+
+Please note you will need to copy the following directory https://github.com/CCHS-Melbourne/ESPlant/tree/master/Libraries/ESP_Kwai to your Arduino/Library directory.
