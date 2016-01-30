@@ -138,7 +138,7 @@ F 3 "" H 2950 3400 60  0000 C CNN
 	1    2950 3400
 	0    1    1    0   
 $EndComp
-Text Label 3200 1800 0    60   ~ 0
+Text Label 5300 1800 0    60   ~ 0
 VIN
 $Comp
 L LED LED201
@@ -346,8 +346,6 @@ F 3 "" H 4600 2350 60  0000 C CNN
 	1    4600 2350
 	1    0    0    -1  
 $EndComp
-Text HLabel 5850 2500 1    60   Input ~ 0
-VBAT
 Wire Wire Line
 	5050 3050 5050 2750
 Wire Wire Line
@@ -399,9 +397,8 @@ Wire Wire Line
 Wire Wire Line
 	4950 4400 4950 4500
 Connection ~ 4950 4500
-Connection ~ 5850 3050
 Wire Wire Line
-	5850 2500 5850 3350
+	5850 2450 5850 3350
 Wire Wire Line
 	5850 2500 8200 2500
 Wire Wire Line
