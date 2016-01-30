@@ -82,7 +82,7 @@ void setup() {
   test_soilsensor(ADC_CHANNEL_SOIL1);
   test_soilsensor(ADC_CHANNEL_SOIL2);
   test_pir();
-1
+
   Serial.println("Tests done");
   Serial.println("************************************************");
   if(fail)
