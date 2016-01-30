@@ -5,13 +5,13 @@ Welcome to the linux.conf.au Open Hardware Project.  You can see information abo
 
 The ESPlant kit is designed to provide an open source platform to transmit environmental data to a central source using the power of wifi.
 
+Assembled PCB:
+
 ![ESPlant main board](Photos/ESPlant.jpg?raw=true "Front")
 
-Prototype board in action (Significant changes to the controller board since then)!
+Prototype board in action (before significant changes):
 
 ![Prototype](Photos/ESPlant.prototype.jpg?raw=true "Prototype")
-
-You can check out photos of our build day in the Photos\Build directory of this repo.
 
 Check out a video of pick-n-placing components of the boards you'll be getting at LCA 2016.
 https://www.youtube.com/watch?v=282qku2C4xo
