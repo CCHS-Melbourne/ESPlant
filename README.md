@@ -61,6 +61,9 @@ We recommend the following additional libraries for dealing with peripherals att
 * [Adafruit_ADXL345](https://github.com/adafruit/Adafruit_ADXL345) - ADXL345 library by @adafruit.
 * [Adafruit_NeoPixel](https://github.com/adafruit/Adafruit_NeoPixel) - NeoPixel library by Adafruit.
 
+... these libraries also rely on a common abstraction library that should also be installed
+* [Adafruit_Unified_Sensor_Driver](https://github.com/adafruit/Adafruit_Sensor) - Adafruit Unified Sensor Driver
+
 ... for supporting WiFi and the MQTT client, there are additional libraries required. These are listed in the [MQTTLogger README](https://github.com/CCHS-Melbourne/ESPlant/tree/master/Firmware/ESPlant_sensor).
 
 CREDITS
