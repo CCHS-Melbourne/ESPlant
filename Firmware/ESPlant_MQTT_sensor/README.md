@@ -34,22 +34,20 @@ The project uses the following libraries. The [main README](https://github.com/C
 * Connect to your AP
 * Connect the device to wifi using the following command
 ```
-curl -v -H "Authorization: Token access_token_here“ 'http://192.168.4.1:9000/wifiSetup?ssid=xxx&pass=xxx'
+curl -v -H "Authorization: Token access_token_here" 'http://192.168.4.1:9000/wifiSetup?ssid=xxx&pass=xxx'
 ```
 
 ## Logging data to an MQTT server
 
 * Install mosquitto (MQTT client and server)
 * Find out your IP and configure the ESPlant to send messages to your system using the following command.
-    * The IP address of your ESPlant is printed to the console once it reboots and connects to wifi.
-    * Also you need your IP address of course.
+    * The IP address of your ESPlant is printed to the console once it reboots and connects to wifi. This goes in `x.x.x.x`.
+    * Also you need your IP address of course which goes into `y.y.y.y`.
 ```
-curl -v -H "Authorization: Token access_token_here" ‘http://X.X.X.X:9000/mqttSetup?mqtt_url=mqtt://test@x.x.x.x'
+curl -v -H "Authorization: Token access_token_here" 'http://X.X.X.X:9000/mqttSetup?mqtt_url=mqtt://test@y.y.y.y'
 ```
 * Reset your ESPlant.
 * To subscribe to messages
 ```
 mosquitto_sub -v -t '#'
 ```
-
-README
