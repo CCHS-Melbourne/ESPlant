@@ -27,7 +27,7 @@ ESP_Kwai.cpp - ESP8266 Library which bridges I2C to ADC on the ESPlant.
 ESP_Kwai::ESP_Kwai() {
 }
 
-bool ESP_Kwai::begin(uint8_t pin) {
+bool ESP_Kwai::begin(uint8_t vsens_pin) {
     Serial.println("Enabling VSens...");
     pinMode(pin, OUTPUT);
     digitalWrite(pin, LOW);

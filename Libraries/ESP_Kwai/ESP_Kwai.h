@@ -57,7 +57,9 @@ static const uint8_t ADC_MAP[ADC_NUMS] = {
 class ESP_Kwai {
   public:
     ESP_Kwai();
-    bool begin(uint8_t pin);
+    /* Start an ESP_Kwai event by applying power on the given VSens pin */
+    bool begin(uint8_t vsens_pin = 14);
+    /* Fill an "event" structure with all of the data types supported by the library */
     bool readEvent(kwai_event_t* event);
   protected:
     int16_t _read_adc(int channel);

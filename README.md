@@ -79,6 +79,8 @@ Onboard STM32
 
 There is an onboard STM32 microcontroller that acts as USB/Serial converter and an i2c connected ADC (Analog/Digital Converter) device.
 
+For the i2c functionality, the `ESP_Kwai` library (under Libraries/ESP_Kwai) acts as a bridge (*get it*) to the i2c ADC peripherals on the ESPlant. It can automatically read all the values connected to the ADC and return them.
+
 If you want more information on how the STM32 works internally, check out the [README in the STM_Firmware directory](https://github.com/CCHS-Melbourne/ESPlant/tree/master/STM_Firmware#readme).
 
 CREDITS
