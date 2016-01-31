@@ -46,9 +46,9 @@ enum kwai_adc_channel_t {
 
 #define NUM_ADC_CHANNELS 7
 
-class ESP_Kwai {
+class ESP_Kwai_class {
   public:
-    ESP_Kwai();
+    ESP_Kwai_class();
     /* Start an ESP_Kwai event by applying power on the given VSens pin */
     bool begin(uint8_t vsens_pin = 14);
     /* Fill an "event" structure with all of the ADC channels at once */
@@ -57,5 +57,7 @@ class ESP_Kwai {
     /* Read a single channel and return the raw reading */
     int16_t read_adc(kwai_adc_channel_t channel);
 };
+
+extern ESP_Kwai_class ESP_Kwai;
 
 #endif //ESP_Kwai_h

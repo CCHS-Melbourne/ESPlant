@@ -24,17 +24,19 @@ ESP_Kwai.cpp - ESP8266 Library which bridges I2C to ADC on the ESPlant.
 #include <Arduino.h>
 #include "ESP_Kwai.h"
 
-ESP_Kwai::ESP_Kwai() {
+ESP_Kwai_class ESP_Kwai;
+
+ESP_Kwai_class::ESP_Kwai_class() {
 }
 
-bool ESP_Kwai::begin(uint8_t vsens_pin) {
+bool ESP_Kwai_class::begin(uint8_t vsens_pin) {
     Wire.begin();
     Serial.println("Enabling VSens...");
     pinMode(vsens_pin, OUTPUT);
     digitalWrite(vsens_pin, LOW);
 }
 
-bool ESP_Kwai::readEvent(kwai_event_t* event) {
+bool ESP_Kwai_class::readEvent(kwai_event_t* event) {
 
     int i;
     int16_t val;
@@ -103,7 +105,7 @@ bool ESP_Kwai::readEvent(kwai_event_t* event) {
     return true;
 }
 
-int16_t ESP_Kwai::read_adc(int channel) {
+int16_t ESP_Kwai_class::read_adc(kwai_adc_channel_t channel) {
   Wire.beginTransmission(0x50);
   Wire.write(channel);
   int res = Wire.endTransmission();

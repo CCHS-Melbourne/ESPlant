@@ -35,8 +35,6 @@ ESP_Onboarding server(&webserver);
 WiFiClient wclient;
 ESP_MQTTLogger logger(wclient, &webserver, 1883);
 
-ESP_Kwai kwai;
-
 Ticker flipper;
 Adafruit_ADXL345_Unified accel = Adafruit_ADXL345_Unified(12345);
 
@@ -58,7 +56,7 @@ void setup() {
   server.begin();
   logger.begin();
 
-  kwai.begin(14);
+  ESP_Kwai.begin(14);
   dallasTemp.begin();
 
   Serial.print("Access Token: ");
@@ -141,7 +139,7 @@ void loop() {
 
     kwai_event_t kevent;
 
-    kwai.readEvent(&kevent);
+    ESP_Kwai.readEvent(&kevent);
 
     logger.publish("adc/uv_sensor", String(kevent.UVSensor));
     logger.publish("adc/soil_1", String(kevent.Soil01));
