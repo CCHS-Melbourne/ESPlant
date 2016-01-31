@@ -4,17 +4,14 @@ This is a simple firmware which writes data from all the sensors on the ESPLant 
 
 # Building
 
-* Install Arduino 1.6.5 from the Arduino website.
-* Start Arduino IDE and open Preferences window.
-* Enter `http://arduino.esp8266.com/staging/package_esp8266com_index.json` into Additional Board Manager URLs field. You can add multiple URLs, separating them with commas.
+You will need Arduino 1.6.6 or newer and the ESP8266 "staging" release.
 
-This uses [ESP8266 Arduino](https://github.com/esp8266/Arduino) project.
+* Use File->Open and open the Firmware/ESPlant_serial_sensor from this repository. This is a simple sketch that outputs all the analog values read by the board to the serial monitor.
+* Press the Upload button (looks like "Play")
 
 # Libraries
 
-The project uses the following libraries.
-
-You will need to clone these libraries to your ~/Documents/Arduino/library (OSX and Linux).
+The project uses the following libraries. The [main README](https://github.com/CCHS-Melbourne/ESPlant#libraries-you-will-need) has instructions for automatically installing the libraries into the Arduino libraries directory in your home directory.
 
 * [ESP_Onboarding](https://github.com/wolfeidau/ESP_Onboarding) - ESP8266 on boarding for wifi.
 * [ESP_MQTTLogger](https://github.com/wolfeidau/ESP_MQTTLogger) - Generic MQTT logger with configuration rest endpoint.

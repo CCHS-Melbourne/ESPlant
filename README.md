@@ -47,9 +47,20 @@ Assembly Steps
 Using with Arduino
 ------------------
 
-To add ESP8266 support to the Arduino IDE (1.6.6 or newer), follow [these instructions from the ESP8266 Arduino project](https://github.com/esp8266/Arduino/#installing-with-boards-manager).
+To add ESP8266 support to the Arduino IDE (1.6.6 or newer) we use the external [ESP8266 Arduino](https://github.com/esp8266/Arduino) project. We need the *staging version* not the stable version of the ESP8266 support package.
 
-To use the ESPlant with Arduino:
+Follow these steps to install:
+
+* Install Arduino 1.6.6 or newer (1.6.7 is fine) from the [Arduino website](http://arduino.cc).
+* Start Arduino IDE and open Preferences window.
+* Enter `http://arduino.esp8266.com/staging/package_esp8266com_index.json` into Additional Board Manager URLs field. You can add multiple URLs, separating them with commas.
+* From the Tools menu choose Board -> Board Manager
+* A window will open. Search for ESP8266.
+* Choose a version from the drop-down in the bottom right. There will probably only be one shown there.
+* Click Install
+
+Connecting ESPLant to your computer
+-----------------------------------
 
 * No drivers required on Linux, OS X, or Windows 10.
 * No manual reset or button pressing dance required to program.
@@ -70,9 +81,43 @@ git submodule init
 git submodule update
 ```
 
-Inside the Libraries directory there is a script `install_libraries.sh` that you can run on Linux or OS X to symlink all of the libraries into your Arduino libraries directory so you can use them. On Windows you'll need to copy all the subdirectories of the libraries directory (copy them into the My Documents/Arduino/libraries directory). You can run the install script and it will try to find 
+Inside the Libraries directory there is a script `install_libraries.sh` that you can run on Linux or OS X to symlink all of the libraries into your Arduino libraries directory so you can use them.
 
-The only Library that is included directly in this repo (not a submodule) is the "ESP_Kwai" library that acts as a bridge to the peripheral hardware.
+```
+cd Libraries
+./install_libraries.sh
+```
+
+On Windows you'll need to copy all the subdirectories of the libraries directory (copy them into the My Documents/Arduino/libraries directory).
+
+The only Library that is part of this repo (not a submodule) is the "ESP_Kwai" library that acts as a bridge to the peripheral hardware.
+
+
+Upload your first program ("sketch")
+------------------------------------
+
+After restarting Arduino IDE to pick up the new libraries, you're ready to upload your first program (Arduino calls them "sketches"):
+
+* Choose File->Open in Arduino and open the `Firmware/ESPlant_serial_sensor` from this repository. This is a simple sketch that outputs all the analog values read by the board.
+* Press the "Upload" button to send it to your board. Watch for messages indicating the upload was successful.
+* Open the serial monitor (under Tools) and set the baud rate to 115200 in order to watch the output from the sketch.
+
+
+Other Sketches to Try
+---------------------
+
+The repo includes the following sketches:
+
+* `ESPlant_prodtest` is the hardware production test. It tests all the sensors to confirm the hardware is good. There are instructions in a large comment at the top of the sketch. You can run this if you think you're having hardware problems, or to look at example code for any individual point.
+
+* `ESPlant_MQTT_sensor` uses MQTT to push data to a server. It includes easy provisioning mechanisms for connecting to the WiFi. It has [other instructions in its README file](https://github.com/CCHS-Melbourne/ESPlant/tree/master/Firmware/ESPlant_MQTT_sensor#readme) for WiFi configuration.
+
+
+Where to Now?
+-------------
+
+Check out (and contribute to) [the wiki](https://github.com/CCHS-Melbourne/ESPlant/wiki). There is a pinout summary, sensor summary, power information, etc.
+
 
 Onboard STM32
 -------------
