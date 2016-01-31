@@ -98,7 +98,7 @@ mkdir -p ${ARDUINO_LIB_DIR}
 echo "Using Arduino libraries directory at ${ARDUINO_LIB_DIR}..."
 
 git submodule init
-git submodule update
+git submodule update .
 
 for lib in *; do
     if ! [ -d "$lib" ]; then
