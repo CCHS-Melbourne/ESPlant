@@ -39,6 +39,10 @@ FEATURES
 
 The 3.3V "VSens" power rail is switchable on/off by the microcontroller. It defaults to unpowered (off). The GPIO to use is 14, and it is active low (ie driving the output low turns VSens on, driving it high turns it off).
 
+Assembly Steps
+--------------
+
+[Assembly guide on the wiki](https://github.com/CCHS-Melbourne/ESPlant/wiki/Step-1:-Step-by-Step-Assembly).
 
 Using with Arduino
 ------------------
@@ -50,26 +54,25 @@ To use the ESPlant with Arduino:
 * No drivers required on Linux, OS X, or Windows 10.
 * No manual reset or button pressing dance required to program.
 * In [ESP8266 Arduino IDE](https://github.com/esp8266/arduino), under Tools menu, set Board to "NodeMCU V1.0" (fully compatible).
-* Can set upload speed to 230400. 460800 works in most cases (you might get occasionl failures at 460800)
-
-Assembly Steps
---------------
-
-[Assembly guide on the wiki](https://github.com/CCHS-Melbourne/ESPlant/wiki/Step-1:-Step-by-Step-Assembly).
+* Can set upload speed to 230400. 460800 works in most cases (you might get occasional failures at 460800)
 
 Libraries you will need
 -----------------------
 
-We recommend the following additional libraries for dealing with peripherals attached to ESPlant. All of these can be installed from inside the Arduino IDE under Sketch -> Include Library -> Manage Libraries
+Arduino uses libraries to work with additional hardware or software functionality in an easy way. Normally you can download and install libraries directly inside the Arduino IDE by choosing Sketch menu -> Include Library -> Manage Libraries.
 
-* [Adafruit_BME280_Library](https://github.com/adafruit/Adafruit_BME280_Library) - BME280 library by @adafruit.
-* [Adafruit_ADXL345](https://github.com/adafruit/Adafruit_ADXL345) - ADXL345 library by @adafruit.
-* [Adafruit_NeoPixel](https://github.com/adafruit/Adafruit_NeoPixel) - NeoPixel library by Adafruit.
+However, for the ESPlant a lot of libraries are required so we've set up "git submodules" inside the "Libraries" directory.
 
-... these libraries also rely on a common abstraction library that should also be installed
-* [Adafruit_Unified_Sensor_Driver](https://github.com/adafruit/Adafruit_Sensor) - Adafruit Unified Sensor Driver
+Run these commands in your top-level ESPlant directory to initialise the git submodules:
 
-... for supporting WiFi and the MQTT client, there are additional libraries required. These are listed in the [MQTTLogger README](https://github.com/CCHS-Melbourne/ESPlant/tree/master/Firmware/ESPlant_sensor).
+```
+git submodule init
+git submodule update
+```
+
+Inside the Libraries directory there is a script `install_modules.sh` that you can run on Linux or OS X to symlink all of the libraries into your Arduino libraries directory so you can use them. On Windows you'll need to copy all the subdirectories of the libraries directory (copy them into the My Documents/Arduino/libraries directory).
+
+The only Library that is included directly in this repo (not a submodule) is the "ESP_Kwai" library that acts as a bridge to the peripheral hardware.
 
 Onboard STM32
 -------------
