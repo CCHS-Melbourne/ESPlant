@@ -4,3 +4,27 @@
 [submodule "Circuit/kicad-ESP8266"]
 	path = Circuit/kicad-ESP8266
 	url = https://github.com/jdunmire/kicad-ESP8266.git
+[submodule "Libraries/ESP_Onboarding"]
+	path = Libraries/ESP_Onboarding
+	url = https://github.com/wolfeidau/ESP_Onboarding
+[submodule "Libraries/pubsubclient"]
+	path = Libraries/pubsubclient
+	url = https://github.com/Imroy/pubsubclient.git
+[submodule "Libraries/Adafruit_BME280_Library"]
+	path = Libraries/Adafruit_BME280_Library
+	url = https://github.com/adafruit/Adafruit_BME280_Library.git
+[submodule "Libraries/Adafruit_ADXL345"]
+	path = Libraries/Adafruit_ADXL345
+	url = https://github.com/adafruit/Adafruit_ADXL345.git
+[submodule "Libraries/ArduinoJson"]
+	path = Libraries/ArduinoJson
+	url = https://github.com/bblanchon/ArduinoJson.git
+[submodule "Libraries/Adafruit_Sensor"]
+	path = Libraries/Adafruit_Sensor
+	url = https://github.com/adafruit/Adafruit_Sensor.git
+[submodule "Libraries/Arduino-Temperature-Control-Library"]
+	path = Libraries/Arduino-Temperature-Control-Library
+	url = https://github.com/milesburton/Arduino-Temperature-Control-Library.git
+[submodule "Libraries/ESP_MQTTLogger"]
+	path = Libraries/ESP_MQTTLogger
+	url = https://github.com/wolfeidau/ESP_MQTTLogger
