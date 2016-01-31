@@ -2,6 +2,10 @@
 # Makefile by CubeMX2Makefile.py
 ######################################
 
+# If you want to override any variables set with ?= below,
+# create a file local.mk and set the variable there.
+-include local.mk
+
 ######################################
 # target
 ######################################
@@ -11,9 +15,12 @@ TARGET = esplant_stm_fw
 # building variables
 ######################################
 # debug build?
-DEBUG = 0
+DEBUG ?= 0
 # optimization
-OPT = -Os
+OPT ?= -Os
+
+# override this in a local.mk file if you'd like to use a different programmer
+OPENOCD ?= openocd -f interface/stlink-v2-1.cfg -c "transport select hla_swd"
 
 #######################################
 # paths
@@ -116,7 +123,10 @@ all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET
 
 # this flash target is very hacky and probably should be replaced
 flash: $(BUILD_DIR)/$(TARGET).elf
-	openocd -f interface/stlink-v2-1.cfg -c "transport select hla_swd" -f target/stm32f0x.cfg -c "program $(BUILD_DIR)/$(TARGET).elf reset; exit"
+	$(OPENOCD) -f target/stm32f0x.cfg -c "program $(BUILD_DIR)/$(TARGET).elf reset; exit"
+
+openocd: $(BUILD_DIR)/$(TARGET).elf
+	$(OPENOCD) -f target/stm32f0x.cfg
 
 # so is this gdb target
 gdb:

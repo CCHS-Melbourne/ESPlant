@@ -52,6 +52,11 @@ To use the ESPlant with Arduino:
 * In [ESP8266 Arduino IDE](https://github.com/esp8266/arduino), under Tools menu, set Board to "NodeMCU V1.0" (fully compatible).
 * Can set upload speed to 230400. 460800 works in most cases (you might get occasionl failures at 460800)
 
+Assembly Steps
+--------------
+
+[Assembly guide on the wiki](https://github.com/CCHS-Melbourne/ESPlant/wiki/Step-1:-Step-by-Step-Assembly).
+
 Libraries you will need
 -----------------------
 
@@ -65,6 +70,13 @@ We recommend the following additional libraries for dealing with peripherals att
 * [Adafruit_Unified_Sensor_Driver](https://github.com/adafruit/Adafruit_Sensor) - Adafruit Unified Sensor Driver
 
 ... for supporting WiFi and the MQTT client, there are additional libraries required. These are listed in the [MQTTLogger README](https://github.com/CCHS-Melbourne/ESPlant/tree/master/Firmware/ESPlant_sensor).
+
+Onboard STM32
+-------------
+
+There is an onboard STM32 microcontroller that acts as USB/Serial converter and an i2c connected ADC (Analog/Digital Converter) device.
+
+If you want more information on how the STM32 works internally, check out the [README in the STM_Firmware directory](https://github.com/CCHS-Melbourne/ESPlant/tree/master/STM_Firmware#readme).
 
 CREDITS
 ------------

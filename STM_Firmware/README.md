@@ -33,9 +33,9 @@ The actual code structure runs almost entirely in interrupt handlers.
 
 # Build Dependencies
 
-"gcc-arm-none-eabi" toolchain, newlib, GNU make.
+"gcc-arm-none-eabi" toolchain, newlib, GNU make, openocd for uploading.
 
-On Debian/Ubuntu the packages to install are `build-essential`, `gcc-arm-none-eabi`, `libnewlib-arm-none-eabi`, and `binutils-arm-none-eabi`.
+> sudo apt-get install build-essential gcc-arm-none-eabi libnewlib-arm-none-eabi binutils-arm-none-eabi openocd
 
 Development versions were:
 * gcc 4.9.3 (4.9 series or newer recommended as some 4.9 features are used to fit the current firmware inside 16kB of flash.)
@@ -46,22 +46,21 @@ Development versions were:
 
 Use [openocd](http://openocd.org/). Other tools will probably work too.
 
-The source tree has an openocd.cfg and some hardcoded openocd commands in the Makefile. These will work if you're using openocd and an STLINK debugger/programmer.
+The source tree has an openocd.cfg and some hardcoded openocd commands in the Makefile. The commands in the Makefile "just work" if you're using openocd and an [ST Nucleo](http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1847) ("ST-Link V2.1") debugger/programmer.
 
-`make flash` to flash the image. Debugger will keep running, Ctrl-C to quit. MCU will automatically reset into new firmware.
+If you're not using that programmer, create a local.mk file and assign the variable OPENOCD to set different arguments. Look in the Makefile for the current settings.
 
-`make gdb` to attach gdb (if installed) to a running openocd. `mon halt reset` will probably be required as a first command, to synchronise gdb with target.
+* `make flash` will build & flash the image. MCU will automatically reset into new firmware on success.
+
+* `make openocd` will run an open-ended openocd session.
+
+* `make gdb` will attach gdb (if installed) to a running openocd. `mon halt reset` will probably be required as a first command, to synchronise gdb with target.
 
 # Known Issues
 
-* Still some ugly boilerplate STM32Cube generated code that can be refactored out.
-
-* STM32Cube is pretty resource-intensive for a small MCU. LTO (Link Time Optimisation) is required to fit the firmware within 16kB of flash, by collapsing lots of hierarchical calls & abstractions.
+* STM32Cube hardware support libraries are pretty resource-intensive for a small MCU. LTO (Link Time Optimisation) is required to fit the firmware within 16kB of flash, by collapsing lots of hierarchical calls & abstractions.
 
 * When transmitting large amounts of data from USB to serial, it's possible to starve out the i2c device for CPU resources. Symptoms of this will be large numbers of NAKed i2c packets to the i2c master.
-
-* No low power modes yet. Due to interrupt-driven architecture is should be fairly easy to use WFE or STOP mode in the main loop, rather than a busy wait.
-
 
 # License
 
