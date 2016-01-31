@@ -4,10 +4,7 @@ This is a simple firmware which writes data from all the sensors on the ESPLant 
 
 # Building
 
-You will need Arduino 1.6.6 or newer and the ESP8266 "staging" release.
-
-* Use File->Open and open the Firmware/ESPlant_serial_sensor from this repository. This is a simple sketch that outputs all the analog values read by the board to the serial monitor.
-* Press the Upload button (looks like "Play")
+You will need Arduino 1.6.6 or newer and the ESP8266 "staging" release. See the [main README](https://github.com/CCHS-Melbourne/ESPlant#readme) for details.
 
 # Libraries
 
