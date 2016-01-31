@@ -47,7 +47,7 @@ Assembly Steps
 Using with Arduino
 ------------------
 
-To add ESP8266 support to the Arduino IDE (1.6.5 or newer), follow [these instructions from the ESP8266 Arduino project](https://github.com/esp8266/Arduino/#installing-with-boards-manager).
+To add ESP8266 support to the Arduino IDE (1.6.6 or newer), follow [these instructions from the ESP8266 Arduino project](https://github.com/esp8266/Arduino/#installing-with-boards-manager).
 
 To use the ESPlant with Arduino:
 
