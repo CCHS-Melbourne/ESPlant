@@ -30,8 +30,8 @@ ESP_Kwai::ESP_Kwai() {
 bool ESP_Kwai::begin(uint8_t vsens_pin) {
     Wire.begin();
     Serial.println("Enabling VSens...");
-    pinMode(pin, OUTPUT);
-    digitalWrite(pin, LOW);
+    pinMode(vsens_pin, OUTPUT);
+    digitalWrite(vsens_pin, LOW);
 }
 
 bool ESP_Kwai::readEvent(kwai_event_t* event) {
