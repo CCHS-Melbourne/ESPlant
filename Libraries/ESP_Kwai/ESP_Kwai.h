@@ -30,7 +30,7 @@ typedef struct {
     int16_t ADC02;
     int16_t Soil01;
     int16_t Soil02;
-    int16_t BatteryVoltage;
+    int16_t InputVoltage;
     int16_t InternalTemp;
 } kwai_event_t;
 
@@ -50,7 +50,7 @@ static const uint8_t ADC_MAP[ADC_NUMS] = {
   ADC_2, /* 2 = "ADC2" */
   ADC_SOIL1, /* 3 = "SOIL1" */
   ADC_SOIL2, /* 4 = "SOIL2" */
-  ADC_BATTERY_VOLTS, /* 5 = Battery voltage monitor */
+  ADC_INPUT_VOLTAGE, /* 5 = Input voltage monitor (highest of USB,solar or battery). In millivolts. */
   ADC_TEMPSENSOR, /* 6 = internal temp sensor */
 };
 

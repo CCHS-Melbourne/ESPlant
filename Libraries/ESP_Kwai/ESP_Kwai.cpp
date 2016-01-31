@@ -80,12 +80,13 @@ bool ESP_Kwai::readEvent(kwai_event_t* event) {
           event->Soil02 = val;
           break;
 
-        case ADC_BATTERY_VOLTS:
-          val = _read_adc(ADC_BATTERY_VOLTS);
+        case ADC_INPUT_VOLTAGE:
+          val = _read_adc(ADC_INPUT_VOLTAGE);
           if (val == -1) {
             return false;
           }
-          event->BatteryVoltage = val;
+	  /* Convert raw units to millivolts */
+          event->InputVoltage = (uint32_t)val * 1825 / 1000;
           break;
 
         case ADC_TEMPSENSOR:

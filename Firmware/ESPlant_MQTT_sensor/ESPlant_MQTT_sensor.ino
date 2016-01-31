@@ -146,7 +146,7 @@ void loop() {
     logger.publish("adc/uv_sensor", String(kevent.UVSensor));
     logger.publish("adc/soil_1", String(kevent.Soil01));
     logger.publish("adc/soil_2", String(kevent.Soil02));
-    logger.publish("adc/battery_voltage", String(kevent.BatteryVoltage));
+    logger.publish("adc/input_voltage", String(kevent.InputVoltage));
     logger.publish("adc/internal_temp", String(kevent.InternalTemp));
 
     dallasTemp.requestTemperatures();
