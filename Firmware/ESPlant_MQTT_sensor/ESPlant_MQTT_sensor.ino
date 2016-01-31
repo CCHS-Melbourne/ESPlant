@@ -19,14 +19,21 @@
 #include <ESP_Kwai.h>
 
 #define SEALEVELPRESSURE_HPA (1013.25)
-#define DEBUG
 #define ONE_WIRE_BUS 12
 
 ADC_MODE(ADC_VCC);
 
-WiFiClientSecure wclient;
-ESP_Onboarding server;
-ESP_MQTTLogger logger(wclient);
+ESP8266WebServer webserver(9000);
+
+ESP_Onboarding server(&webserver);
+
+// Send data over MQTT with TLS
+// WiFiClientSecure wclient;
+// ESP_MQTTLogger logger(wclient, &webserver, 8883);
+
+// Send data over MQTT without TLS
+WiFiClient wclient;
+ESP_MQTTLogger logger(wclient, &webserver, 1883);
 
 ESP_Kwai kwai;
 
@@ -59,8 +66,17 @@ void setup() {
 
   logger.setToken(server.getToken());
 
+  bool configured = server.loadWifiCreds();
+
+  Serial.println("Loading onboarding server");
+  server.startServer(configured);
+
   // do we have config
-  if (server.loadWifiCreds()) {
+  if (configured) {
+
+    // configure station mode
+    WiFi.mode(WIFI_STA);
+
     String ssid = server.getSSID();
     String pass = server.getPassword();
 
@@ -93,27 +109,17 @@ void setup() {
 
     flipper.attach(15, flip);
 
-    Serial.print("connecting to ");
-    Serial.println("mqtt.gophermq.io");
-    if (!wclient.connect("mqtt.gophermq.io", 8883)) {
-      Serial.println("connection failed");
-      return;
-    }
-
-    Serial.println("connection success!");
-
     return; // we are done
   }
 
   Serial.printf("AP: ESP_%06X\n", ESP.getChipId());
 
   // fall back to AP mode to enable onboarding
+  WiFi.mode(WIFI_AP);
   IPAddress myIP = WiFi.softAPIP();
   Serial.print("IP address: ");
   Serial.println(myIP);
 
-  Serial.println("Loading onboarding server");
-  server.startServer();
 }
 
 void loop() {
