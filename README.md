@@ -70,7 +70,7 @@ git submodule init
 git submodule update
 ```
 
-Inside the Libraries directory there is a script `install_libraries.sh` that you can run on Linux or OS X to symlink all of the libraries into your Arduino libraries directory so you can use them. On Windows you'll need to copy all the subdirectories of the libraries directory (copy them into the My Documents/Arduino/libraries directory).
+Inside the Libraries directory there is a script `install_libraries.sh` that you can run on Linux or OS X to symlink all of the libraries into your Arduino libraries directory so you can use them. On Windows you'll need to copy all the subdirectories of the libraries directory (copy them into the My Documents/Arduino/libraries directory). You can run the install script and it will try to find 
 
 The only Library that is included directly in this repo (not a submodule) is the "ESP_Kwai" library that acts as a bridge to the peripheral hardware.
 
@@ -80,7 +80,6 @@ Onboard STM32
 There is an onboard STM32 microcontroller that acts as USB/Serial converter and an i2c connected ADC (Analog/Digital Converter) device.
 
 For the i2c functionality, the `ESP_Kwai` library (under Libraries/ESP_Kwai) acts as a bridge (*get it*) to the i2c ADC peripherals on the ESPlant. It can automatically read all the values connected to the ADC and return them.
-
 
 If you want more information on how the STM32 works internally, check out the [README in the STM_Firmware directory](https://github.com/CCHS-Melbourne/ESPlant/tree/master/STM_Firmware#readme).
 

@@ -71,17 +71,15 @@ function realpath()
 LIB_DIR="`dirname $0`"
 
 cd "${LIB_DIR}"
-git submodule init
-git submodule update
 
 ARDUINO_DIR="$1"
-if [ -z "$1" ]; then
+if [ -z ${ARDUINO_DIR} ]; then
     # Try both the likely Arduino home directories
     ARDUINO_DIR=$(realpath "${HOME}/Documents/Arduino")
     if ! [ -d "$ARDUINO_DIR" ]; then
 	ARDUINO_DIR="$(realpath ${HOME}/Arduino)"
 	if ! [ -d "$ARDUINO_DIR" ]; then
-	    echo "Arduino directory not found at <home>/Documents/Arduino or <home>/Arduino."
+	    echo "Arduino directory not found at $HOME/Documents/Arduino or $HOME/Arduino."
 	    echo
 	    echo "If you're using a different Arduino install path, specify the directory on the command line as $0 <Arduino path>"
 	    exit 1
@@ -89,15 +87,18 @@ if [ -z "$1" ]; then
     fi
 fi
 
-ARDUINO_DIR=$(realpath "$1")
-
-if ! [ -d "$ARDUINO_DIR" ]; then
-    echo "Arduino directory not found at ${ARDUINO_DIR}"
+if ! [ -d $(realpath "$ARDUINO_DIR") ]; then
+    echo "Arduino directory not found at ${1}/(${ARDUINO_DIR})"
     exit 1
 fi
 
 ARDUINO_LIB_DIR="${ARDUINO_DIR}/libraries"
 mkdir -p ${ARDUINO_LIB_DIR}
+
+echo "Using Arduino libraries directory at ${ARDUINO_LIB_DIR}..."
+
+git submodule init
+git submodule update
 
 for lib in *; do
     if ! [ -d "$lib" ]; then
