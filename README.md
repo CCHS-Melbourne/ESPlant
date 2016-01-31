@@ -72,7 +72,9 @@ Libraries you will need
 
 Arduino uses libraries to work with additional hardware or software functionality in an easy way. Normally you can download and install libraries directly inside the Arduino IDE by choosing Sketch menu -> Include Library -> Manage Libraries.
 
-However, for the ESPlant a lot of libraries are required so we've set up "git submodules" inside the "Libraries" directory.
+**One library that you should install this way is the OneWire library**. Search for "OneWire" and then click the Install button to install it.
+
+For the ESPlant the other required libraries are set up as "git submodules" inside the "Libraries" directory.
 
 Run these commands in your top-level ESPlant directory to initialise the git submodules:
 
@@ -90,7 +92,9 @@ cd Libraries
 
 On Windows you'll need to copy all the subdirectories of the libraries directory (copy them into the My Documents/Arduino/libraries directory).
 
-The only Library that is part of this repo (not a submodule) is the "ESP_Kwai" library that acts as a bridge to the peripheral hardware.
+The one Library here that is part of this repo (not a submodule) is the "ESP_Kwai" library that acts as a bridge to the peripheral hardware.
+
+Don't forget OneWire as well (see above).
 
 
 Upload your first program ("sketch")
