@@ -37,11 +37,11 @@ bool ESP_Kwai::readEvent(kwai_event_t* event) {
 
     int i;
     int16_t val;
-    for(i = 0; i < ADC_NUMS; i++) {
+    for(i = 0; i < NUM_ADC_CHANNELS; i++) {
 
       switch(i) {
         case ADC_UV:
-          val = _read_adc(ADC_UV);
+          val = read_adc(ADC_UV);
           if (val == -1) {
             return false;
           }
@@ -49,7 +49,7 @@ bool ESP_Kwai::readEvent(kwai_event_t* event) {
           break;
 
         case ADC_1:
-          val = _read_adc(ADC_1);
+          val = read_adc(ADC_1);
           if (val == -1) {
             return false;
           }
@@ -57,7 +57,7 @@ bool ESP_Kwai::readEvent(kwai_event_t* event) {
           break;
 
         case ADC_2:
-          val = _read_adc(ADC_2);
+          val = read_adc(ADC_2);
           if (val == -1) {
             return false;
           }
@@ -65,7 +65,7 @@ bool ESP_Kwai::readEvent(kwai_event_t* event) {
           break;
 
         case ADC_SOIL1:
-          val = _read_adc(ADC_SOIL1);
+          val = read_adc(ADC_SOIL1);
           if (val == -1) {
             return false;
           }
@@ -73,7 +73,7 @@ bool ESP_Kwai::readEvent(kwai_event_t* event) {
           break;
 
         case ADC_SOIL2:
-          val = _read_adc(ADC_SOIL2);
+          val = read_adc(ADC_SOIL2);
           if (val == -1) {
             return false;
           }
@@ -81,7 +81,7 @@ bool ESP_Kwai::readEvent(kwai_event_t* event) {
           break;
 
         case ADC_INPUT_VOLTAGE:
-          val = _read_adc(ADC_INPUT_VOLTAGE);
+          val = read_adc(ADC_INPUT_VOLTAGE);
           if (val == -1) {
             return false;
           }
@@ -90,7 +90,7 @@ bool ESP_Kwai::readEvent(kwai_event_t* event) {
           break;
 
         case ADC_TEMPSENSOR:
-          val = _read_adc(ADC_TEMPSENSOR);
+          val = read_adc(ADC_TEMPSENSOR);
           if (val == -1) {
             return false;
           }
@@ -102,7 +102,7 @@ bool ESP_Kwai::readEvent(kwai_event_t* event) {
     return true;
 }
 
-int16_t ESP_Kwai::_read_adc(int channel) {
+int16_t ESP_Kwai::read_adc(int channel) {
   Wire.beginTransmission(0x50);
   Wire.write(channel);
   int res = Wire.endTransmission();

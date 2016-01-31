@@ -34,35 +34,28 @@ typedef struct {
     int16_t InternalTemp;
 } kwai_event_t;
 
-#define ADC_NUMS 7
-
-#define ADC_UV 0
-#define ADC_1 1
-#define ADC_2 2
-#define ADC_SOIL1 3
-#define ADC_SOIL2 4
-#define ADC_BATTERY_VOLTS 5
-#define ADC_TEMPSENSOR 6
-
-static const uint8_t ADC_MAP[ADC_NUMS] = {
-  ADC_UV, /* 0 = "UV" */
-  ADC_1, /* 1 = "ADC1" */
-  ADC_2, /* 2 = "ADC2" */
-  ADC_SOIL1, /* 3 = "SOIL1" */
-  ADC_SOIL2, /* 4 = "SOIL2" */
-  ADC_INPUT_VOLTAGE, /* 5 = Input voltage monitor (highest of USB,solar or battery). In millivolts. */
-  ADC_TEMPSENSOR, /* 6 = internal temp sensor */
+enum kwai_adc_channel_t {
+  ADC_UV = 0, /* "UV" */
+  ADC_1 = 1, /* "ADC1" */
+  ADC_2 = 2, /* "ADC2" */
+  ADC_SOIL1 = 3, /* "SOIL1" */
+  ADC_SOIL2 = 4, /* "SOIL2" */
+  ADC_INPUT_VOLTAGE = 5, /* Input voltage monitor (highest of USB,solar or battery). In millivolts. */
+  ADC_TEMPSENSOR = 6, /* internal temp sensor */
 };
+
+#define NUM_ADC_CHANNELS 7
 
 class ESP_Kwai {
   public:
     ESP_Kwai();
     /* Start an ESP_Kwai event by applying power on the given VSens pin */
     bool begin(uint8_t vsens_pin = 14);
-    /* Fill an "event" structure with all of the data types supported by the library */
+    /* Fill an "event" structure with all of the ADC channels at once */
     bool readEvent(kwai_event_t* event);
-  protected:
-    int16_t _read_adc(int channel);
+
+    /* Read a single channel and return the raw reading */
+    int16_t read_adc(kwai_adc_channel_t channel);
 };
 
 #endif //ESP_Kwai_h
