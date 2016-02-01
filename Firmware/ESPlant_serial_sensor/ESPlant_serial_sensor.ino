@@ -174,10 +174,6 @@ void loop() {
 
     Serial.println ( "------------------------" ) ;
 
-    logger_publish("temp", String(bme.readTemperature()));
-    logger_publish("pressure", String(bme.readPressure() / 100.0F));
-    logger_publish("humidity", String(bme.readHumidity()));
-
     sensors_event_t event;
     accel.getEvent(&event);
 
@@ -188,29 +184,34 @@ void loop() {
     kwai_event_t kevent;
 
     ESP_Kwai.readEvent(&kevent);
+    dallasTemp.requestTemperatures();
 
-    logger_publish("adc/uv_sensor", String(kevent.UVSensor));
+    logger_publish("adc/internal_temp", String(kevent.InternalTemp*0.01)+"C");
+    logger_publish("temp", String(bme.readTemperature())+"C");
+    logger_publish("external/temp_sensor", String(dallasTemp.getTempCByIndex(0))+"C");
+    logger_publish("pressure", String(bme.readPressure() / 100.0F)+"mbar");
+    logger_publish("humidity", String(bme.readHumidity())+"%");
+
     logger_publish("adc/soil_1", String(kevent.Soil01));
     logger_publish("adc/soil_2", String(kevent.Soil02));
-    logger_publish("adc/input_voltage", String(kevent.InputVoltage));
-    logger_publish("adc/internal_temp", String(kevent.InternalTemp));
 
-    dallasTemp.requestTemperatures();
-    logger_publish("external/temp_sensor", String(dallasTemp.getTempCByIndex(0)));
-
-    logger_publish("chip/free_heap", String(ESP.getFreeHeap()));
-    logger_publish("chip/vcc", String(ESP.getVcc()));
+    // UV value and solar panel voltage should be loosely correlated.
+    logger_publish("adc/uv_sensor", String(kevent.UVSensor));
+    // I measure panel voltage separately with a voltage divider (2x 10k
+    // resistor), so real voltage ends up being 1.67V what ADC reads
+    logger_publish("adc/solar_voltage", String(kevent.ADC02*0.00167)+"V");
+    logger_publish("adc/input_voltage", String(kevent.InputVoltage*0.001)+"V");
+    // I used a volt meature to measure a correction factor (0.956 instead of 1)
+    logger_publish("chip/vcc", String(ESP.getVcc()*0.000956)+"V");
 
     logger_publish("pir", digitalRead(15) ? "HIGH" : "low" );
-
-
+    logger_publish("chip/free_heap", String(ESP.getFreeHeap()));
     logger_publish("led", String(curRingLed));
 
-    // 
     for (uint8_t i=0; i < 10; i++) { // how many times we change LED per second
 	curRingLed = ( curRingLed + 1 ) % MAX_LEDS ;
-	Serial.print("LED to ");
-	Serial.println(curRingLed);
+	// Serial.print("LED to ");
+	// Serial.println(curRingLed);
 	for (uint16_t j=0; j < 20; j++) { // how many times we change the LED color per LED display
 	    rgbLedFadeHandler(&red, &green, &blue);
 	    pixels.setPixelColor(curRingLed, pixels.Color(red, green, blue));
