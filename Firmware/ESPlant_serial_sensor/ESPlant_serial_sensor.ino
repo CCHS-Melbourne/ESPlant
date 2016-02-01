@@ -34,11 +34,11 @@ uint8_t RGB_delay_factor = 0;
 // How many intermediate shades of colors.
 #define RGB_COLOR_CHANGE_STEPS 100
 // How many steps we hold the target colors.
-#define RGB_COLOR_HOLD_STEPS 50
+#define RGB_COLOR_HOLD_STEPS 20
 // How bright to light up neopixel. 1 very bright (blinding), bigger is less bright
-#define RGB_LED_BRIGHTNESS 4
-// How many trailing LEDs get displayed on neopixel (1 to 11)
-#define LED_TRAIL 4
+#define RGB_LED_BRIGHTNESS 3
+// How many trailing LEDs get displayed on neopixel (1 to 10)
+#define LED_TRAIL 8
 
 void setup() {
     Serial.begin(115200);
@@ -211,11 +211,11 @@ void loop() {
 	curRingLed = ( curRingLed + 1 ) % MAX_LEDS ;
 	Serial.print("LED to ");
 	Serial.println(curRingLed);
-	for (uint16_t j=0; j < 30; j++) { // how many times we change the LED color per LED display
+	for (uint16_t j=0; j < 20; j++) { // how many times we change the LED color per LED display
 	    rgbLedFadeHandler(&red, &green, &blue);
 	    pixels.setPixelColor(curRingLed, pixels.Color(red, green, blue));
 	    pixels.show();
-	    delay(10);
+	    delay(5);
 	}
 	pixels.setPixelColor((curRingLed-LED_TRAIL + MAX_LEDS) % MAX_LEDS, pixels.Color(0,0,0)); // turn off current LED
     }
