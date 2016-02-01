@@ -212,12 +212,9 @@ void loop() {
 	Serial.print("LED to ");
 	Serial.println(curRingLed);
 	for (uint16_t j=0; j < 30; j++) { // how many times we change the LED color per LED display
-	    // Get a new color or if color is unchanged for this step, skip color set
-	    if (rgbLedFadeHandler(&red, &green, &blue)) {
-		pixels.setPixelColor(curRingLed, pixels.Color(red, green, blue));
-		pixels.show();
-	    }
-	    // Leave displayed color for some milliseconds
+	    rgbLedFadeHandler(&red, &green, &blue);
+	    pixels.setPixelColor(curRingLed, pixels.Color(red, green, blue));
+	    pixels.show();
 	    delay(10);
 	}
 	pixels.setPixelColor((curRingLed-LED_TRAIL + MAX_LEDS) % MAX_LEDS, pixels.Color(0,0,0)); // turn off current LED
