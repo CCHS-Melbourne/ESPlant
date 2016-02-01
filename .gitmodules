@@ -28,3 +28,6 @@
 [submodule "Libraries/ESP_MQTTLogger"]
 	path = Libraries/ESP_MQTTLogger
 	url = https://github.com/wolfeidau/ESP_MQTTLogger
+[submodule "Libraries/adafruit_NeoPixel"]
+	path = Libraries/adafruit_NeoPixel
+	url = https://github.com/adafruit/adafruit_NeoPixel
