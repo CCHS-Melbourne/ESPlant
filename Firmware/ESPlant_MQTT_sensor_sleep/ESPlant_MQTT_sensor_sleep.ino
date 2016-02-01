@@ -23,6 +23,9 @@
 
 ADC_MODE(ADC_VCC);
 
+/* How many minutes should we deep sleep for (can use fractional numbers) */
+#define SLEEP_MINUTES 1
+
 ESP8266WebServer webserver(9000);
 
 ESP_Onboarding server(&webserver);
@@ -172,8 +175,7 @@ void loop()
   publish("chip/free_heap",       ESP.getFreeHeap());
   publish("chip/vcc",             ESP.getVcc());
 
-  Serial.println("hibernating...");
-  // sleep 2 minutes in microseconds
-  ESP.deepSleep(2 * 60 * 1000l * 1000l);
+  Serial.println("hibernating..."); 
+  ESP.deepSleep(SLEEP_MINUTES * 60 * 1000l * 1000l);
 
 }
