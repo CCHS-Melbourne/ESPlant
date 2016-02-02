@@ -125,34 +125,34 @@ void loop() {
   logger.handleClient();
 
   if (sendMessage) {
-
-    logger.publish("temp", String(bme.readTemperature()));
-    logger.publish("pressure", String(bme.readPressure() / 100.0F));
-    logger.publish("humidity", String(bme.readHumidity()));
-
+    kwai_event_t kevent;
+    ESP_Kwai.readEvent(&kevent);
     sensors_event_t event;
     accel.getEvent(&event);
-
-    logger.publish("acc/x", String(event.acceleration.x));
-    logger.publish("acc/y", String(event.acceleration.y));
-    logger.publish("acc/z", String(event.acceleration.z));
-
-    kwai_event_t kevent;
-
-    ESP_Kwai.readEvent(&kevent);
-
-    logger.publish("adc/uv_sensor", String(kevent.UVSensor));
-    logger.publish("adc/soil_1", String(kevent.Soil01));
-    logger.publish("adc/soil_2", String(kevent.Soil02));
-    logger.publish("adc/input_voltage", String(kevent.InputVoltage));
-    logger.publish("adc/internal_temp", String(kevent.InternalTemp));
-
     dallasTemp.requestTemperatures();
 
-    logger.publish("external/temp_sensor", String(dallasTemp.getTempCByIndex(0)));
+    logger.publish("adc/internal_temp", String(kevent.InternalTemp*0.01)+"C");
+    logger.publish("temp", String(bme.readTemperature())+"C");
+    logger.publish("external/temp_sensor", String(dallasTemp.getTempCByIndex(0))+"C");
+    logger.publish("pressure", String(bme.readPressure() / 100.0F)+"mbar");
+    logger.publish("humidity", String(bme.readHumidity())+"%");
 
+    logger.publish("adc/soil_1", String(kevent.Soil01));
+    logger.publish("adc/soil_2", String(kevent.Soil02));
+
+    // UV value and solar panel voltage should be loosely correlated.
+    logger.publish("adc/uv_sensor", String(kevent.UVSensor));
+#ifdef SOLAR_CONNECTED_ADC2
+    // I measure panel voltage separately with a voltage divider (2x 10k
+    // resistor), after measuring real voltage ends up being 1.67V what ADC reads
+    logger.publish("adc/solar_voltage", String(kevent.ADC02*0.00167)+"V");
+#endif
+    logger.publish("adc/input_voltage", String(kevent.InputVoltage*0.001)+"V");
+    // I used a volt meature to measure a correction factor (0.956 instead of 1)
+    logger.publish("chip/vcc", String(ESP.getVcc()*0.000956)+"V");
+
+    logger.publish("pir", digitalRead(15) ? "HIGH" : "low" );
     logger.publish("chip/free_heap", String(ESP.getFreeHeap()));
-    logger.publish("chip/vcc", String(ESP.getVcc()));
 
     sendMessage = false;
   }
