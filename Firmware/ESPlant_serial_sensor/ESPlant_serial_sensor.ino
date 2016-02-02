@@ -197,9 +197,11 @@ void loop() {
 
     // UV value and solar panel voltage should be loosely correlated.
     logger_publish("adc/uv_sensor", String(kevent.UVSensor));
+#ifdef SOLAR_CONNECTED_ADC2
     // I measure panel voltage separately with a voltage divider (2x 10k
-    // resistor), so real voltage ends up being 1.67V what ADC reads
+    // resistor), after measuring real voltage ends up being 1.67V what ADC reads
     logger_publish("adc/solar_voltage", String(kevent.ADC02*0.00167)+"V");
+#endif
     logger_publish("adc/input_voltage", String(kevent.InputVoltage*0.001)+"V");
     // I used a volt meature to measure a correction factor (0.956 instead of 1)
     logger_publish("chip/vcc", String(ESP.getVcc()*0.000956)+"V");
