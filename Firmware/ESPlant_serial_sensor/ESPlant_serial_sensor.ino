@@ -28,17 +28,20 @@ DallasTemperature dallasTemp(&oneWire);
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(12, 13, NEO_GRB + NEO_KHZ800);
 
 #define MAX_LEDS 12
-// We have an interrupt every 10ms and RGB_COLOR_CHANGE_STEPS changes to get to the
-// next color, so that's 1 second with a delay factor of 1.
-uint8_t RGB_delay_factor = 0;
 // How many intermediate shades of colors.
 #define RGB_COLOR_CHANGE_STEPS 100
 // How many steps we hold the target colors.
 #define RGB_COLOR_HOLD_STEPS 20
 // How bright to light up neopixel. 1 very bright (blinding), bigger is less bright
-#define RGB_LED_BRIGHTNESS 3
+// #define RGB_LED_BRIGHTNESS 3
+uint8_t RGB_LED_BRIGHTNESS = 1;
 // How many trailing LEDs get displayed on neopixel (1 to 10)
-#define LED_TRAIL 8
+// #define RGB_LED_TRAIL 8
+uint8_t RGB_LED_TRAIL = 0;
+// How quickly we rotate LEDs (1 to 10)
+uint8_t RGB_LED_SPEED = 1;
+// How long to keep LEDs on after detection motion (seconds)
+#define LED_TIMEOUT 10
 
 void setup() {
     Serial.begin(115200);
@@ -51,11 +54,11 @@ void setup() {
     bool bme_res = bme.begin();
 
     if (!bme_res) {
-	Serial.println(F("Uh - oh, could not find a valid BME280 sensor, check i2c address (see comments) and soldering!"));
+	Serial.println(F("Uh - oh, could not find a valid BME280 sensor, check i2c address (see comments) and soldering! (or try a full power cycle)"));
     }
 
     if(!accel.begin()){
-	Serial.println(F("Uh - oh, could not find a valid ADXL345 sensor, check i2c address (see comments) and soldering!"));
+	Serial.println(F("Uh - oh, could not find a valid ADXL345 sensor, check i2c address (see comments) and soldering! (or try a full power cycle)"));
     } else {
 	accel.setRange(ADXL345_RANGE_16_G);
     }
@@ -63,6 +66,8 @@ void setup() {
     // Turn all NeoPixels off
     pixels.begin(); // This initializes the NeoPixel library.
     pixels.show();
+    Serial.println(F("You can change LED intensity and length/speed by touching soil sensors with wet fingers"));
+    delay(2000);
 }
 
 void logger_publish(String Label, String Value) {
@@ -111,15 +116,10 @@ void LED_Color_Picker(float *blue, float *red, float *green) {
 
 
 bool rgbLedFadeHandler(uint8_t *red, uint8_t *green, uint8_t *blue) {
-    static uint8_t RGB_loop_count = 0;
     static uint8_t RGB_led_stage = 0;
     static float RGBa[3] = { 255, 255, 255 };
     static float RGBb[3];
     static float RGBdiff[3];
-
-    RGB_loop_count++;
-    if (RGB_loop_count <= RGB_delay_factor) return 0;
-    RGB_loop_count = 1;
 
     if (RGB_led_stage == 0) {
 	LED_Color_Picker(&RGBb[0], &RGBb[1], &RGBb[2]);
@@ -171,29 +171,37 @@ void loop() {
     static uint8_t green = 255;
     static uint8_t blue = 255;
     static uint16_t curRingLed = 0 ;
+    static uint32_t last_motion = 0;
+    static bool leds_on = TRUE;
 
     Serial.println ( "------------------------" ) ;
 
     sensors_event_t event;
-    accel.getEvent(&event);
+    kwai_event_t kevent;
 
+    accel.getEvent(&event);
+    ESP_Kwai.readEvent(&kevent);
+    dallasTemp.requestTemperatures();
+ 
     logger_publish_c("acc/x", String(event.acceleration.x));
     logger_publish_c("acc/y", String(event.acceleration.y));
     logger_publish("acc/z", String(event.acceleration.z));
-
-    kwai_event_t kevent;
-
-    ESP_Kwai.readEvent(&kevent);
-    dallasTemp.requestTemperatures();
-
+ 
     logger_publish("adc/internal_temp", String(kevent.InternalTemp*0.01)+"C");
     logger_publish("temp", String(bme.readTemperature())+"C");
     logger_publish("external/temp_sensor", String(dallasTemp.getTempCByIndex(0))+"C");
     logger_publish("pressure", String(bme.readPressure() / 100.0F)+"mbar");
     logger_publish("humidity", String(bme.readHumidity())+"%");
-
+ 
     logger_publish("adc/soil_1", String(kevent.Soil01));
     logger_publish("adc/soil_2", String(kevent.Soil02));
+    // ADC shows value below 100 when nothing is connected and goes up to high 3200s
+    // out of 4096.
+    // We take this down to 1 to 11
+    RGB_LED_BRIGHTNESS = 1 + (3200 - kevent.Soil01) / 330;
+    // Take to 0 to 10
+    RGB_LED_TRAIL = (3200 - kevent.Soil02) / 330;
+    RGB_LED_SPEED = 11 - RGB_LED_TRAIL;
 
     // UV value and solar panel voltage should be loosely correlated.
     logger_publish("adc/uv_sensor", String(kevent.UVSensor));
@@ -207,8 +215,30 @@ void loop() {
     logger_publish("chip/vcc", String(ESP.getVcc()*0.000956)+"V");
 
     logger_publish("pir", digitalRead(15) ? "HIGH" : "low" );
+    if (digitalRead(15)) {
+	last_motion = millis();
+    }   
+
     logger_publish("chip/free_heap", String(ESP.getFreeHeap()));
     logger_publish("led", String(curRingLed));
+#ifdef FIXED_MOTION_SENSOR
+    leds_on = ((millis() - last_motion)/1000 < LED_TIMEOUT);
+#else
+    leds_on = TRUE;
+#endif
+// This can slow down the loop a fair bit, and this goes away after reboot
+     if (leds_on) {
+ 	Serial.print("+++ LEDs> brightness: ");
+ 	Serial.print(kevent.Soil01);
+ 	Serial.print(" > ");
+ 	Serial.print(RGB_LED_BRIGHTNESS);
+ 	Serial.print(", trail: ");
+ 	Serial.print(kevent.Soil02);
+ 	Serial.print(" > ");
+ 	Serial.println(RGB_LED_TRAIL);
+     } else {
+ 	Serial.println("+++ LEDs: OFF");
+     }
 
     for (uint8_t i=0; i < 10; i++) { // how many times we change LED per second
 	curRingLed = ( curRingLed + 1 ) % MAX_LEDS ;
@@ -216,11 +246,14 @@ void loop() {
 	// Serial.println(curRingLed);
 	for (uint16_t j=0; j < 20; j++) { // how many times we change the LED color per LED display
 	    rgbLedFadeHandler(&red, &green, &blue);
-	    pixels.setPixelColor(curRingLed, pixels.Color(red, green, blue));
-	    pixels.show();
-	    delay(5);
+	    if (leds_on) {
+		pixels.setPixelColor(curRingLed, pixels.Color(red, green, blue));
+		pixels.show();
+	    }
+	    delay(RGB_LED_SPEED);
 	}
-	pixels.setPixelColor((curRingLed-LED_TRAIL + MAX_LEDS) % MAX_LEDS, pixels.Color(0,0,0)); // turn off current LED
+	pixels.setPixelColor((curRingLed-RGB_LED_TRAIL + MAX_LEDS) % MAX_LEDS, pixels.Color(0,0,0)); // turn off current LED
+	if (!leds_on) pixels.show();
     }
 }
 
