@@ -67,6 +67,16 @@ Connecting ESPLant to your computer
 * In [ESP8266 Arduino IDE](https://github.com/esp8266/arduino), under Tools menu, set Board to "NodeMCU V1.0" (fully compatible).
 * Can set upload speed to 230400. 460800 works in most cases (you might get occasional failures at 460800)
 
+Getting ESPlant
+---------------
+
+You need to clone the ESPlant repo from github, using the `--recursive` option to pick up submodules. If you download a zip file then the submodule parts will be missing, so we recommend using git to get it.
+
+The command is:
+```
+git clone --recursive https://github.com/CCHS-Melbourne/ESPlant
+```
+
 Libraries you will need
 -----------------------
 
@@ -74,13 +84,10 @@ Arduino uses libraries to work with additional hardware or software functionalit
 
 **One library that you should install this way is the OneWire library**. Search for "OneWire" and then click the Install button to install it.
 
-For the ESPlant the other required libraries are set up as "git submodules" inside the "Libraries" directory.
-
-Run these commands in your top-level ESPlant directory to initialise the git submodules:
+For the ESPlant the other required libraries are set up as "git submodules" inside the "Libraries" directory. If you did a "recursive" clone then you will have these, otherwise you can add them to a "normal" clone by running this command:
 
 ```
-git submodule init
-git submodule update
+git submodule update --init
 ```
 
 Inside the Libraries directory there is a script `install_libraries.sh` that you can run on Linux or OS X to symlink all of the libraries into your Arduino libraries directory so you can use them.
