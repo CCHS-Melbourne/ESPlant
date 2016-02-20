@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:ESPlant-rescue
 LIBS:freetronics_schematic
 LIBS:power
 LIBS:device
@@ -38,8 +39,8 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 3
 Title "ESPlant"
-Date ""
-Rev "V1.2"
+Date "2016-02-20"
+Rev "V1.5"
 Comp ""
 Comment1 "TAPR Open Hardware License"
 Comment2 "Copyright (C) 2015 John Spencer & Angus Gratton"

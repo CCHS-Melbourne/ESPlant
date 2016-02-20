@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:ESPlant-rescue
 LIBS:freetronics_schematic
 LIBS:power
 LIBS:device
@@ -37,12 +38,12 @@ EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 2 3
-Title ""
-Date ""
-Rev ""
+Title "ESPlant"
+Date "2016-02-20"
+Rev "V1.5"
 Comp ""
-Comment1 ""
-Comment2 ""
+Comment1 "TAPR Open Hardware License"
+Comment2 "Copyright (C) 2015 John Spencer & Angus Gratton"
 Comment3 ""
 Comment4 ""
 $EndDescr
@@ -186,21 +187,21 @@ Charging current\nIr = 252mA max
 $Comp
 L GND #PWR035
 U 1 1 56417FB3
-P 7450 4100
-F 0 "#PWR035" H 7450 3850 50  0001 C CNN
-F 1 "GND" H 7450 3950 50  0000 C CNN
-F 2 "" H 7450 4100 60  0000 C CNN
-F 3 "" H 7450 4100 60  0000 C CNN
-	1    7450 4100
+P 7450 4350
+F 0 "#PWR035" H 7450 4100 50  0001 C CNN
+F 1 "GND" H 7450 4200 50  0000 C CNN
+F 2 "" H 7450 4350 60  0000 C CNN
+F 3 "" H 7450 4350 60  0000 C CNN
+	1    7450 4350
 	-1   0    0    -1  
 $EndComp
 $Comp
 L MOSFET_P Q203
 U 1 1 5641832A
 P 8400 2600
-F 0 "Q203" V 8200 2450 60  0000 R CNN
-F 1 "FDN340P" V 8300 2450 60  0000 R CNN
-F 2 "FT:SOT23_FET" V 8100 2300 24  0000 C CNN
+F 0 "Q203" V 8800 2750 60  0000 R CNN
+F 1 "FDN340P" V 8700 2750 60  0000 R CNN
+F 2 "FT:SOT23_FET" V 8650 2600 24  0000 C CNN
 F 3 "" H 8400 2600 60  0000 C CNN
 	1    8400 2600
 	0    -1   -1   0   
@@ -223,9 +224,11 @@ F 3 "" H 10250 2500 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L LM193 U202
+L LM193-RESCUE-ESPlant U202
 U 1 1 5642B796
 P 7350 3550
+AR Path="/5642B796" Ref="U202"  Part="1" 
+AR Path="/563C492E/5642B796" Ref="U202"  Part="1" 
 F 0 "U202" H 7500 3700 60  0000 C CNN
 F 1 "MCP6002" H 7550 3350 60  0000 C CNN
 F 2 "FT:SO08_4mm" H 7050 3300 24  0000 C CNN
@@ -234,9 +237,11 @@ F 3 "" H 7350 3550 60  0000 C CNN
 	-1   0    0    -1  
 $EndComp
 $Comp
-L LM193 U202
+L LM193-RESCUE-ESPlant U202
 U 2 1 5642B7E1
 P 8900 3550
+AR Path="/5642B7E1" Ref="U202"  Part="2" 
+AR Path="/563C492E/5642B7E1" Ref="U202"  Part="2" 
 F 0 "U202" H 9050 3700 60  0000 C CNN
 F 1 "MCP6002" H 9100 3350 60  0000 C CNN
 F 2 "FT:SO08_4mm" H 8900 3550 60  0001 C CNN
@@ -387,7 +392,7 @@ Wire Wire Line
 	2950 3050 2950 3200
 Connection ~ 2950 3850
 Wire Wire Line
-	6850 2100 6850 3550
+	6850 2100 6850 3700
 Wire Wire Line
 	2450 3850 3400 3850
 Wire Wire Line
@@ -397,8 +402,6 @@ Wire Wire Line
 Wire Wire Line
 	4950 4400 4950 4500
 Connection ~ 4950 4500
-Wire Wire Line
-	5850 2450 5850 3350
 Wire Wire Line
 	5850 2500 8200 2500
 Wire Wire Line
@@ -414,7 +417,7 @@ Connection ~ 10250 1800
 Wire Wire Line
 	10250 2300 10250 2500
 Wire Wire Line
-	7450 4100 7450 3950
+	7450 3950 7450 4350
 Wire Wire Line
 	9050 2500 9050 1800
 Wire Wire Line
@@ -444,7 +447,6 @@ Wire Wire Line
 Connection ~ 4600 1800
 Wire Wire Line
 	4600 2250 4600 2350
-Connection ~ 5850 2500
 Wire Notes Line
 	5750 3550 5950 3550
 Wire Notes Line
@@ -494,7 +496,7 @@ Connection ~ 5450 3550
 Wire Wire Line
 	5450 4100 5450 4500
 Connection ~ 5450 4500
-Text Notes 6000 4650 0    59   ~ 0
+Text Notes 5550 5050 0    59   ~ 0
 NTC thermistor\nplaced under battery holder.\n\nCharging cut off @ 38.5C\nwhen using specified thermistor.
 Wire Wire Line
 	2700 1800 2700 2400
@@ -539,4 +541,45 @@ Wire Wire Line
 	4150 4500 4150 4150
 Connection ~ 4150 4500
 Connection ~ 3950 4500
+$Comp
+L R R203
+U 1 1 56C82B29
+P 6850 3950
+F 0 "R203" V 6930 3950 50  0000 C CNN
+F 1 "100K" V 6850 3950 50  0000 C CNN
+F 2 "FT:0603" V 7000 3950 50  0000 C CNN
+F 3 "" H 6850 3950 60  0000 C CNN
+	1    6850 3950
+	1    0    0    -1  
+$EndComp
+Connection ~ 6850 3550
+Wire Wire Line
+	6850 4200 6850 4300
+Wire Wire Line
+	6850 4300 7450 4300
+Connection ~ 7450 4300
+$Comp
+L R R206
+U 1 1 56C830DB
+P 8750 2850
+F 0 "R206" V 8830 2850 50  0000 C CNN
+F 1 "100K" V 8750 2850 50  0000 C CNN
+F 2 "FT:0603" V 8900 2850 50  0000 C CNN
+F 3 "" H 8750 2850 60  0000 C CNN
+	1    8750 2850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8750 2600 8750 2500
+Connection ~ 8750 2500
+Wire Wire Line
+	8750 3100 8750 3200
+Wire Wire Line
+	8750 3200 8400 3200
+Connection ~ 8400 3200
+Wire Wire Line
+	5850 2450 5850 3400
+Text HLabel 5850 2450 1    60   Input ~ 0
+VBAT
+Connection ~ 5850 2500
 $EndSCHEMATC
