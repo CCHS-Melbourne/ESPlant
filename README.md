@@ -147,6 +147,7 @@ This project was designed by the 2016 linux.conf.au Open Hardware Team!
  - [Angus Gratton](https://github.com/projectgus)
  - [Andy Gelme](https://github.com/geekscape)
  - [Jon Oxer](https://github.com/jonoxer)
+ - [Mark Wolfe](https://github.com/wolfeidau)
 
 Made at hackmelbourne.org!
 
