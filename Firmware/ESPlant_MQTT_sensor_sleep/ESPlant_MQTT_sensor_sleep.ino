@@ -114,9 +114,8 @@ void setup() {
 
 }
 
-template<typename T>
-void
-publish(const char * topic, T msg)
+template <typename T>
+void publish(const char * topic, T msg)
 {
   logger.publish(topic, String(msg));
 }
@@ -174,6 +173,9 @@ void loop()
 
   publish("chip/free_heap",       ESP.getFreeHeap());
   publish("chip/vcc",             ESP.getVcc());
+
+
+  delay(3000);
 
   Serial.println("hibernating..."); 
   ESP.deepSleep(SLEEP_MINUTES * 60 * 1000l * 1000l);
